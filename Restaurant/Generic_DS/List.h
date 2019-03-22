@@ -4,77 +4,75 @@
 template<class T>
 class List 
 {
-	Node<T>* Header;
-	Node<T>* back; 
+	Node<T>* Head;
+	Node<T>* tail; 
 public: 
-	List(); 
-	List(T );																						//  only for  orders
-	//T * getitem(int ID);
-	//Node<T> * promote(int ID);																		//  only for  orders
-	bool insert(const T &);						//return false if couldn't create a Node
-	bool remove (const T & );					// return false if the item is not exist 
-	bool isEmpty(); 
-	void clear(); 
-	~List(); 
+	List();										//sets Head &  tail to nullptr
+	List(T );									//Creates a list and set parameter itme at the begining 											
+	bool InsertEnd(const T &);					//return false if couldn't create a Node
+	bool Remove(const T & );					// return false if the item is not exist 
+	bool IsEmpty();								//return true if Head points to nullptr
+	void Clear();								//delete all Nodes and set Head & tail to nullptr
+	~List();									//call Clear() fn 
 };
 
 template<class T>
 List<T>::List()
 {
-	Header=nullptr; 
-	back=nullptr;
+	Head=nullptr; 
+	tail==nullptr;
 
 }
 template<class T>
-List<T>::List(T item)
+List<T>::List(T item)						
 {
-	Node<T>* ptr=new Node(item); 
+	Node<T>* ptr=new Node<T>(item); 
 	ptr->setNext(nullptr); 
-	Header=ptr; 
-	back=Header; 
+	Head=ptr; 
+	tail=Head; 
 }
 template<class T>
-bool List<T>::insert(const T & item)		//insert at the end of the list NOT at the begining 
+bool List<T>::InsertEnd(const T & item)		// it inserts at the end of the list NOT at the begining 
 {
-	Node<T>* ptr=new Node(item);
+	Node<T>* ptr=new Node<T>(item);
 	if (ptr==nullptr) return false; 
-	if (isEmpty())
+	if (IsEmpty())
 	{
-		Header=ptr; 
-		back=Header; 
+		Head=ptr; 
+		tail=Head; 
 	}
 	else 
 	{
-	back->setNext(ptr); 
-	back=ptr;
+	tail->setNext(ptr); 
+	tail=ptr;
 	}
-	back->setNext(nullptr); 
+	tail->setNext(nullptr); 
 	return true ;
 }
 template<class T>
-bool List<T>::isEmpty()
+bool List<T>::IsEmpty()
 {
-	if (Header==nullptr)
+	if (Head==nullptr)
 		return true; 
 	return false; 
 }
 template<class T>
-bool List<T>::remove (const T & item )				// here the file will give only the ID of the order so whoever want to delete it he can't unless he get the item first
+bool List<T>::Remove (const T & item )       
 {
-	Node<T>* ptr=Header;
+	Node<T>* ptr=Head;
 
-	if (Header->getItem()==item)				  // needs operator overloeading 
+	if (Head->getItem()==item)				  
 	{
-		Header=Header->getItem();				
+		Head=Head->getNext();				
 		delete ptr;								
 		ptr=nullptr; 							
 		return true; 							
 	}
 	ptr=ptr->getNext();							
-	Node<T>* before=Header;						
+	Node<T>* before=Head;						
 	while (ptr!=nullptr)
 	{
-		if (ptr->getItem()==item)            // needs operator overloeading 
+		if (ptr->getItem()==item)                  
 		{	
 			before->setNext(ptr->getNext());
 			delete ptr ; 
@@ -88,23 +86,22 @@ bool List<T>::remove (const T & item )				// here the file will give only the ID
 }
 template<class T>
 
-void List<T>::clear()
+void List<T>::Clear()
 {
-	Node<T>* ptr=Header; 
-	while (Header!=nullptr)
+	Node<T>* ptr=Head; 
+	while (Head!=nullptr)
 	{
-		Header=Header->getNext;
+		Head=Head->getNext();
 		delete ptr ; 
-		ptr=Header; 
+		ptr=Head; 
 	}
-	back=nullptr; 
+	tail=nullptr; 
 }
 template<class T>
 List<T>::~List()
 {
-	clear(); 
+	Clear(); 
 }
-template<class T>
 
-// ------------------------------------------------------how could we know the order using its ID
+
 
