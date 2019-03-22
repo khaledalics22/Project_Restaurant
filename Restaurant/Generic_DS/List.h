@@ -13,6 +13,7 @@ public:
 	bool Remove(const T & );					// return false if the item is not exist 
 	bool IsEmpty();								//return true if Head points to nullptr
 	void Clear();								//delete all Nodes and set Head & tail to nullptr
+	Node* Contain(T & );				// search for an item and return ptr to its node if found and nullptr if not found
 	~List();									//call Clear() fn 
 };
 
@@ -30,6 +31,20 @@ List<T>::List(T item)
 	ptr->setNext(nullptr); 
 	Head=ptr; 
 	tail=Head; 
+}
+template<class T>
+Node<T>* List<T>::Contain(T & item)
+{
+	Node<T>* ptr=Head; 														
+	while (ptr!=nullptr)
+	{
+		if (ptr->getItem()==item)                  
+		{	
+			return ptr;  
+		}
+		ptr=ptr->getNext(); 
+	}
+	return nullptr; 
 }
 template<class T>
 bool List<T>::InsertEnd(const T & item)		// it inserts at the end of the list NOT at the begining 
