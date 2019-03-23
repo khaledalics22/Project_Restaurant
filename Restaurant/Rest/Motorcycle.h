@@ -15,6 +15,23 @@ class Motorcycle
 
 public:
 	Motorcycle();
+	Motorcycle(int id, ORD_TYPE t, int Speed, REGION RE);
+
+	int GetSpeed() const;
+	void SetSpeed(int s);
+
+	ORD_TYPE GetType() const;
+	void SetType(ORD_TYPE t);
+
+	int GetID() const;
+	void SetID(int id);
+
+	REGION GetRegion() const;
+	void SetRegion(REGION r);
+
+	void SetStatus(STATUS s);
+	bool IsAvailable() const;
+
 	virtual ~Motorcycle();
 };
 

@@ -11,6 +11,11 @@ enum REGION {
 	REG_CNT		//Total number of regions
 };
 
+enum STATE     //indicates whether the order is active or not
+{
+	ACTIVE,     //Active orders
+	INACTIVE	//Inactive orders
+};
 
 enum ORD_TYPE	//types of orders
 {
