@@ -1,6 +1,8 @@
 #include <cstdlib>
 #include <time.h>
 #include <iostream>
+#include <fstream>
+#include <string>
 using namespace std;
 
 #include "Restaurant.h"
@@ -63,6 +65,110 @@ Restaurant::~Restaurant()
 		delete pGUI;
 }
 
+void Restaurant::ReadData()
+{
+	ifstream infile;
+	infile.open("InputFile");
+//receiving speeds	
+	int SN,SF,SV;
+	infile>>SN; infile>>SF; infile>>SV;
+//receiving number of all motors for all regions
+	int NumMotNA,NumMotFA,NumMotVA;
+	infile>>NumMotNA; infile>>NumMotFA; infile>>NumMotVA;
+
+	int NumMotNB,NumMotFB,NumMotVB;
+	infile>>NumMotNB; infile>>NumMotFB; infile>>NumMotVB;
+
+	int NumMotNC,NumMotFC,NumMotVC;
+	infile>>NumMotNC; infile>>NumMotFC; infile>>NumMotVC;
+
+	int NumMotND,NumMotFD,NumMotVD;
+	infile>>NumMotND; infile>>NumMotFD; infile>>NumMotVD;
+	
+	int j=0; //motors ID counter
+
+//filling all normal motors
+	for(int i=0;i<NumMotNA;i++)
+	{Motorcycle m(j,TYPE_NRM,SN,A_REG); Norm_Mtr_A.enqueue(m); j++;}
+
+	for(int i=0;i<NumMotNB;i++)
+	{Motorcycle m(j,TYPE_NRM,SN,B_REG); Norm_Mtr_B.enqueue(m); j++;}
+
+	for(int i=0;i<NumMotNC;i++)
+	{Motorcycle m(j,TYPE_NRM,SN,C_REG); Norm_Mtr_C.enqueue(m); j++;}
+	
+	for(int i=0;i<NumMotND;i++)
+	{Motorcycle m(j,TYPE_NRM,SN,D_REG); Norm_Mtr_D.enqueue(m); j++;}
+	
+//filling all frozen motors
+	for(int i=0;i<NumMotFA;i++)
+	{Motorcycle m(j,TYPE_FROZ,SF,A_REG); Froz_Mtr_A.enqueue(m); j++;}
+
+	for(int i=0;i<NumMotFB;i++)
+	{Motorcycle m(j,TYPE_FROZ,SF,B_REG); Froz_Mtr_B.enqueue(m); j++;}
+
+	for(int i=0;i<NumMotFC;i++)
+	{Motorcycle m(j,TYPE_FROZ,SF,C_REG); Froz_Mtr_C.enqueue(m); j++;}
+	
+	for(int i=0;i<NumMotFD;i++)
+	{Motorcycle m(j,TYPE_FROZ,SF,D_REG); Froz_Mtr_D.enqueue(m); j++;}
+
+//filling all VIP motors
+	for(int i=0;i<NumMotVA;i++)
+	{Motorcycle m(j,TYPE_VIP,SV,A_REG); VIP_Mtr_A.enqueue(m); j++;}
+
+	for(int i=0;i<NumMotVB;i++)
+	{Motorcycle m(j,TYPE_VIP,SV,B_REG); VIP_Mtr_B.enqueue(m); j++;}
+
+	for(int i=0;i<NumMotVC;i++)
+	{Motorcycle m(j,TYPE_VIP,SV,C_REG); VIP_Mtr_C.enqueue(m); j++;}
+	
+	for(int i=0;i<NumMotVD;i++)
+	{Motorcycle m(j,TYPE_VIP,SV,D_REG); VIP_Mtr_D.enqueue(m); j++;}
+
+//receiving events & orders
+	infile>>AutoPromLim;
+	infile>>EventsNum;
+	string s;
+while(infile>>s)
+ {
+if(s=="R")
+{
+	 int TS; infile>>TS;
+	 string typ; infile>>typ;
+	 int id,dst,mon; string reg;
+	 infile>>id; infile>>dst; infile>>mon; infile>>reg;
+	 if(typ=="N") 
+	 {
+	 if(reg=="A") { Order o(id,TYPE_NRM,A_REG,dst,mon); Norm_Ord_A.InsertEnd(o); }
+else if(reg=="B") { Order o(id,TYPE_NRM,B_REG,dst,mon); Norm_Ord_B.InsertEnd(o); }
+else if(reg=="C") { Order o(id,TYPE_NRM,C_REG,dst,mon); Norm_Ord_C.InsertEnd(o); }
+else if(reg=="D") { Order o(id,TYPE_NRM,D_REG,dst,mon); Norm_Ord_D.InsertEnd(o); }	 
+	 }
+	 else if(typ=="F") 
+	 {
+     if(reg=="A") { Order o(id,TYPE_FROZ,A_REG,dst,mon); Frz_Ord_A.enqueue(o); }
+else if(reg=="B") { Order o(id,TYPE_FROZ,B_REG,dst,mon); Frz_Ord_B.enqueue(o); }
+else if(reg=="C") { Order o(id,TYPE_FROZ,C_REG,dst,mon); Frz_Ord_C.enqueue(o); }
+else if(reg=="D") { Order o(id,TYPE_FROZ,D_REG,dst,mon); Frz_Ord_D.enqueue(o); }		 
+	 }
+	 else if(typ=="V") 
+	 {
+
+	 }
+}
+if(s=="P")
+     {
+	 
+	 }
+else if(s=="X")
+     {
+
+     }
+
+ }
+
+}
 
 
 

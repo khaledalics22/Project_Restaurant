@@ -21,7 +21,9 @@ Order::Order(int id, ORD_TYPE r_Type, REGION r_region)
 	SetInservice(false);
 	SetServiced(false);
 }
-
+Order::Order()
+{
+}
 Order::~Order()
 {
 }

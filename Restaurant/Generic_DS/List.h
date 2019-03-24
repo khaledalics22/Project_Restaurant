@@ -21,7 +21,7 @@ template<class T>
 List<T>::List()
 {
 	Head=nullptr; 
-	tail==nullptr;
+	tail=nullptr;
 
 }
 template<class T>

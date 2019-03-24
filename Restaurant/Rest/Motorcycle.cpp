@@ -4,7 +4,7 @@
 Motorcycle::Motorcycle()
 {
 }
-Motorcycle::Motorcycle(int id, ORD_TYPE t, int Speed, REGION RE)
+Motorcycle::Motorcycle(int id, ORD_TYPE t, int Speed, REGION RE,STATUS s)
 {
 	SetID(id);
 	SetType(t);

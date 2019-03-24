@@ -15,7 +15,7 @@ class Motorcycle
 
 public:
 	Motorcycle();
-	Motorcycle(int id, ORD_TYPE t, int Speed, REGION RE);
+	Motorcycle(int id, ORD_TYPE t, int Speed, REGION RE,STATUS s=IDLE);
 
 	int GetSpeed() const;
 	void SetSpeed(int s);

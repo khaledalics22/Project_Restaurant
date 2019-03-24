@@ -20,7 +20,7 @@ protected:
 public:
 	Order(int ID, ORD_TYPE r_Type, REGION r_region, int dis, double cost);
 	Order(int ID, ORD_TYPE r_Type, REGION r_region);
-
+	Order();
 	void SetID(int id);
 	int GetID();
 
