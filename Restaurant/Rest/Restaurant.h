@@ -6,8 +6,9 @@
 #include "..\GUI\GUI.h"
 #include "..\Generic_DS\Queue.h"
 #include "..\Events\Event.h"
-
-
+#include "..\Generic_DS\List.h"
+#include "..\Generic_DS\PriorityQueue.h"
+#include "Motorcycle.h"
 #include "Order.h"
 
 // it is the maestro of the project
@@ -16,7 +17,35 @@ class Restaurant
 private:
 	GUI *pGUI;
 	Queue<Event*> EventsQueue;	//Queue of all events that will be loaded from file
+	List<Order*> Norm_Ord_A;    //List of norm orders
+	List<Order*> Norm_Ord_B;
+	List<Order*> Norm_Ord_C;
+	List<Order*> Norm_Ord_D;
 
+	Queue<Order*>Frz_Ord_A;     //Queue of Frozen orders
+	Queue<Order*>Frz_Ord_B;
+	Queue<Order*>Frz_Ord_C;
+	Queue<Order*>Frz_Ord_D;
+
+	Priority_Queue<Order*>VIP_ord_A;	//priority queue of vip orders
+	Priority_Queue<Order*>VIP_ord_B;
+	Priority_Queue<Order*>VIP_ord_C;
+	Priority_Queue<Order*>VIP_ord_D;
+
+	Queue<Motorcycle*> Norm_Mtr_A;		//que
+	Queue<Motorcycle*> Norm_Mtr_B;
+	Queue<Motorcycle*> Norm_Mtr_C;
+	Queue<Motorcycle*> Norm_Mtr_D;
+
+	Queue<Motorcycle*> Froz_Mtr_A;
+	Queue<Motorcycle*> Froz_Mtr_B;
+	Queue<Motorcycle*> Froz_Mtr_C;
+	Queue<Motorcycle*> Froz_Mtr_D;
+
+	Queue<Motorcycle*> VIP_Mtr_A;
+	Queue<Motorcycle*> VIP_Mtr_B;
+	Queue<Motorcycle*> VIP_Mtr_C;
+	Queue<Motorcycle*> VIP_Mtr_D;
 	/// ==> 
 	//	DEMO-related members. Should be removed in phases 1&2
 	Queue<Order*> DEMO_Queue;	//Important: This is just for demo

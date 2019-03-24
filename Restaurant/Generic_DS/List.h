@@ -13,7 +13,7 @@ public:
 	bool Remove(const T & );					// return false if the item is not exist 
 	bool IsEmpty();								//return true if Head points to nullptr
 	void Clear();								//delete all Nodes and set Head & tail to nullptr
-	Node* Contain(T & );				// search for an item and return ptr to its node if found and nullptr if not found
+	Node<T>* Contain(T & );				// search for an item and return ptr to its node if found and nullptr if not found
 	~List();									//call Clear() fn 
 };
 

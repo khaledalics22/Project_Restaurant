@@ -12,6 +12,16 @@ Order::Order(int id, ORD_TYPE r_Type, REGION r_region, int dis, double cost)
 	SetServiced(false);
 }
 
+Order::Order(int id, ORD_TYPE r_Type, REGION r_region)
+{
+
+	SetID(id);	//1<ID<999
+	SetType(r_Type);
+	SetRegion(r_region);	
+	SetInservice(false);
+	SetServiced(false);
+}
+
 Order::~Order()
 {
 }
