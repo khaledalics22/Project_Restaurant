@@ -7,7 +7,8 @@ using namespace std;
 
 #include "Restaurant.h"
 #include "..\Events\ArrivalEvent.h"
-
+#include "..\Events\PromotionEvent.h"
+#include "..\Events\CancellationEvent.h"
 
 Restaurant::Restaurant() 
 {
@@ -68,7 +69,7 @@ Restaurant::~Restaurant()
 void Restaurant::ReadData()
 {
 	ifstream infile;
-	infile.open("InputFile");
+	infile.open("InputFile.txt");
 //receiving speeds	
 	int SN,SF,SV;
 	infile>>SN; infile>>SF; infile>>SV;
@@ -126,44 +127,53 @@ void Restaurant::ReadData()
 	for(int i=0;i<NumMotVD;i++)
 	{Motorcycle m(j,TYPE_VIP,SV,D_REG); VIP_Mtr_D.enqueue(m); j++;}
 
-//receiving events & orders
+//receiving Auto promomotion Limit,events Number
 	infile>>AutoPromLim;
 	infile>>EventsNum;
 	string s;
+//receiving orders and events
 while(infile>>s)
  {
 if(s=="R")
 {
+	 
 	 int TS; infile>>TS;
 	 string typ; infile>>typ;
 	 int id,dst,mon; string reg;
 	 infile>>id; infile>>dst; infile>>mon; infile>>reg;
+	 
 	 if(typ=="N") 
 	 {
-	 if(reg=="A") { Order o(id,TYPE_NRM,A_REG,dst,mon); Norm_Ord_A.InsertEnd(o); }
-else if(reg=="B") { Order o(id,TYPE_NRM,B_REG,dst,mon); Norm_Ord_B.InsertEnd(o); }
-else if(reg=="C") { Order o(id,TYPE_NRM,C_REG,dst,mon); Norm_Ord_C.InsertEnd(o); }
-else if(reg=="D") { Order o(id,TYPE_NRM,D_REG,dst,mon); Norm_Ord_D.InsertEnd(o); }	 
+	 if(reg=="A") { Order o(id,TYPE_NRM,A_REG,dst,mon); Norm_Ord_A.InsertEnd(o); ArrivalEvent ariv(TS,id,TYPE_NRM,A_REG); EventsQueue.enqueue(&ariv); }
+else if(reg=="B") { Order o(id,TYPE_NRM,B_REG,dst,mon); Norm_Ord_B.InsertEnd(o); ArrivalEvent ariv(TS,id,TYPE_NRM,B_REG); EventsQueue.enqueue(&ariv);}
+else if(reg=="C") { Order o(id,TYPE_NRM,C_REG,dst,mon); Norm_Ord_C.InsertEnd(o); ArrivalEvent ariv(TS,id,TYPE_NRM,C_REG); EventsQueue.enqueue(&ariv);}
+else if(reg=="D") { Order o(id,TYPE_NRM,D_REG,dst,mon); Norm_Ord_D.InsertEnd(o); ArrivalEvent ariv(TS,id,TYPE_NRM,D_REG); EventsQueue.enqueue(&ariv);}	 
+	 
 	 }
 	 else if(typ=="F") 
 	 {
-     if(reg=="A") { Order o(id,TYPE_FROZ,A_REG,dst,mon); Frz_Ord_A.enqueue(o); }
-else if(reg=="B") { Order o(id,TYPE_FROZ,B_REG,dst,mon); Frz_Ord_B.enqueue(o); }
-else if(reg=="C") { Order o(id,TYPE_FROZ,C_REG,dst,mon); Frz_Ord_C.enqueue(o); }
-else if(reg=="D") { Order o(id,TYPE_FROZ,D_REG,dst,mon); Frz_Ord_D.enqueue(o); }		 
+     if(reg=="A") { Order o(id,TYPE_FROZ,A_REG,dst,mon); Frz_Ord_A.enqueue(o); ArrivalEvent ariv(TS,id,TYPE_FROZ,A_REG); EventsQueue.enqueue(&ariv);}
+else if(reg=="B") { Order o(id,TYPE_FROZ,B_REG,dst,mon); Frz_Ord_B.enqueue(o); ArrivalEvent ariv(TS,id,TYPE_FROZ,B_REG); EventsQueue.enqueue(&ariv);}
+else if(reg=="C") { Order o(id,TYPE_FROZ,C_REG,dst,mon); Frz_Ord_C.enqueue(o); ArrivalEvent ariv(TS,id,TYPE_FROZ,C_REG); EventsQueue.enqueue(&ariv);}
+else if(reg=="D") { Order o(id,TYPE_FROZ,D_REG,dst,mon); Frz_Ord_D.enqueue(o); ArrivalEvent ariv(TS,id,TYPE_FROZ,D_REG); EventsQueue.enqueue(&ariv);}		 
 	 }
 	 else if(typ=="V") 
 	 {
-
+     int prio=100*(mon/(dst*TS));
+     if(reg=="A") { Order o(id,TYPE_VIP,A_REG,dst,mon); VIP_ord_A.enqueue(o,prio); ArrivalEvent ariv(TS,id,TYPE_VIP,A_REG); EventsQueue.enqueue(&ariv);}
+else if(reg=="B") { Order o(id,TYPE_VIP,B_REG,dst,mon); VIP_ord_B.enqueue(o,prio); ArrivalEvent ariv(TS,id,TYPE_VIP,B_REG); EventsQueue.enqueue(&ariv);}
+else if(reg=="C") { Order o(id,TYPE_VIP,C_REG,dst,mon); VIP_ord_C.enqueue(o,prio); ArrivalEvent ariv(TS,id,TYPE_VIP,C_REG); EventsQueue.enqueue(&ariv);}
+else if(reg=="D") { Order o(id,TYPE_VIP,D_REG,dst,mon); VIP_ord_D.enqueue(o,prio); ArrivalEvent ariv(TS,id,TYPE_VIP,D_REG); EventsQueue.enqueue(&ariv);}     
 	 }
+ 
 }
 if(s=="P")
      {
-	 
+		 int ts,id; double exmon; infile>>ts; infile>>id; infile>>exmon;  PromotionEvent pe(ts,id,exmon); EventsQueue.enqueue(&pe);
 	 }
 else if(s=="X")
      {
-
+		 int ts,id; infile>>ts; infile>>id; CancellationEvent ce(ts,id); EventsQueue.enqueue(&ce);
      }
 
  }
