@@ -90,42 +90,90 @@ void Restaurant::ReadData()
 
 //filling all normal motors
 	for(int i=0;i<NumMotNA;i++)
-	{Motorcycle m(j,TYPE_NRM,SN,A_REG); Norm_Mtr_A.enqueue(m); j++;}
+	{
+		Motorcycle m(j,TYPE_NRM,SN,A_REG); 
+		Norm_Mtr_A.enqueue(m); 
+		j++;
+	}
 
 	for(int i=0;i<NumMotNB;i++)
-	{Motorcycle m(j,TYPE_NRM,SN,B_REG); Norm_Mtr_B.enqueue(m); j++;}
+	{
+		Motorcycle m(j,TYPE_NRM,SN,B_REG);
+		Norm_Mtr_B.enqueue(m);
+		j++;
+	}
 
 	for(int i=0;i<NumMotNC;i++)
-	{Motorcycle m(j,TYPE_NRM,SN,C_REG); Norm_Mtr_C.enqueue(m); j++;}
+	{
+		Motorcycle m(j,TYPE_NRM,SN,C_REG); 
+		Norm_Mtr_C.enqueue(m);
+		j++;
+	}
 	
 	for(int i=0;i<NumMotND;i++)
-	{Motorcycle m(j,TYPE_NRM,SN,D_REG); Norm_Mtr_D.enqueue(m); j++;}
+	{
+		Motorcycle m(j,TYPE_NRM,SN,D_REG);
+		Norm_Mtr_D.enqueue(m);
+		j++;
+	}
 	
 //filling all frozen motors
 	for(int i=0;i<NumMotFA;i++)
-	{Motorcycle m(j,TYPE_FROZ,SF,A_REG); Froz_Mtr_A.enqueue(m); j++;}
+	{
+		Motorcycle m(j,TYPE_FROZ,SF,A_REG); 
+		Froz_Mtr_A.enqueue(m); 
+		j++;
+	}
 
 	for(int i=0;i<NumMotFB;i++)
-	{Motorcycle m(j,TYPE_FROZ,SF,B_REG); Froz_Mtr_B.enqueue(m); j++;}
+	{
+		Motorcycle m(j,TYPE_FROZ,SF,B_REG);
+		Froz_Mtr_B.enqueue(m); 
+		j++;
+	}
 
 	for(int i=0;i<NumMotFC;i++)
-	{Motorcycle m(j,TYPE_FROZ,SF,C_REG); Froz_Mtr_C.enqueue(m); j++;}
+	{
+		Motorcycle m(j,TYPE_FROZ,SF,C_REG);
+		Froz_Mtr_C.enqueue(m); 
+		j++;
+	}
 	
 	for(int i=0;i<NumMotFD;i++)
-	{Motorcycle m(j,TYPE_FROZ,SF,D_REG); Froz_Mtr_D.enqueue(m); j++;}
+	{ 
+		Motorcycle m(j,TYPE_FROZ,SF,D_REG); 
+		Froz_Mtr_D.enqueue(m);
+		j++;
+	}
 
 //filling all VIP motors
 	for(int i=0;i<NumMotVA;i++)
-	{Motorcycle m(j,TYPE_VIP,SV,A_REG); VIP_Mtr_A.enqueue(m); j++;}
+	{
+		Motorcycle m(j,TYPE_VIP,SV,A_REG);
+		VIP_Mtr_A.enqueue(m); 
+		j++;
+	}
 
 	for(int i=0;i<NumMotVB;i++)
-	{Motorcycle m(j,TYPE_VIP,SV,B_REG); VIP_Mtr_B.enqueue(m); j++;}
+	{
+		Motorcycle m(j,TYPE_VIP,SV,B_REG);
+		VIP_Mtr_B.enqueue(m);
+		j++;
+	}
 
 	for(int i=0;i<NumMotVC;i++)
-	{Motorcycle m(j,TYPE_VIP,SV,C_REG); VIP_Mtr_C.enqueue(m); j++;}
+	{
+		Motorcycle m(j,TYPE_VIP,SV,C_REG); 
+		VIP_Mtr_C.enqueue(m); 
+		j++;
+	}
 	
 	for(int i=0;i<NumMotVD;i++)
-	{Motorcycle m(j,TYPE_VIP,SV,D_REG); VIP_Mtr_D.enqueue(m); j++;}
+	{
+		Motorcycle m(j,TYPE_VIP,SV,D_REG);
+		VIP_Mtr_D.enqueue(m);
+		j++;
+	}
 
 //receiving Auto promomotion Limit,events Number
 	infile>>AutoPromLim;
@@ -144,36 +192,118 @@ if(s=="R")
 	 
 	 if(typ=="N") 
 	 {
-	 if(reg=="A") { Order o(id,TYPE_NRM,A_REG,dst,mon); Norm_Ord_A.InsertEnd(o); ArrivalEvent ariv(TS,id,TYPE_NRM,A_REG); EventsQueue.enqueue(&ariv); }
-else if(reg=="B") { Order o(id,TYPE_NRM,B_REG,dst,mon); Norm_Ord_B.InsertEnd(o); ArrivalEvent ariv(TS,id,TYPE_NRM,B_REG); EventsQueue.enqueue(&ariv);}
-else if(reg=="C") { Order o(id,TYPE_NRM,C_REG,dst,mon); Norm_Ord_C.InsertEnd(o); ArrivalEvent ariv(TS,id,TYPE_NRM,C_REG); EventsQueue.enqueue(&ariv);}
-else if(reg=="D") { Order o(id,TYPE_NRM,D_REG,dst,mon); Norm_Ord_D.InsertEnd(o); ArrivalEvent ariv(TS,id,TYPE_NRM,D_REG); EventsQueue.enqueue(&ariv);}	 
+	if(reg=="A") 
+	{ 
+		Order o(id,TYPE_NRM,A_REG,dst,mon);
+		Norm_Ord_A.InsertEnd(o);
+		ArrivalEvent ariv(TS,id,TYPE_NRM,A_REG); 
+		EventsQueue.enqueue(&ariv); 
+	}
+	else if(reg=="B")
+	{ 
+		Order o(id,TYPE_NRM,B_REG,dst,mon);
+		Norm_Ord_B.InsertEnd(o); 
+		ArrivalEvent ariv(TS,id,TYPE_NRM,B_REG); 
+		EventsQueue.enqueue(&ariv);
+	}
+	else if(reg=="C")
+	{ 
+		Order o(id,TYPE_NRM,C_REG,dst,mon);
+		Norm_Ord_C.InsertEnd(o);
+		ArrivalEvent ariv(TS,id,TYPE_NRM,C_REG); 
+		EventsQueue.enqueue(&ariv);
+	}
+	else if(reg=="D")
+	{ 
+		Order o(id,TYPE_NRM,D_REG,dst,mon);
+		Norm_Ord_D.InsertEnd(o); 
+		ArrivalEvent ariv(TS,id,TYPE_NRM,D_REG);
+		EventsQueue.enqueue(&ariv);
+	}	 
 	 
 	 }
 	 else if(typ=="F") 
 	 {
-     if(reg=="A") { Order o(id,TYPE_FROZ,A_REG,dst,mon); Frz_Ord_A.enqueue(o); ArrivalEvent ariv(TS,id,TYPE_FROZ,A_REG); EventsQueue.enqueue(&ariv);}
-else if(reg=="B") { Order o(id,TYPE_FROZ,B_REG,dst,mon); Frz_Ord_B.enqueue(o); ArrivalEvent ariv(TS,id,TYPE_FROZ,B_REG); EventsQueue.enqueue(&ariv);}
-else if(reg=="C") { Order o(id,TYPE_FROZ,C_REG,dst,mon); Frz_Ord_C.enqueue(o); ArrivalEvent ariv(TS,id,TYPE_FROZ,C_REG); EventsQueue.enqueue(&ariv);}
-else if(reg=="D") { Order o(id,TYPE_FROZ,D_REG,dst,mon); Frz_Ord_D.enqueue(o); ArrivalEvent ariv(TS,id,TYPE_FROZ,D_REG); EventsQueue.enqueue(&ariv);}		 
+		if(reg=="A") 
+		{ 
+			Order o(id,TYPE_FROZ,A_REG,dst,mon);
+			Frz_Ord_A.enqueue(o);
+			ArrivalEvent ariv(TS,id,TYPE_FROZ,A_REG); 
+			EventsQueue.enqueue(&ariv);
+		}
+		else if(reg=="B")
+		{ 
+			Order o(id,TYPE_FROZ,B_REG,dst,mon); 
+			Frz_Ord_B.enqueue(o); 
+			ArrivalEvent ariv(TS,id,TYPE_FROZ,B_REG); 
+			EventsQueue.enqueue(&ariv);
+		}
+		else if(reg=="C") 
+		{ 
+			Order o(id,TYPE_FROZ,C_REG,dst,mon);
+			Frz_Ord_C.enqueue(o);
+			ArrivalEvent ariv(TS,id,TYPE_FROZ,C_REG);
+			EventsQueue.enqueue(&ariv);
+		}
+		else if(reg=="D") 
+		{ 
+			Order o(id,TYPE_FROZ,D_REG,dst,mon);
+			Frz_Ord_D.enqueue(o); 
+			ArrivalEvent ariv(TS,id,TYPE_FROZ,D_REG);
+			EventsQueue.enqueue(&ariv);
+		}		 
 	 }
 	 else if(typ=="V") 
 	 {
-     int prio=100*(mon/(dst*TS));
-     if(reg=="A") { Order o(id,TYPE_VIP,A_REG,dst,mon); VIP_ord_A.enqueue(o,prio); ArrivalEvent ariv(TS,id,TYPE_VIP,A_REG); EventsQueue.enqueue(&ariv);}
-else if(reg=="B") { Order o(id,TYPE_VIP,B_REG,dst,mon); VIP_ord_B.enqueue(o,prio); ArrivalEvent ariv(TS,id,TYPE_VIP,B_REG); EventsQueue.enqueue(&ariv);}
-else if(reg=="C") { Order o(id,TYPE_VIP,C_REG,dst,mon); VIP_ord_C.enqueue(o,prio); ArrivalEvent ariv(TS,id,TYPE_VIP,C_REG); EventsQueue.enqueue(&ariv);}
-else if(reg=="D") { Order o(id,TYPE_VIP,D_REG,dst,mon); VIP_ord_D.enqueue(o,prio); ArrivalEvent ariv(TS,id,TYPE_VIP,D_REG); EventsQueue.enqueue(&ariv);}     
+		int prio=100*(mon/(dst*TS));
+		 if(reg=="A")
+		 { 
+			 Order o(id,TYPE_VIP,A_REG,dst,mon); 
+			 VIP_ord_A.enqueue(o,prio);
+			 ArrivalEvent ariv(TS,id,TYPE_VIP,A_REG); 
+			 EventsQueue.enqueue(&ariv);
+		 }
+		else if(reg=="B")
+		{
+			Order o(id,TYPE_VIP,B_REG,dst,mon);
+			VIP_ord_B.enqueue(o,prio); 
+			ArrivalEvent ariv(TS,id,TYPE_VIP,B_REG);
+			EventsQueue.enqueue(&ariv);
+		 }
+		else if(reg=="C") 
+		{
+			Order o(id,TYPE_VIP,C_REG,dst,mon); 
+			VIP_ord_C.enqueue(o,prio); 
+			ArrivalEvent ariv(TS,id,TYPE_VIP,C_REG); 
+			EventsQueue.enqueue(&ariv);
+		}
+		else if(reg=="D")
+		{ 
+			Order o(id,TYPE_VIP,D_REG,dst,mon);
+			VIP_ord_D.enqueue(o,prio); 
+			ArrivalEvent ariv(TS,id,TYPE_VIP,D_REG); 
+			EventsQueue.enqueue(&ariv);
+		}     
 	 }
  
 }
 if(s=="P")
      {
-		 int ts,id; double exmon; infile>>ts; infile>>id; infile>>exmon;  PromotionEvent pe(ts,id,exmon); EventsQueue.enqueue(&pe);
+		 int ts,id;
+		 double exmon;
+		 infile>>ts;
+		 infile>>id; 
+		 infile>>exmon; 
+		 PromotionEvent pe(ts,id,exmon); 
+		 EventsQueue.enqueue(&pe);
 	 }
 else if(s=="X")
      {
-		 int ts,id; infile>>ts; infile>>id; CancellationEvent ce(ts,id); EventsQueue.enqueue(&ce);
+		 int ts,id; 
+		 infile>>ts; 
+		 infile>>id; 
+		 CancellationEvent ce(ts,id);
+		 EventsQueue.enqueue(&ce);
      }
 
  }
