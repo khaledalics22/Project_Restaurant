@@ -51,8 +51,11 @@ private :
 	
 	Node<T>* backPtr;
 	Node<T>* frontPtr;
+	int count;
 public :
-	Queue();	
+	Queue();
+	int getCount();
+	void Clear();
 	bool isEmpty() const ;
 	bool enqueue(const T& newEntry);
 	bool dequeue(T& frntEntry);  
@@ -72,9 +75,15 @@ Queue<T>::Queue()
 {
 	backPtr=nullptr;
 	frontPtr=nullptr;
-
+	count = 0;
 }
 /////////////////////////////////////////////////////////////////////////////////////////
+
+template <class T>
+int Queue<T>::getCount()
+{
+	return count;
+}
 
 /*
 Function: isEmpty
@@ -105,6 +114,7 @@ template <typename T>
 bool Queue<T>::enqueue( const T& newEntry)
 {
 	Node<T>* newNodePtr = new Node<T>(newEntry);
+	count++;
 	// Insert the new node
 	if (isEmpty())
 		frontPtr = newNodePtr; // The queue is empty
@@ -130,7 +140,7 @@ bool Queue<T>:: dequeue(T& frntEntry)
 {
 	if(isEmpty())
 		return false;
-
+	count--;
 	Node<T>* nodeToDeletePtr = frontPtr;
 	frntEntry = frontPtr->getItem();
 	frontPtr = frontPtr->getNext();
@@ -168,8 +178,22 @@ bool Queue<T>:: peekFront(T& frntEntry) const
 }
 ///////////////////////////////////////////////////////////////////////////////////
 
+template <class T>
+void Queue<T>::Clear()
+{
+	Node<T>* ptr = frontPtr; 
+	while (frontPtr != nullptr)
+	{
+		frontPtr = frontPtr->getNext();
+		delete ptr; 
+		ptr=frontPtr; 
+	}
+	count = 0;
+}
+
 template <typename T>
 Queue<T>::~Queue()
 {
+	Clear();
 }
 #endif

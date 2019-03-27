@@ -6,9 +6,11 @@ class List
 {
 	Node<T>* Head;
 	Node<T>* tail; 
+	int count;
 public: 
 	List();										//sets Head &  tail to nullptr
 	List(T );									//Creates a list and set parameter itme at the begining 											
+	int getCount();
 	bool InsertEnd(const T &);					//return false if couldn't create a Node
 	bool Remove(const T & );					// return false if the item is not exist 
 	bool IsEmpty();								//return true if Head points to nullptr
@@ -23,8 +25,15 @@ List<T>::List()
 {
 	Head=nullptr; 
 	tail=nullptr;
-
+	count = 0;
 }
+
+template <class T>
+int List<T>::getCount()
+{
+	return count;
+}
+
 template<class T>
 List<T>::List(T item)						
 {
@@ -51,6 +60,7 @@ template<class T>
 bool List<T>::InsertEnd(const T & item)		// it inserts at the end of the list NOT at the begining 
 {
 	Node<T>* ptr=new Node<T>(item);
+	count++;
 	if (ptr==nullptr) return false; 
 	if (IsEmpty())
 	{
@@ -81,7 +91,8 @@ bool List<T>::Remove (const T & item )
 	{
 		Head=Head->getNext();				
 		delete ptr;								
-		ptr=nullptr; 							
+		ptr=nullptr;
+		count--;
 		return true; 							
 	}
 	ptr=ptr->getNext();							
@@ -93,6 +104,7 @@ bool List<T>::Remove (const T & item )
 			before->setNext(ptr->getNext());
 			delete ptr ; 
 			ptr=before->getNext();
+			count--;
 			return true; 
 		}
 		before=ptr; 
@@ -111,7 +123,8 @@ void List<T>::Clear()
 		delete ptr ; 
 		ptr=Head; 
 	}
-	tail=nullptr; 
+	tail=nullptr;
+	count = 0;
 }
 
 template<class T>
@@ -122,7 +135,8 @@ bool List<T>::GetFirst(T & item)
     {    Node<T>*ptr=Head; 
          item=Head->getItem(); 
          Head=Head->getNext();
-         delete ptr; 
+         delete ptr;
+		 count--;
          return true; 
     }
     return false ; 

@@ -11,9 +11,12 @@ class Priority_Queue
 {
 private:
 	PriorityNode<T>* frontptr; //pointer to the first element in the queue
+	int count;
 public:
 	Priority_Queue();
 	bool isEmpty() const ;
+	int getCount();
+	void Clear();
 	bool enqueue(const T& newEntry, int p); // insert to be sorted with respect to priority
 	bool dequeue(T& frntEntry);  //dequeue the highest priority in the queue
 	bool peekFront(T& frntEntry)  const; // return the highest priority node without deleting it from the queue
@@ -30,6 +33,13 @@ template <class T>
 Priority_Queue<T>::Priority_Queue()
 {
 	frontptr = NULL;
+	count = 0;
+}
+
+template <class T>
+int Priority_Queue<T>::getCount()
+{
+	return count;
 }
 
 /*
@@ -57,6 +67,7 @@ bool Priority_Queue<T>::enqueue(const T& newEntry, int p)
 {
 	PriorityNode<T>* trav = frontptr;	//traverse pointer
 	PriorityNode<T>* newNode = new PriorityNode<T>(newEntry, p);	// the node to insert
+	count++;
 	// case the queue is empty
 	if(!frontptr)
 	{
@@ -101,6 +112,7 @@ bool Priority_Queue<T>::dequeue(T& frntEntry)
 	if(isEmpty())
 		return false;
 	// queue is not empty remove the highest priority in the queue
+	count--;
 	PriorityNode<T>* nodeToDeletePtr = frontptr;
 	frntEntry = frontptr->getItem();
 	frontptr = frontptr->getNext();
@@ -125,7 +137,21 @@ bool Priority_Queue<T>::peekFront(T& frntEntry) const
 	frntEntry = frontptr->getItem();
 	return true;
 }
+
+template<class T>
+void Priority_Queue<T>::Clear()
+{
+	PriorityNode<T>* ptr = frontptr; 
+	while (frontptr != nullptr)
+	{
+		frontptr = frontptr->getNext();
+		delete ptr; 
+		ptr=frontptr; 
+	}
+	count = 0;
+}
 template <class T>
 Priority_Queue<T>::~Priority_Queue()
 {
+	Clear();
 }
