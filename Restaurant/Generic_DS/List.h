@@ -14,6 +14,7 @@ public:
 	bool IsEmpty();								//return true if Head points to nullptr
 	void Clear();								//delete all Nodes and set Head & tail to nullptr
 	Node<T>* Contain(T & );				// search for an item and return ptr to its node if found and nullptr if not found
+	bool GetFirst(T &);					//return first item and delete it from the list
 	~List();									//call Clear() fn 
 };
 
@@ -112,6 +113,21 @@ void List<T>::Clear()
 	}
 	tail=nullptr; 
 }
+
+template<class T>
+bool List<T>::GetFirst(T & item)
+{
+
+    if (Head!=nullptr)
+    {    Node<T>*ptr=Head; 
+         item=Head->getItem(); 
+         Head=Head->getNext();
+         delete ptr; 
+         return true; 
+    }
+    return false ; 
+}
+
 template<class T>
 List<T>::~List()
 {

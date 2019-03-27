@@ -19,11 +19,11 @@ void Restaurant::RunSimulation()
 {
 	pGUI = new GUI;
 	PROG_MODE	mode = pGUI->getGUIMode();
-		
+	ReadData();
 	switch (mode)	//Add a function for each mode in next phases
 	{
 	case MODE_INTR:
-
+		MODE_INTR_FN();	
 		break;
 	case MODE_STEP:
 		break;
@@ -91,28 +91,28 @@ void Restaurant::ReadData()
 //filling all normal motors
 	for(int i=0;i<NumMotNA;i++)
 	{
-		Motorcycle m(j,TYPE_NRM,SN,A_REG); 
+		Motorcycle* m = new Motorcycle(j,TYPE_NRM,SN,A_REG); 
 		Norm_Mtr_A.enqueue(m); 
 		j++;
 	}
 
 	for(int i=0;i<NumMotNB;i++)
 	{
-		Motorcycle m(j,TYPE_NRM,SN,B_REG);
+		Motorcycle* m = new Motorcycle(j,TYPE_NRM,SN,B_REG);
 		Norm_Mtr_B.enqueue(m);
 		j++;
 	}
 
 	for(int i=0;i<NumMotNC;i++)
 	{
-		Motorcycle m(j,TYPE_NRM,SN,C_REG); 
+		Motorcycle* m = new Motorcycle(j,TYPE_NRM,SN,C_REG); 
 		Norm_Mtr_C.enqueue(m);
 		j++;
 	}
 	
 	for(int i=0;i<NumMotND;i++)
 	{
-		Motorcycle m(j,TYPE_NRM,SN,D_REG);
+		Motorcycle* m = new Motorcycle(j,TYPE_NRM,SN,D_REG);
 		Norm_Mtr_D.enqueue(m);
 		j++;
 	}
@@ -120,28 +120,28 @@ void Restaurant::ReadData()
 //filling all frozen motors
 	for(int i=0;i<NumMotFA;i++)
 	{
-		Motorcycle m(j,TYPE_FROZ,SF,A_REG); 
+		Motorcycle* m = new Motorcycle(j,TYPE_FROZ,SF,A_REG); 
 		Froz_Mtr_A.enqueue(m); 
 		j++;
 	}
 
 	for(int i=0;i<NumMotFB;i++)
 	{
-		Motorcycle m(j,TYPE_FROZ,SF,B_REG);
+		Motorcycle* m = new Motorcycle(j,TYPE_FROZ,SF,B_REG);
 		Froz_Mtr_B.enqueue(m); 
 		j++;
 	}
 
 	for(int i=0;i<NumMotFC;i++)
 	{
-		Motorcycle m(j,TYPE_FROZ,SF,C_REG);
+		Motorcycle* m = new Motorcycle(j,TYPE_FROZ,SF,C_REG);
 		Froz_Mtr_C.enqueue(m); 
 		j++;
 	}
 	
 	for(int i=0;i<NumMotFD;i++)
 	{ 
-		Motorcycle m(j,TYPE_FROZ,SF,D_REG); 
+		Motorcycle* m = new Motorcycle(j,TYPE_FROZ,SF,D_REG); 
 		Froz_Mtr_D.enqueue(m);
 		j++;
 	}
@@ -149,28 +149,28 @@ void Restaurant::ReadData()
 //filling all VIP motors
 	for(int i=0;i<NumMotVA;i++)
 	{
-		Motorcycle m(j,TYPE_VIP,SV,A_REG);
+		Motorcycle* m = new Motorcycle(j,TYPE_VIP,SV,A_REG);
 		VIP_Mtr_A.enqueue(m); 
 		j++;
 	}
 
 	for(int i=0;i<NumMotVB;i++)
 	{
-		Motorcycle m(j,TYPE_VIP,SV,B_REG);
+		Motorcycle* m = new Motorcycle(j,TYPE_VIP,SV,B_REG);
 		VIP_Mtr_B.enqueue(m);
 		j++;
 	}
 
 	for(int i=0;i<NumMotVC;i++)
 	{
-		Motorcycle m(j,TYPE_VIP,SV,C_REG); 
+		Motorcycle* m = new Motorcycle(j,TYPE_VIP,SV,C_REG);
 		VIP_Mtr_C.enqueue(m); 
 		j++;
 	}
 	
 	for(int i=0;i<NumMotVD;i++)
 	{
-		Motorcycle m(j,TYPE_VIP,SV,D_REG);
+		Motorcycle* m = new Motorcycle(j,TYPE_VIP,SV,D_REG);
 		VIP_Mtr_D.enqueue(m);
 		j++;
 	}
@@ -190,103 +190,77 @@ if(s=="R")
 	 int id,dst,mon; string reg;
 	 infile>>id; infile>>dst; infile>>mon; infile>>reg;
 	 
-	 if(typ=="N") 
-	 {
-	if(reg=="A") 
-	{ 
-		Order o(id,TYPE_NRM,A_REG,dst,mon);
-		Norm_Ord_A.InsertEnd(o);
-		ArrivalEvent ariv(TS,id,TYPE_NRM,A_REG); 
-		EventsQueue.enqueue(&ariv); 
-	}
-	else if(reg=="B")
-	{ 
-		Order o(id,TYPE_NRM,B_REG,dst,mon);
-		Norm_Ord_B.InsertEnd(o); 
-		ArrivalEvent ariv(TS,id,TYPE_NRM,B_REG); 
-		EventsQueue.enqueue(&ariv);
-	}
-	else if(reg=="C")
-	{ 
-		Order o(id,TYPE_NRM,C_REG,dst,mon);
-		Norm_Ord_C.InsertEnd(o);
-		ArrivalEvent ariv(TS,id,TYPE_NRM,C_REG); 
-		EventsQueue.enqueue(&ariv);
-	}
-	else if(reg=="D")
-	{ 
-		Order o(id,TYPE_NRM,D_REG,dst,mon);
-		Norm_Ord_D.InsertEnd(o); 
-		ArrivalEvent ariv(TS,id,TYPE_NRM,D_REG);
-		EventsQueue.enqueue(&ariv);
-	}	 
-	 
-	 }
-	 else if(typ=="F") 
-	 {
+	if(typ=="N") 
+	{
 		if(reg=="A") 
 		{ 
-			Order o(id,TYPE_FROZ,A_REG,dst,mon);
-			Frz_Ord_A.enqueue(o);
-			ArrivalEvent ariv(TS,id,TYPE_FROZ,A_REG); 
-			EventsQueue.enqueue(&ariv);
+		
+			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_NRM,A_REG); 
+			EventsQueue.enqueue(newEvent); 
 		}
 		else if(reg=="B")
 		{ 
-			Order o(id,TYPE_FROZ,B_REG,dst,mon); 
-			Frz_Ord_B.enqueue(o); 
-			ArrivalEvent ariv(TS,id,TYPE_FROZ,B_REG); 
-			EventsQueue.enqueue(&ariv);
+			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_NRM,B_REG); 
+			EventsQueue.enqueue(newEvent);
 		}
-		else if(reg=="C") 
+		else if(reg=="C")
 		{ 
-			Order o(id,TYPE_FROZ,C_REG,dst,mon);
-			Frz_Ord_C.enqueue(o);
-			ArrivalEvent ariv(TS,id,TYPE_FROZ,C_REG);
-			EventsQueue.enqueue(&ariv);
-		}
-		else if(reg=="D") 
-		{ 
-			Order o(id,TYPE_FROZ,D_REG,dst,mon);
-			Frz_Ord_D.enqueue(o); 
-			ArrivalEvent ariv(TS,id,TYPE_FROZ,D_REG);
-			EventsQueue.enqueue(&ariv);
-		}		 
-	 }
-	 else if(typ=="V") 
-	 {
-		int prio=100*(mon/(dst*TS));
-		 if(reg=="A")
-		 { 
-			 Order o(id,TYPE_VIP,A_REG,dst,mon); 
-			 VIP_ord_A.enqueue(o,prio);
-			 ArrivalEvent ariv(TS,id,TYPE_VIP,A_REG); 
-			 EventsQueue.enqueue(&ariv);
-		 }
-		else if(reg=="B")
-		{
-			Order o(id,TYPE_VIP,B_REG,dst,mon);
-			VIP_ord_B.enqueue(o,prio); 
-			ArrivalEvent ariv(TS,id,TYPE_VIP,B_REG);
-			EventsQueue.enqueue(&ariv);
-		 }
-		else if(reg=="C") 
-		{
-			Order o(id,TYPE_VIP,C_REG,dst,mon); 
-			VIP_ord_C.enqueue(o,prio); 
-			ArrivalEvent ariv(TS,id,TYPE_VIP,C_REG); 
-			EventsQueue.enqueue(&ariv);
+			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_NRM,C_REG); 
+			EventsQueue.enqueue(newEvent);
 		}
 		else if(reg=="D")
 		{ 
-			Order o(id,TYPE_VIP,D_REG,dst,mon);
-			VIP_ord_D.enqueue(o,prio); 
-			ArrivalEvent ariv(TS,id,TYPE_VIP,D_REG); 
-			EventsQueue.enqueue(&ariv);
-		}     
-	 }
- 
-}
+			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_NRM,D_REG); 
+			EventsQueue.enqueue(newEvent);
+		}
+	}
+	else if(typ=="F") 
+	{
+		if(reg=="A") 
+		{ 
+		
+			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_FROZ,A_REG); 
+			EventsQueue.enqueue(newEvent); 
+		}
+		else if(reg=="B")
+		{ 
+			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_FROZ,B_REG); 
+			EventsQueue.enqueue(newEvent);
+		}
+		else if(reg=="C")
+		{ 
+			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_FROZ,C_REG); 
+			EventsQueue.enqueue(newEvent);
+		}
+		else if(reg=="D")
+		{ 
+			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_FROZ,D_REG); 
+			EventsQueue.enqueue(newEvent);
+		}		 
+	}
+	else if(typ=="V") 
+	{
+		if(reg=="A") 
+		{ 
+			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_VIP,A_REG); 
+			EventsQueue.enqueue(newEvent); 
+		}
+		else if(reg=="B")
+		{ 
+			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_VIP,B_REG); 
+			EventsQueue.enqueue(newEvent);
+		}
+		else if(reg=="C")
+		{ 
+			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_VIP,C_REG); 
+			EventsQueue.enqueue(newEvent);
+		}
+		else if(reg=="D")
+		{ 
+			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_VIP,D_REG); 
+			EventsQueue.enqueue(newEvent);
+		}
+	}
 if(s=="P")
      {
 		 int ts,id;
@@ -294,20 +268,21 @@ if(s=="P")
 		 infile>>ts;
 		 infile>>id; 
 		 infile>>exmon; 
-		 PromotionEvent pe(ts,id,exmon); 
-		 EventsQueue.enqueue(&pe);
+		 Event* newEvent = new PromotionEvent(ts,id,exmon); 
+		 EventsQueue.enqueue(newEvent);
 	 }
 else if(s=="X")
      {
 		 int ts,id; 
 		 infile>>ts; 
 		 infile>>id; 
-		 CancellationEvent ce(ts,id);
-		 EventsQueue.enqueue(&ce);
+		 Event* newEvent = new CancellationEvent(ts,id); 
+		 EventsQueue.enqueue(newEvent);
      }
 
  }
 
+}
 }
 
 
@@ -412,3 +387,152 @@ Order* Restaurant::getDemoOrder()
 
 
 /// ==> end of DEMO-related function
+
+void Restaurant::MODE_INTR_FN()
+{
+	Order* pOrd;
+	int current_time_step=1;
+	while(!EventsQueue.isEmpty())
+	{
+		char timestep[10];
+		itoa(current_time_step,timestep,10);	
+		pGUI->PrintMessage(timestep);
+
+		ExecuteEvents(current_time_step);
+
+		//vip order  for all areas
+		while (VIP_ord_A.dequeue(pOrd))
+		{
+			pGUI->AddOrderForDrawing(pOrd);
+		}
+		while (VIP_ord_B.dequeue(pOrd))
+		{
+			pGUI->AddOrderForDrawing(pOrd);
+		}
+		while (VIP_ord_C.dequeue(pOrd))
+		{
+			pGUI->AddOrderForDrawing(pOrd);
+		}
+		while (VIP_ord_D.dequeue(pOrd))
+		{
+			pGUI->AddOrderForDrawing(pOrd);
+		}
+
+		//frozen order  for all areas
+		while (Frz_Ord_A.dequeue(pOrd))
+		{
+			pGUI->AddOrderForDrawing(pOrd);
+		}
+		while (Frz_Ord_B.dequeue(pOrd))
+		{
+			pGUI->AddOrderForDrawing(pOrd);
+		}
+		while (Frz_Ord_C.dequeue(pOrd))
+		{
+			pGUI->AddOrderForDrawing(pOrd);
+		}
+		while (Frz_Ord_D.dequeue(pOrd))
+		{
+			pGUI->AddOrderForDrawing(pOrd);
+		}
+
+
+		//normal orders for all areas
+		while (Norm_Ord_A.GetFirst(pOrd))
+		{
+			pGUI->AddOrderForDrawing(pOrd);
+		}
+		while (Norm_Ord_B.GetFirst(pOrd))
+		{
+			pGUI->AddOrderForDrawing(pOrd);
+		}
+		while (Norm_Ord_C.GetFirst(pOrd))
+		{
+			pGUI->AddOrderForDrawing(pOrd);
+
+		}
+		while (Norm_Ord_D.GetFirst(pOrd))
+		{
+			pGUI->AddOrderForDrawing(pOrd);
+		}
+		
+		pGUI->UpdateInterface();
+		pGUI->ResetDrawingList();
+		pGUI->waitForClick(); 
+		current_time_step++;
+	}
+
+
+}
+
+void Restaurant::AddOrders(Order*  po)
+{
+	switch (po->GetType())
+	{
+	case TYPE_NRM:
+
+		switch (po->GetRegion())
+		{
+		case A_REG:
+			Norm_Ord_A.InsertEnd(po);
+			break;
+		case B_REG:
+			Norm_Ord_B.InsertEnd(po);
+			break;
+		case C_REG:
+			Norm_Ord_C.InsertEnd(po);
+			break;
+		case D_REG:
+			Norm_Ord_D.InsertEnd(po);
+			break;
+		default:
+			break;
+		}
+		break;
+	case TYPE_VIP:
+		{
+			int priority = 1000*(po->GetMoney()/(po->GetDistance()*po->GetArrTime()));
+			switch (po->GetRegion())
+			{
+			case A_REG:
+				VIP_ord_A.enqueue(po, priority);
+				break;
+			case B_REG:
+				VIP_ord_B.enqueue(po, priority);
+				break;
+			case C_REG:
+				VIP_ord_C.enqueue(po, priority);
+				break;
+			case D_REG:
+				VIP_ord_D.enqueue(po, priority);
+				break;
+			default:
+				break;
+			}
+			break;
+		}
+
+	case TYPE_FROZ:
+		
+		switch (po->GetRegion())
+		{
+		case A_REG:
+			Frz_Ord_A.enqueue(po);
+			break;
+		case B_REG:
+			Frz_Ord_B.enqueue(po);
+			break;
+		case C_REG:
+			Frz_Ord_C.enqueue(po);
+			break;
+		case D_REG:
+			Frz_Ord_D.enqueue(po);
+			break;
+		default:
+			break;
+		}
+		break;
+	default:
+		break;
+	}
+}

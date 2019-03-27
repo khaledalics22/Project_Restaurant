@@ -107,7 +107,6 @@ bool Priority_Queue<T>::dequeue(T& frntEntry)
 	delete nodeToDeletePtr;
 	return true;
 }
-
 /*
 Function: peekFront
 gets the highest priority of this queue. The operation does not modify the queue.

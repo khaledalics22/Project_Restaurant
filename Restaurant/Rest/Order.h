@@ -18,14 +18,14 @@ protected:
 	int ArrTime, ServTime, FinishTime, WaitingTime, AssigningTime;	//arrival, service start, and finish times
 	
 public:
-	Order(int ID, ORD_TYPE r_Type, REGION r_region, int dis, double cost);
+	Order(int ID, ORD_TYPE r_Type, REGION r_region, int dis, double cost, int time);
 	Order(int ID, ORD_TYPE r_Type, REGION r_region);
 	Order();
 	void SetID(int id);
 	int GetID();
 
 	void SetType(ORD_TYPE T);
-	int GetType() const;
+	ORD_TYPE GetType() const;
 
 	void SetRegion(REGION R);
 	REGION GetRegion() const;

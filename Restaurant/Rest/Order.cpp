@@ -1,6 +1,6 @@
 #include "Order.h"
 
-Order::Order(int id, ORD_TYPE r_Type, REGION r_region, int dis, double cost)
+Order::Order(int id, ORD_TYPE r_Type, REGION r_region, int dis, double cost, int time)
 {
 
 	SetID(id);	//1<ID<999
@@ -10,6 +10,7 @@ Order::Order(int id, ORD_TYPE r_Type, REGION r_region, int dis, double cost)
 	SetMoney(cost);
 	SetInservice(false);
 	SetServiced(false);
+	SetArrTime(time);
 }
 
 Order::Order(int id, ORD_TYPE r_Type, REGION r_region)
@@ -42,7 +43,7 @@ void Order::SetType(ORD_TYPE T)
 {
 	type = T;
 }
-int Order::GetType() const
+ORD_TYPE Order::GetType() const
 {
 	return type;
 }
