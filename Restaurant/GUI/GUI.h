@@ -71,7 +71,6 @@ private:
 	// 
 	// TODO: Add more members if needed
 	//
-
 	void DrawSingleOrder(Order* pO, int RegionCount) const;		//draws ONE order 
 	void DrawOrders() const;		//drwas ALL orders in OrdListForDrawing
 
@@ -92,13 +91,11 @@ public:
 	string GetString() const ; // reads a string (keyboard input) from the user
 
 	// Output Functions  ---------------------------
-	void PrintMessage(string msg) const; // prints a message in the status bar
-
+	void PrintMessage(string msg, int y=0 , int x=10) const; // prints a message in the status bar
 
 	void UpdateInterface();
 	void AddOrderForDrawing(Order* pOrd);	//Adds a new order to the drawing list
 	void ResetDrawingList();		//resets drawing list (should be called every timestep after drawing)
-
 	PROG_MODE getGUIMode() const;			//returns the mode of the program
 
 };

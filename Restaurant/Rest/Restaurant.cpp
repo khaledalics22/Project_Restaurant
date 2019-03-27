@@ -401,64 +401,121 @@ void Restaurant::MODE_INTR_FN()
 		ExecuteEvents(current_time_step);
 
 		//vip order  for all areas
-		while (VIP_ord_A.dequeue(pOrd))
+		int priority; 
+		for  (int i=0; i<VIP_ord_A.getCount();i++)
 		{
+			VIP_ord_A.dequeue(pOrd,priority);
 			pGUI->AddOrderForDrawing(pOrd);
+			VIP_ord_A.enqueue(pOrd,priority);
+
 		}
-		while (VIP_ord_B.dequeue(pOrd))
+		for  (int i=0; i<VIP_ord_B.getCount();i++)
 		{
+			VIP_ord_B.dequeue(pOrd,priority);
 			pGUI->AddOrderForDrawing(pOrd);
+			VIP_ord_B.enqueue(pOrd,priority);
+
 		}
-		while (VIP_ord_C.dequeue(pOrd))
+		for  (int i=0; i<VIP_ord_C.getCount();i++)
 		{
+			VIP_ord_C.dequeue(pOrd,priority);
 			pGUI->AddOrderForDrawing(pOrd);
+			VIP_ord_C.enqueue(pOrd,priority);
+
 		}
-		while (VIP_ord_D.dequeue(pOrd))
+		for  (int i=0; i<VIP_ord_D.getCount();i++)
 		{
+			VIP_ord_D.dequeue(pOrd,priority);
 			pGUI->AddOrderForDrawing(pOrd);
+			VIP_ord_D.enqueue(pOrd,priority);
+
 		}
 
 		//frozen order  for all areas
-		while (Frz_Ord_A.dequeue(pOrd))
+		for  (int i=0; i<Frz_Ord_A.getCount();i++)
 		{
+			Frz_Ord_A.dequeue(pOrd);
 			pGUI->AddOrderForDrawing(pOrd);
+			Frz_Ord_A.enqueue(pOrd);
+
 		}
-		while (Frz_Ord_B.dequeue(pOrd))
+		for  (int i=0; i<Frz_Ord_B.getCount();i++)
 		{
+			Frz_Ord_B.dequeue(pOrd);
 			pGUI->AddOrderForDrawing(pOrd);
+			Frz_Ord_B.enqueue(pOrd);
+
 		}
-		while (Frz_Ord_C.dequeue(pOrd))
+		for  (int i=0; i<Frz_Ord_C.getCount();i++)
 		{
+			Frz_Ord_C.dequeue(pOrd);
 			pGUI->AddOrderForDrawing(pOrd);
+			Frz_Ord_C.enqueue(pOrd);
+
 		}
-		while (Frz_Ord_D.dequeue(pOrd))
+		for  (int i=0; i<Frz_Ord_D.getCount();i++)
 		{
+			Frz_Ord_D.dequeue(pOrd);
 			pGUI->AddOrderForDrawing(pOrd);
+			Frz_Ord_D.enqueue(pOrd);
+
 		}
 
 
 		//normal orders for all areas
-		while (Norm_Ord_A.GetFirst(pOrd))
+		for  (int i=0; i<Norm_Ord_A.getCount();i++)
 		{
+			Norm_Ord_A.GetFirst(pOrd);
 			pGUI->AddOrderForDrawing(pOrd);
-		}
-		while (Norm_Ord_B.GetFirst(pOrd))
-		{
-			pGUI->AddOrderForDrawing(pOrd);
-		}
-		while (Norm_Ord_C.GetFirst(pOrd))
-		{
-			pGUI->AddOrderForDrawing(pOrd);
+			Norm_Ord_A.InsertEnd(pOrd);
 
 		}
-		while (Norm_Ord_D.GetFirst(pOrd))
+		for  (int i=0; i<Norm_Ord_B.getCount();i++)
 		{
+			Norm_Ord_B.GetFirst(pOrd);
 			pGUI->AddOrderForDrawing(pOrd);
+			Norm_Ord_B.InsertEnd(pOrd);
+
 		}
-		
+		for  (int i=0; i<Norm_Ord_C.getCount();i++)
+		{
+			Norm_Ord_C.GetFirst(pOrd);
+			pGUI->AddOrderForDrawing(pOrd);
+			Norm_Ord_C.InsertEnd(pOrd);
+
+
+		}
+		for  (int i=0; i<Norm_Ord_D.getCount();i++)
+		{
+			Norm_Ord_D.GetFirst(pOrd);
+			pGUI->AddOrderForDrawing(pOrd);
+			Norm_Ord_D.InsertEnd(pOrd);
+
+		}
+/*		
+		pGUI->PrintMessage("Number of Active Orders in Region A = ",1);
+		int count=VIP_ord_A.getCount()+Norm_Ord_A.getCount()+Frz_Ord_A.getCount();
+		itoa(count,timestep,10);	
+		pGUI->PrintMessage(timestep,1,40);
+		pGUI->PrintMessage("\nNumber of Active Orders in Region B = ",2);
+		count=VIP_ord_B.getCount()+Norm_Ord_B.getCount()+Frz_Ord_B.getCount();
+		itoa(count,timestep,10);	
+		pGUI->PrintMessage(timestep,2,40);
+
+		pGUI->PrintMessage("\nNumber of Active Orders in Region C = ",3);
+		count=VIP_ord_C.getCount()+Norm_Ord_C.getCount()+Frz_Ord_C.getCount();
+		itoa(count,timestep,10);	
+		pGUI->PrintMessage(timestep,3,40);
+
+		pGUI->PrintMessage("\nNumber of Active Orders in Region D = ",4);
+		count=VIP_ord_D.getCount()+Norm_Ord_D.getCount()+Frz_Ord_D.getCount();
+		itoa(count,timestep,10);	
+		pGUI->PrintMessage(timestep,4,40);
+*/
 		pGUI->UpdateInterface();
 		pGUI->ResetDrawingList();
 		pGUI->waitForClick(); 
+	
 		current_time_step++;
 	}
 
