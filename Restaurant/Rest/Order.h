@@ -58,7 +58,7 @@ public:
 	
 	void SetWaitingTime(int arrival, int assigning);
 	int GetWaitingTime() const;
-
+	bool operator==(Order other); 
 	virtual ~Order();
 };
 

@@ -158,3 +158,8 @@ int Order::GetWaitingTime() const
 {
 	return WaitingTime;
 }
+
+bool Order::operator==(Order other)
+{
+	return ID == other.ID;
+}

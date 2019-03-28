@@ -79,6 +79,7 @@ public:
 	void MODE_INTR_FN();
 	void AddOrders(Order* po);
 	void ReadData();
+	void CancelOrder(int id);
 };
 
 #endif

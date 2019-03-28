@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <string.h>
 using namespace std;
 
 #include "Restaurant.h"
@@ -181,108 +182,108 @@ void Restaurant::ReadData()
 	string s;
 //receiving orders and events
 while(infile>>s)
- {
-if(s=="R")
 {
+	if(s=="R")
+	{
 	 
-	 int TS; infile>>TS;
-	 string typ; infile>>typ;
-	 int id,dst,mon; string reg;
-	 infile>>id; infile>>dst; infile>>mon; infile>>reg;
+		 int TS; infile>>TS;
+		 string typ; infile>>typ;
+		 int id,dst,mon; string reg;
+		 infile>>id; infile>>dst; infile>>mon; infile>>reg;
 	 
-	if(typ=="N") 
-	{
-		if(reg=="A") 
-		{ 
+		if(typ=="N") 
+		{
+			if(reg=="A") 
+			{ 
 		
-			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_NRM,A_REG); 
-			EventsQueue.enqueue(newEvent); 
+				Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_NRM,A_REG); 
+				EventsQueue.enqueue(newEvent); 
+			}
+			else if(reg=="B")
+			{ 
+				Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_NRM,B_REG); 
+				EventsQueue.enqueue(newEvent);
+			}
+			else if(reg=="C")
+			{ 
+				Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_NRM,C_REG); 
+				EventsQueue.enqueue(newEvent);
+			}
+			else if(reg=="D")
+			{ 
+				Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_NRM,D_REG); 
+				EventsQueue.enqueue(newEvent);
+			}
 		}
-		else if(reg=="B")
-		{ 
-			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_NRM,B_REG); 
-			EventsQueue.enqueue(newEvent);
-		}
-		else if(reg=="C")
-		{ 
-			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_NRM,C_REG); 
-			EventsQueue.enqueue(newEvent);
-		}
-		else if(reg=="D")
-		{ 
-			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_NRM,D_REG); 
-			EventsQueue.enqueue(newEvent);
-		}
-	}
-	else if(typ=="F") 
-	{
-		if(reg=="A") 
-		{ 
+		else if(typ=="F") 
+		{
+			if(reg=="A") 
+			{ 
 		
-			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_FROZ,A_REG); 
-			EventsQueue.enqueue(newEvent); 
+				Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_FROZ,A_REG); 
+				EventsQueue.enqueue(newEvent); 
+			}
+			else if(reg=="B")
+			{ 
+				Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_FROZ,B_REG); 
+				EventsQueue.enqueue(newEvent);
+			}
+			else if(reg=="C")
+			{ 
+				Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_FROZ,C_REG); 
+				EventsQueue.enqueue(newEvent);
+			}
+			else if(reg=="D")
+			{ 
+				Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_FROZ,D_REG); 
+				EventsQueue.enqueue(newEvent);
+			}		 
 		}
-		else if(reg=="B")
-		{ 
-			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_FROZ,B_REG); 
-			EventsQueue.enqueue(newEvent);
+		else if(typ=="V") 
+		{
+			if(reg=="A") 
+			{ 
+				Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_VIP,A_REG); 
+				EventsQueue.enqueue(newEvent); 
+			}
+			else if(reg=="B")
+			{ 
+				Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_VIP,B_REG); 
+				EventsQueue.enqueue(newEvent);
+			}
+			else if(reg=="C")
+			{ 
+				Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_VIP,C_REG); 
+				EventsQueue.enqueue(newEvent);
+			}
+			else if(reg=="D")
+			{ 
+				Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_VIP,D_REG); 
+				EventsQueue.enqueue(newEvent);
+			}
 		}
-		else if(reg=="C")
-		{ 
-			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_FROZ,C_REG); 
-			EventsQueue.enqueue(newEvent);
-		}
-		else if(reg=="D")
-		{ 
-			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_FROZ,D_REG); 
-			EventsQueue.enqueue(newEvent);
-		}		 
 	}
-	else if(typ=="V") 
-	{
-		if(reg=="A") 
-		{ 
-			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_VIP,A_REG); 
-			EventsQueue.enqueue(newEvent); 
-		}
-		else if(reg=="B")
-		{ 
-			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_VIP,B_REG); 
-			EventsQueue.enqueue(newEvent);
-		}
-		else if(reg=="C")
-		{ 
-			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_VIP,C_REG); 
-			EventsQueue.enqueue(newEvent);
-		}
-		else if(reg=="D")
-		{ 
-			Event* newEvent = new ArrivalEvent(TS, id, dst, mon,TYPE_VIP,D_REG); 
-			EventsQueue.enqueue(newEvent);
-		}
+	else if(s=="P")
+    {
+		int ts,id;
+		double exmon;
+		infile>>ts;
+		infile>>id; 
+		infile>>exmon; 
+		Event* newEvent = new PromotionEvent(ts,id,exmon); 
+		EventsQueue.enqueue(newEvent);
 	}
-if(s=="P")
-     {
-		 int ts,id;
-		 double exmon;
-		 infile>>ts;
-		 infile>>id; 
-		 infile>>exmon; 
-		 Event* newEvent = new PromotionEvent(ts,id,exmon); 
-		 EventsQueue.enqueue(newEvent);
-	 }
-else if(s=="X")
-     {
-		 int ts,id; 
-		 infile>>ts; 
-		 infile>>id; 
-		 Event* newEvent = new CancellationEvent(ts,id); 
-		 EventsQueue.enqueue(newEvent);
-     }
+	else if(s=="X")
+    {
+		int ts,id; 
+		infile>>ts; 
+		infile>>id; 
+		Event* newEvent = new CancellationEvent(ts,id); 
+		EventsQueue.enqueue(newEvent);
+    }
 
  }
 
-}
 }
 
 
@@ -396,7 +397,7 @@ void Restaurant::MODE_INTR_FN()
 	{
 		char timestep[10];
 		itoa(current_time_step,timestep,10);	
-		pGUI->PrintMessage(timestep);
+		//pGUI->PrintMessage(timestep);
 
 		ExecuteEvents(current_time_step);
 
@@ -409,6 +410,7 @@ void Restaurant::MODE_INTR_FN()
 			VIP_ord_A.enqueue(pOrd,priority);
 
 		}
+
 		for  (int i=0; i<VIP_ord_B.getCount();i++)
 		{
 			VIP_ord_B.dequeue(pOrd,priority);
@@ -492,30 +494,53 @@ void Restaurant::MODE_INTR_FN()
 			Norm_Ord_D.InsertEnd(pOrd);
 
 		}
-/*		
-		pGUI->PrintMessage("Number of Active Orders in Region A = ",1);
-		int count=VIP_ord_A.getCount()+Norm_Ord_A.getCount()+Frz_Ord_A.getCount();
-		itoa(count,timestep,10);	
-		pGUI->PrintMessage(timestep,1,40);
-		pGUI->PrintMessage("\nNumber of Active Orders in Region B = ",2);
-		count=VIP_ord_B.getCount()+Norm_Ord_B.getCount()+Frz_Ord_B.getCount();
-		itoa(count,timestep,10);	
-		pGUI->PrintMessage(timestep,2,40);
+		
+		string S1, S2, S3, S4; 
+		S1 ="Region A:     Orders: VIP "+ to_string(VIP_ord_A.getCount()) 
+				+ "     Frozen " + to_string(Frz_Ord_A.getCount()) 
+				+ "     Normal " +  to_string(Norm_Ord_A.getCount())
+				+ "        Motors:   VIP "+ to_string(VIP_Mtr_A.getCount())
+				+ "     Frozen " + to_string(Froz_Mtr_A.getCount())
+				+ "     Normal " +  to_string(Norm_Mtr_A.getCount());
 
-		pGUI->PrintMessage("\nNumber of Active Orders in Region C = ",3);
-		count=VIP_ord_C.getCount()+Norm_Ord_C.getCount()+Frz_Ord_C.getCount();
-		itoa(count,timestep,10);	
-		pGUI->PrintMessage(timestep,3,40);
-
-		pGUI->PrintMessage("\nNumber of Active Orders in Region D = ",4);
-		count=VIP_ord_D.getCount()+Norm_Ord_D.getCount()+Frz_Ord_D.getCount();
-		itoa(count,timestep,10);	
-		pGUI->PrintMessage(timestep,4,40);
-*/
+		S2 ="Region B:     Orders: VIP "+ to_string(VIP_ord_B.getCount()) 
+				+ "     Frozen " + to_string(Frz_Ord_B.getCount()) 
+				+ "     Normal " +  to_string(Norm_Ord_B.getCount())
+				+ "        Motors:   VIP "+ to_string(VIP_Mtr_B.getCount())
+				+ "     Frozen " + to_string(Froz_Mtr_B.getCount())
+				+ "     Normal " +  to_string(Norm_Mtr_B.getCount());
+		
+		S3 ="Region C:     Orders: VIP "+ to_string(VIP_ord_C.getCount()) 
+				+ "     Frozen " + to_string(Frz_Ord_C.getCount()) 
+				+ "     Normal " +  to_string(Norm_Ord_C.getCount())
+				+ "        Motors:   VIP " + to_string(VIP_Mtr_C.getCount())
+				+ "     Frozen " + to_string(Froz_Mtr_C.getCount())
+				+ "     Normal " +  to_string(Norm_Mtr_C.getCount());
+		
+		S4 ="Region D:     Orders: VIP "+ to_string(VIP_ord_D.getCount()) 
+				+ "     Frozen " + to_string(Frz_Ord_D.getCount()) 
+				+ "     Normal " +  to_string(Norm_Ord_D.getCount())
+				+ "        Motors:   VIP "+ to_string(VIP_Mtr_D.getCount())
+				+ "     Frozen " + to_string(Froz_Mtr_A.getCount())
+				+ "     Normal " +  to_string(Norm_Mtr_A.getCount());
+		pGUI->PrintMessage(timestep, S1, S2, S3, S4);
 		pGUI->UpdateInterface();
 		pGUI->ResetDrawingList();
 		pGUI->waitForClick(); 
-	
+		
+		VIP_ord_A.dequeue(pOrd,priority);
+		VIP_ord_B.dequeue(pOrd,priority);
+		VIP_ord_C.dequeue(pOrd,priority);
+		VIP_ord_D.dequeue(pOrd,priority);
+		Norm_Ord_A.GetFirst(pOrd);
+		Norm_Ord_B.GetFirst(pOrd);
+		Norm_Ord_C.GetFirst(pOrd);
+		Norm_Ord_D.GetFirst(pOrd);
+		Frz_Ord_A.dequeue(pOrd);
+		Frz_Ord_B.dequeue(pOrd);
+		Frz_Ord_C.dequeue(pOrd);
+		Frz_Ord_D.dequeue(pOrd);
+
 		current_time_step++;
 	}
 
@@ -591,5 +616,53 @@ void Restaurant::AddOrders(Order*  po)
 		break;
 	default:
 		break;
+	}
+}
+
+void Restaurant::CancelOrder(int id)
+{
+	Order* pOrd;
+	bool found = false;
+	for  (int i=0; i<Norm_Ord_A.getCount();i++)
+	{
+		Norm_Ord_A.GetFirst(pOrd);
+		if(pOrd->GetID() != id)
+			Norm_Ord_A.InsertEnd(pOrd);
+		else
+			found = true;
+	}
+	
+	if(found)
+		return;
+	
+	for  (int i=0; i<Norm_Ord_B.getCount();i++)
+	{
+		Norm_Ord_B.GetFirst(pOrd);
+		if(pOrd->GetID() != id)
+			Norm_Ord_B.InsertEnd(pOrd);
+		else
+			found = true;
+	}
+	
+	if(found)
+		return;
+	
+	for  (int i=0; i<Norm_Ord_C.getCount();i++)
+	{
+		Norm_Ord_C.GetFirst(pOrd);
+		if(pOrd->GetID() != id)
+			Norm_Ord_C.InsertEnd(pOrd);
+		else
+			found = true;
+	}
+
+	if(found)
+		return;
+
+	for  (int i=0; i<Norm_Ord_D.getCount();i++)
+	{
+		Norm_Ord_D.GetFirst(pOrd);
+		if(pOrd->GetID() != id)
+			Norm_Ord_D.InsertEnd(pOrd);
 	}
 }
