@@ -70,7 +70,7 @@ Restaurant::~Restaurant()
 void Restaurant::ReadData()
 {
 	ifstream infile;
-	infile.open("InputFile.txt");
+	infile.open("InputFile3.txt");
 //receiving speeds	
 	int SN,SF,SV;
 	infile>>SN; infile>>SF; infile>>SV;
@@ -521,8 +521,8 @@ void Restaurant::MODE_INTR_FN()
 				+ "     Frozen " + to_string(Frz_Ord_D.getCount()) 
 				+ "     Normal " +  to_string(Norm_Ord_D.getCount())
 				+ "        Motors:   VIP "+ to_string(VIP_Mtr_D.getCount())
-				+ "     Frozen " + to_string(Froz_Mtr_A.getCount())
-				+ "     Normal " +  to_string(Norm_Mtr_A.getCount());
+				+ "     Frozen " + to_string(Froz_Mtr_D.getCount())
+				+ "     Normal " +  to_string(Norm_Mtr_D.getCount());
 		pGUI->PrintMessage(timestep, S1, S2, S3, S4);
 		pGUI->UpdateInterface();
 		pGUI->ResetDrawingList();

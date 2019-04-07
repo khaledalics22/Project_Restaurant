@@ -266,5 +266,11 @@
     <Text Include="InputFile.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="InputFile2.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="InputFile3.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
