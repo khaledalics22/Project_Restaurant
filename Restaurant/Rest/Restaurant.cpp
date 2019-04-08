@@ -84,7 +84,7 @@ Restaurant::~Restaurant()
 void Restaurant::ReadData()
 {
 	ifstream infile;
-	infile.open("InputFile2.txt");
+	infile.open("InputFile.txt");
 //receiving speeds	
 	int SN,SF,SV;
 	infile>>SN; infile>>SF; infile>>SV;
