@@ -674,7 +674,7 @@ void Restaurant::AddOrders(Order*  po)
 		break;
 	}
 }
-void Restaurant::AddMotorcycle(Motorcycle *po, int extraspeed)
+void Restaurant::AddMotorcycle(Motorcycle *po, int priority)
 {
 	switch (po->GetType())
 	{
@@ -682,48 +682,48 @@ void Restaurant::AddMotorcycle(Motorcycle *po, int extraspeed)
 		switch (po->GetRegion())
 		{
 		case A_REG:
-			Norm_Mtr_A.enqueue(po, extraspeed);
+			Norm_Mtr_A.enqueue(po, priority);
 			break;
 		case B_REG:
-			Norm_Mtr_B.enqueue(po, extraspeed);
+			Norm_Mtr_B.enqueue(po, priority);
 			break;
 		case C_REG:
-			Norm_Mtr_C.enqueue(po, extraspeed);
+			Norm_Mtr_C.enqueue(po, priority);
 			break;
 		case D_REG:
-			Norm_Mtr_D.enqueue(po, extraspeed);
+			Norm_Mtr_D.enqueue(po, priority);
 			break;
 		}
 	case TYPE_FROZ:
 		switch (po->GetRegion())
 		{
 		case A_REG:
-			Froz_Mtr_A.enqueue(po, extraspeed);
+			Froz_Mtr_A.enqueue(po, priority);
 			break;
 		case B_REG:
-			Froz_Mtr_B.enqueue(po, extraspeed);
+			Froz_Mtr_B.enqueue(po, priority);
 			break;
 		case C_REG:
-			Froz_Mtr_C.enqueue(po, extraspeed);
+			Froz_Mtr_C.enqueue(po, priority);
 			break;
 		case D_REG:
-			Froz_Mtr_D.enqueue(po, extraspeed);
+			Froz_Mtr_D.enqueue(po, priority);
 			break;
 		}
 	case TYPE_VIP:
 		switch (po->GetRegion())
 		{
 		case A_REG:
-			VIP_Mtr_A.enqueue(po, extraspeed);
+			VIP_Mtr_A.enqueue(po, priority);
 			break;
 		case B_REG:
-			VIP_Mtr_B.enqueue(po, extraspeed);
+			VIP_Mtr_B.enqueue(po, priority);
 			break;
 		case C_REG:
-			VIP_Mtr_C.enqueue(po, extraspeed);
+			VIP_Mtr_C.enqueue(po, priority);
 			break;
 		case D_REG:
-			VIP_Mtr_D.enqueue(po, extraspeed);
+			VIP_Mtr_D.enqueue(po, priority);
 			break;
 		}
 
