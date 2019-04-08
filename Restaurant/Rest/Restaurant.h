@@ -32,20 +32,21 @@ private:
 	Priority_Queue<Order*>VIP_ord_C;
 	Priority_Queue<Order*>VIP_ord_D;
 
-	Queue<Motorcycle*> Norm_Mtr_A;		//queue of all normal motors
-	Queue<Motorcycle*> Norm_Mtr_B;
-	Queue<Motorcycle*> Norm_Mtr_C;
-	Queue<Motorcycle*> Norm_Mtr_D;
+	Priority_Queue<Motorcycle*> Norm_Mtr_A;		//priority queue of all normal motors
+	Priority_Queue<Motorcycle*> Norm_Mtr_B;
+	Priority_Queue<Motorcycle*> Norm_Mtr_C;
+	Priority_Queue<Motorcycle*> Norm_Mtr_D;
 
-	Queue<Motorcycle*> Froz_Mtr_A;     //queue for all frozen motors
-	Queue<Motorcycle*> Froz_Mtr_B;
-	Queue<Motorcycle*> Froz_Mtr_C;
-	Queue<Motorcycle*> Froz_Mtr_D;
+	Priority_Queue<Motorcycle*> Froz_Mtr_A;     //priority queue for all frozen motors
+	Priority_Queue<Motorcycle*> Froz_Mtr_B;
+	Priority_Queue<Motorcycle*> Froz_Mtr_C;
+	Priority_Queue<Motorcycle*> Froz_Mtr_D;
 
-	Queue<Motorcycle*> VIP_Mtr_A;    //queue for all VIP motors
-	Queue<Motorcycle*> VIP_Mtr_B;
-	Queue<Motorcycle*> VIP_Mtr_C;
-	Queue<Motorcycle*> VIP_Mtr_D;
+	Priority_Queue<Motorcycle*> VIP_Mtr_A;      //priority queue for all VIP motors
+	Priority_Queue<Motorcycle*> VIP_Mtr_B;
+	Priority_Queue<Motorcycle*> VIP_Mtr_C;
+	Priority_Queue<Motorcycle*> VIP_Mtr_D;
+	
 	/// ==> 
 	//	DEMO-related members. Should be removed in phases 1&2
 	Queue<Order*> DEMO_Queue;	//Important: This is just for demo
@@ -56,7 +57,7 @@ private:
 	//
 	// TODO: Add More Data Members As Needed
 	//time step ::
-	void deleteMotorcycle(Queue<Motorcycle*> &toDelete);
+	void deleteMotorcycle(Priority_Queue<Motorcycle*> &toDelete);
 
 public:
 	
