@@ -56,6 +56,7 @@ private:
 	//
 	// TODO: Add More Data Members As Needed
 	//time step ::
+	void deleteMotorcycle(Queue<Motorcycle*> &toDelete);
 
 public:
 	

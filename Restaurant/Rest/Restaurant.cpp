@@ -64,13 +64,27 @@ void Restaurant::ExecuteEvents(int CurrentTimeStep)
 
 Restaurant::~Restaurant()
 {
-		delete pGUI;
+	deleteMotorcycle(Norm_Mtr_A);	
+	deleteMotorcycle(Norm_Mtr_B);
+	deleteMotorcycle(Norm_Mtr_C);
+	deleteMotorcycle(Norm_Mtr_D);
+		
+	deleteMotorcycle(Froz_Mtr_A);
+	deleteMotorcycle(Froz_Mtr_B);
+	deleteMotorcycle(Froz_Mtr_C);
+	deleteMotorcycle(Froz_Mtr_D);
+
+	deleteMotorcycle(VIP_Mtr_A);
+	deleteMotorcycle(VIP_Mtr_B);
+	deleteMotorcycle(VIP_Mtr_C);
+	deleteMotorcycle(VIP_Mtr_D);
+	delete pGUI;
 }
 
 void Restaurant::ReadData()
 {
 	ifstream infile;
-	infile.open("InputFile3.txt");
+	infile.open("InputFile.txt");
 //receiving speeds	
 	int SN,SF,SV;
 	infile>>SN; infile>>SF; infile>>SV;
@@ -528,18 +542,46 @@ void Restaurant::MODE_INTR_FN()
 		pGUI->ResetDrawingList();
 		pGUI->waitForClick(); 
 		
-		VIP_ord_A.dequeue(pOrd,priority);
-		VIP_ord_B.dequeue(pOrd,priority);
-		VIP_ord_C.dequeue(pOrd,priority);
-		VIP_ord_D.dequeue(pOrd,priority);
-		Norm_Ord_A.GetFirst(pOrd);
-		Norm_Ord_B.GetFirst(pOrd);
-		Norm_Ord_C.GetFirst(pOrd);
-		Norm_Ord_D.GetFirst(pOrd);
-		Frz_Ord_A.dequeue(pOrd);
-		Frz_Ord_B.dequeue(pOrd);
-		Frz_Ord_C.dequeue(pOrd);
-		Frz_Ord_D.dequeue(pOrd);
+		Order* temp = NULL;
+		VIP_ord_A.dequeue(temp,priority);
+		if(temp) delete temp;
+		temp = NULL;
+		VIP_ord_B.dequeue(temp,priority);
+		if(temp) delete temp;
+		temp = NULL;
+		VIP_ord_C.dequeue(temp,priority);
+		if(temp) delete temp;
+		temp = NULL;
+		VIP_ord_D.dequeue(temp,priority);
+		if(temp) delete temp;
+		temp = NULL;
+
+		Norm_Ord_A.GetFirst(temp);
+		if(temp) delete temp;
+		temp = NULL;
+		Norm_Ord_B.GetFirst(temp);
+		temp = NULL;
+		if(temp) delete temp;
+		temp = NULL;
+		Norm_Ord_C.GetFirst(temp);
+		if(temp) delete temp;
+		temp = NULL;
+		Norm_Ord_D.GetFirst(temp);
+		if(temp) delete temp;
+		temp = NULL;
+		
+		Frz_Ord_A.dequeue(temp);
+		if(temp) delete temp;
+		temp = NULL;
+		Frz_Ord_B.dequeue(temp);
+		if(temp) delete temp;
+		temp = NULL;
+		Frz_Ord_C.dequeue(temp);
+		if(temp) delete temp;
+		temp = NULL;
+		Frz_Ord_D.dequeue(temp);
+		if(temp) delete temp;
+		temp = NULL;
 
 		current_time_step++;
 	}
@@ -664,5 +706,13 @@ void Restaurant::CancelOrder(int id)
 		Norm_Ord_D.GetFirst(pOrd);
 		if(pOrd->GetID() != id)
 			Norm_Ord_D.InsertEnd(pOrd);
+	}
+}
+void Restaurant::deleteMotorcycle(Queue<Motorcycle*> &toDelete)
+{
+	Motorcycle* m = NULL;
+	while (toDelete.dequeue(m))
+	{
+		delete m;
 	}
 }
