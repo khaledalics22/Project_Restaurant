@@ -80,6 +80,7 @@ public:
 	//
 	void MODE_INTR_FN();
 	void AddOrders(Order* po);
+	void AddMotorcycle(Motorcycle *po, int extraspeed);
 	void ReadData();
 	void CancelOrder(int id);
 };

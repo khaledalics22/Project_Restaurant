@@ -674,6 +674,61 @@ void Restaurant::AddOrders(Order*  po)
 		break;
 	}
 }
+void Restaurant::AddMotorcycle(Motorcycle *po, int extraspeed)
+{
+	switch (po->GetType())
+	{
+	case TYPE_NRM:
+		switch (po->GetRegion())
+		{
+		case A_REG:
+			Norm_Mtr_A.enqueue(po, extraspeed);
+			break;
+		case B_REG:
+			Norm_Mtr_B.enqueue(po, extraspeed);
+			break;
+		case C_REG:
+			Norm_Mtr_C.enqueue(po, extraspeed);
+			break;
+		case D_REG:
+			Norm_Mtr_D.enqueue(po, extraspeed);
+			break;
+		}
+	case TYPE_FROZ:
+		switch (po->GetRegion())
+		{
+		case A_REG:
+			Froz_Mtr_A.enqueue(po, extraspeed);
+			break;
+		case B_REG:
+			Froz_Mtr_B.enqueue(po, extraspeed);
+			break;
+		case C_REG:
+			Froz_Mtr_C.enqueue(po, extraspeed);
+			break;
+		case D_REG:
+			Froz_Mtr_D.enqueue(po, extraspeed);
+			break;
+		}
+	case TYPE_VIP:
+		switch (po->GetRegion())
+		{
+		case A_REG:
+			VIP_Mtr_A.enqueue(po, extraspeed);
+			break;
+		case B_REG:
+			VIP_Mtr_B.enqueue(po, extraspeed);
+			break;
+		case C_REG:
+			VIP_Mtr_C.enqueue(po, extraspeed);
+			break;
+		case D_REG:
+			VIP_Mtr_D.enqueue(po, extraspeed);
+			break;
+		}
+
+	}
+}
 
 void Restaurant::CancelOrder(int id)
 {
