@@ -85,9 +85,7 @@ void Restaurant::ReadData()
 {
 	ifstream infile;
 	infile.open("InputFile.txt");
-//receiving speeds	
-	int SN,SF,SV;
-	infile>>SN; infile>>SF; infile>>SV;
+
 //receiving number of all motors for all regions
 	int NumMotNA,NumMotFA,NumMotVA;
 	infile>>NumMotNA; infile>>NumMotFA; infile>>NumMotVA;
@@ -102,106 +100,109 @@ void Restaurant::ReadData()
 	infile>>NumMotND; infile>>NumMotFD; infile>>NumMotVD;
 	
 	int j=0; //motors ID counter
-	int ExtraSpeed=0; //coutnter to increase speed of motors
-
+	int ExSpeed; //speed of motors
 	//filling all normal motors
 	for(int i=0;i<NumMotNA;i++)
 	{
-		Motorcycle* m = new Motorcycle(j,TYPE_NRM,SN+ExtraSpeed,A_REG); 
-		Norm_Mtr_A.enqueue(m,SN+ExtraSpeed); 
+		infile>>ExSpeed;
+		Motorcycle* m = new Motorcycle(j,TYPE_NRM,ExSpeed,A_REG); 
+		Norm_Mtr_A.enqueue(m,ExSpeed); 
 		j++;
-		ExtraSpeed++;
+
 	}
-	ExtraSpeed=0;
+
 	for(int i=0;i<NumMotNB;i++)
 	{
-		Motorcycle* m = new Motorcycle(j,TYPE_NRM,SN+ExtraSpeed,B_REG);
-		Norm_Mtr_B.enqueue(m,SN+ExtraSpeed);
+		infile>>ExSpeed;
+		Motorcycle* m = new Motorcycle(j,TYPE_NRM,ExSpeed,B_REG);
+		Norm_Mtr_B.enqueue(m,ExSpeed);
 		j++;
-		ExtraSpeed++;
+	
 	}
-	ExtraSpeed=0;
+	
 	for(int i=0;i<NumMotNC;i++)
 	{
-		Motorcycle* m = new Motorcycle(j,TYPE_NRM,SN+ExtraSpeed,C_REG); 
-		Norm_Mtr_C.enqueue(m,SN+ExtraSpeed);
+		infile>>ExSpeed;
+		Motorcycle* m = new Motorcycle(j,TYPE_NRM,ExSpeed,C_REG); 
+		Norm_Mtr_C.enqueue(m,ExSpeed);
 		j++;
-		ExtraSpeed++;
+
 	}
-	ExtraSpeed=0;
+
 	for(int i=0;i<NumMotND;i++)
 	{
-		Motorcycle* m = new Motorcycle(j,TYPE_NRM,SN+ExtraSpeed,D_REG);
-		Norm_Mtr_D.enqueue(m,SN+ExtraSpeed);
+		infile>>ExSpeed;
+		Motorcycle* m = new Motorcycle(j,TYPE_NRM,ExSpeed,D_REG);
+		Norm_Mtr_D.enqueue(m,ExSpeed);
 		j++;
-		ExtraSpeed++;
+	
 	}
-	ExtraSpeed=0;
+
 //filling all frozen motors
 	for(int i=0;i<NumMotFA;i++)
 	{
-		Motorcycle* m = new Motorcycle(j,TYPE_FROZ,SF+ExtraSpeed,A_REG); 
-		Froz_Mtr_A.enqueue(m,SF+ExtraSpeed); 
+		infile>>ExSpeed;
+		Motorcycle* m = new Motorcycle(j,TYPE_FROZ,ExSpeed,A_REG); 
+		Froz_Mtr_A.enqueue(m,ExSpeed); 
 		j++;
-		ExtraSpeed++;
-	}
-	ExtraSpeed=0;
-	for(int i=0;i<NumMotFB;i++)
-	{
-		Motorcycle* m = new Motorcycle(j,TYPE_FROZ,SF+ExtraSpeed,B_REG);
-		Froz_Mtr_B.enqueue(m,SF+ExtraSpeed); 
-		j++;
-		ExtraSpeed++;
-	}
-	ExtraSpeed=0;
-	for(int i=0;i<NumMotFC;i++)
-	{
-		Motorcycle* m = new Motorcycle(j,TYPE_FROZ,SF+ExtraSpeed,C_REG);
-		Froz_Mtr_C.enqueue(m,SF+ExtraSpeed); 
-		j++;
-		ExtraSpeed++;
-	}
-	ExtraSpeed=0;
-	for(int i=0;i<NumMotFD;i++)
-	{ 
-		Motorcycle* m = new Motorcycle(j,TYPE_FROZ,SF+ExtraSpeed,D_REG); 
-		Froz_Mtr_D.enqueue(m,SF+ExtraSpeed);
-		j++;
-		ExtraSpeed++;
 	}
 
-	ExtraSpeed=0;
+	for(int i=0;i<NumMotFB;i++)
+	{
+		infile>>ExSpeed;
+		Motorcycle* m = new Motorcycle(j,TYPE_FROZ,ExSpeed,B_REG);
+		Froz_Mtr_B.enqueue(m,ExSpeed); 
+		j++;
+	}
+
+	for(int i=0;i<NumMotFC;i++)
+	{
+		infile>>ExSpeed;
+		Motorcycle* m = new Motorcycle(j,TYPE_FROZ,ExSpeed,C_REG);
+		Froz_Mtr_C.enqueue(m,ExSpeed); 
+		j++;
+	}
+
+	for(int i=0;i<NumMotFD;i++)
+	{ 
+		infile>>ExSpeed;
+		Motorcycle* m = new Motorcycle(j,TYPE_FROZ,ExSpeed,D_REG); 
+		Froz_Mtr_D.enqueue(m,ExSpeed);
+		j++;
+	}
+
 //filling all VIP motors
 	for(int i=0;i<NumMotVA;i++)
 	{
-		Motorcycle* m = new Motorcycle(j,TYPE_VIP,SV+ExtraSpeed,A_REG);
-		VIP_Mtr_A.enqueue(m,SV+ExtraSpeed); 
+		infile>>ExSpeed;
+		Motorcycle* m = new Motorcycle(j,TYPE_VIP,ExSpeed,A_REG);
+		VIP_Mtr_A.enqueue(m,ExSpeed); 
 		j++;
-		ExtraSpeed++;
+
 	}
-	ExtraSpeed=0;
+
 	for(int i=0;i<NumMotVB;i++)
 	{
-		Motorcycle* m = new Motorcycle(j,TYPE_VIP,SV+ExtraSpeed,B_REG);
-		VIP_Mtr_B.enqueue(m,SV+ExtraSpeed);
+		infile>>ExSpeed;
+		Motorcycle* m = new Motorcycle(j,TYPE_VIP,ExSpeed,B_REG);
+		VIP_Mtr_B.enqueue(m,ExSpeed);
 		j++;
-		ExtraSpeed++;
 	}
-	ExtraSpeed=0;
+
 	for(int i=0;i<NumMotVC;i++)
 	{
-		Motorcycle* m = new Motorcycle(j,TYPE_VIP,SV+ExtraSpeed,C_REG);
-		VIP_Mtr_C.enqueue(m,SV+ExtraSpeed); 
+		infile>>ExSpeed;
+		Motorcycle* m = new Motorcycle(j,TYPE_VIP,ExSpeed,C_REG);
+		VIP_Mtr_C.enqueue(m,ExSpeed); 
 		j++;
-		ExtraSpeed++;
 	}
-	ExtraSpeed=0;
+
 	for(int i=0;i<NumMotVD;i++)
 	{
-		Motorcycle* m = new Motorcycle(j,TYPE_VIP,SV+ExtraSpeed,D_REG);
-		VIP_Mtr_D.enqueue(m,SV+ExtraSpeed);
+		infile>>ExSpeed;
+		Motorcycle* m = new Motorcycle(j,TYPE_VIP,ExSpeed,D_REG);
+		VIP_Mtr_D.enqueue(m,ExSpeed);
 		j++;
-		ExtraSpeed++;
 	}
 
 //receiving Auto promomotion Limit,events Number
