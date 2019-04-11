@@ -10,7 +10,7 @@ GUI::GUI()
 
 	//Set color for each order type
 	OrdersClrs[TYPE_NRM] = 	DARKBLUE;	//normal-order color
-	OrdersClrs[TYPE_FROZ] = DARKVIOLET;		//Frozen-order color
+	OrdersClrs[TYPE_FROZ] = VIOLET;		//Frozen-order color
 	OrdersClrs[TYPE_VIP] = 	RED;		//VIP-order color					
 
 	ClearStatusBar();
@@ -85,15 +85,15 @@ void GUI::ClearStatusBar() const
 	pWind->SetBrush(WHITE);
 	pWind->DrawRectangle(0, WindHeight - StatusBarHeight , WindWidth, WindHeight);	
 
-	pWind->SetPen(BLACK, 3);
+	pWind->SetPen(BROWN, 3);
 	pWind->DrawLine(0, WindHeight - StatusBarHeight , WindWidth, WindHeight - StatusBarHeight);	
 }
 ///////////////////////////////////////////////////////////////////////////////////
 void GUI::ClearDrawingArea() const
 {
 	// Clearing the Drawing area
-	pWind->SetPen(LIGHTGRAY, 3);
-	pWind->SetBrush(LIGHTGRAY);
+	pWind->SetPen(KHAKI, 3);
+	pWind->SetBrush(KHAKI);
 	pWind->DrawRectangle(0, MenuBarHeight, WindWidth, WindHeight - StatusBarHeight);
 }
 ///////////////////////////////////////////////////////////////////////////////////
@@ -101,36 +101,45 @@ void GUI::DrawRestArea() const
 {
 	int L = RestWidth / 2;
 
-	// 1- Drawing the brown square of the Rest
-	pWind->SetPen(BLACK);
-	pWind->SetBrush(BLACK);
-	pWind->DrawRectangle(RestStartX, RestStartY, RestEndX, RestEndY);
+	
 
 	// 2- Drawing the 2 brown crossed lines (for making 4 regions)
-	pWind->SetPen(BLACK, 3);
+	pWind->SetPen(BROWN, 3);
 	pWind->DrawLine(0, YHalfDrawingArea, WindWidth, YHalfDrawingArea);
 	pWind->DrawLine(WindWidth/2, MenuBarHeight, WindWidth/2, WindHeight-StatusBarHeight);
 
-	// 3- Drawing the 2 white crossed lines (inside the Rest)
-	pWind->SetPen(WHITE);
-	pWind->DrawLine(WindWidth/2, YHalfDrawingArea - RestWidth/2, WindWidth/2, YHalfDrawingArea + RestWidth/2);
-	pWind->DrawLine(WindWidth/2 - RestWidth/2, YHalfDrawingArea, WindWidth/2 + RestWidth/2, YHalfDrawingArea);
+	pWind->SetPen(MYBLUE);
+	pWind->SetBrush(MYBLUE);
+	//pWind->DrawRectangle(RestStartX, RestStartY, RestEndX, RestEndY);
+	pWind->DrawCircle((int)(0.5*WindWidth), YHalfDrawingArea, (int)(0.5*RestWidth), FILLED);
 
-	// 4- Drawing the 4 white squares inside the Rest (one for each tower)
-	pWind->SetPen(WHITE);
-	pWind->SetBrush(WHITE);
+	// 3- Drawing the 2 white crossed lines (inside the Rest)
+	/*pWind->SetPen(WHITE, 3);
+	pWind->DrawLine(WindWidth/2, YHalfDrawingArea - RestWidth/2, WindWidth/2, YHalfDrawingArea + RestWidth/2);
+	pWind->DrawLine(WindWidth/2 - RestWidth/2, YHalfDrawingArea, WindWidth/2 + RestWidth/2, YHalfDrawingArea);*/
+
+	//// 4- Drawing the 4 white squares inside the Rest (one for each tower)
+	/*pWind->SetPen(BLACK);
+	pWind->SetBrush(BLACK);
 	pWind->DrawRectangle(RestStartX + L/3, RestStartY + L/3, RestStartX + 2*L/3, RestStartY + 2*L/3);
 	pWind->DrawRectangle(RestStartX + L/3, RestEndY - L/3, RestStartX + 2*L/3, RestEndY - 2*L/3);
 	pWind->DrawRectangle(RestEndX - 2*L/3, RestStartY + L/3, RestEndX - L/3, RestStartY + 2*L/3);
-	pWind->DrawRectangle(RestEndX - 2*L/3, RestEndY - L/3, RestEndX - L/3, RestEndY - 2*L/3);
+	pWind->DrawRectangle(RestEndX - 2*L/3, RestEndY - L/3, RestEndX - L/3, RestEndY - 2*L/3);*/
+	
+	pWind->SetPen(SNOW);
+	pWind->SetBrush(SNOW);
+	pWind->DrawRectangle(0, 0, WindWidth, MenuBarHeight);
 
+
+	pWind->DrawImage("restaurant1.jpg", RestStartX+(int)(0.15*RestWidth), RestStartY+(int)(0.15*RestWidth), (int)(0.7*RestWidth), (int)(0.7*RestWidth));
+	/*pWind->DrawImage("restaurant1.jpg", RestStartX, RestStartY, RestWidth, RestWidth);*/
 	// 5- Writing the letter of each region (A, B, C, D)
-	pWind->SetPen(BLUE);
-	pWind->SetFont(25, BOLD , BY_NAME, "Arial");
-	pWind->DrawString(RestStartX + (int)(0.44*L), RestStartY + 5*L/12, "A");
-	pWind->DrawString(RestStartX + (int)(0.44*L), YHalfDrawingArea + 5*L/12, "D");
-	pWind->DrawString(WindWidth/2 + (int)(0.44*L), RestStartY + 5*L/12, "B");
-	pWind->DrawString(WindWidth/2 + (int)(0.44*L), YHalfDrawingArea + 5*L/12, "C"); 
+	pWind->SetPen(GHOSTWHITE);
+	pWind->SetFont(255, PLAIN , BY_NAME, "Arial");
+	pWind->DrawString((int)(0.17*WindWidth) , MenuBarHeight, "A");
+	pWind->DrawString((int)(0.17*WindWidth), YHalfDrawingArea, "D");
+	pWind->DrawString((int)(0.7*WindWidth), MenuBarHeight, "B");
+	pWind->DrawString((int)(0.7*WindWidth), YHalfDrawingArea, "C"); 
 
 }
 //////////////////////////////////////////////////////////////////////////////////////////
