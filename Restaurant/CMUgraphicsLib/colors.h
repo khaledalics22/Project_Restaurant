@@ -182,5 +182,7 @@ const color DARKMAGENTA = color(139, 0, 139);
 const color DARKRED = color(139, 0, 0);
 const color LIGHTGREEN = color(144, 238, 144);
 const color MYBLUE = color(39, 59, 122);
+const color MYRED = color(193, 57, 43);
+const color MYORANGE = color(255, 187, 76);
 
 #endif //COLOR_H

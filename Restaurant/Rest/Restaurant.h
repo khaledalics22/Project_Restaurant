@@ -46,6 +46,8 @@ private:
 	Priority_Queue<Motorcycle*> VIP_Mtr_B;
 	Priority_Queue<Motorcycle*> VIP_Mtr_C;
 	Priority_Queue<Motorcycle*> VIP_Mtr_D;
+
+	Priority_Queue<Motorcycle*> Serving_Mtr;	//contain the serving Motorcycles 
 	
 	/// ==> 
 	//	DEMO-related members. Should be removed in phases 1&2

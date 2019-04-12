@@ -108,8 +108,8 @@ void GUI::DrawRestArea() const
 	pWind->DrawLine(0, YHalfDrawingArea, WindWidth, YHalfDrawingArea);
 	pWind->DrawLine(WindWidth/2, MenuBarHeight, WindWidth/2, WindHeight-StatusBarHeight);
 
-	pWind->SetPen(MYBLUE);
-	pWind->SetBrush(MYBLUE);
+	pWind->SetPen(MYORANGE);
+	pWind->SetBrush(MYORANGE);
 	//pWind->DrawRectangle(RestStartX, RestStartY, RestEndX, RestEndY);
 	pWind->DrawCircle((int)(0.5*WindWidth), YHalfDrawingArea, (int)(0.5*RestWidth), FILLED);
 
@@ -131,7 +131,7 @@ void GUI::DrawRestArea() const
 	pWind->DrawRectangle(0, 0, WindWidth, MenuBarHeight);
 
 
-	pWind->DrawImage("restaurant1.jpg", RestStartX+(int)(0.15*RestWidth), RestStartY+(int)(0.15*RestWidth), (int)(0.7*RestWidth), (int)(0.7*RestWidth));
+	pWind->DrawImage("restaurant4.jpg", RestStartX+(int)(0.15*RestWidth) , RestStartY+(int)(0.15*RestWidth) - 3, (int)(0.7*RestWidth), (int)(0.7*RestWidth));
 	/*pWind->DrawImage("restaurant1.jpg", RestStartX, RestStartY, RestWidth, RestWidth);*/
 	// 5- Writing the letter of each region (A, B, C, D)
 	pWind->SetPen(GHOSTWHITE);
