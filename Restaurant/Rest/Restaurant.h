@@ -59,7 +59,6 @@ private:
 	//
 	// TODO: Add More Data Members As Needed
 	//time step ::
-
 	void deleteMotorcycle(Priority_Queue<Motorcycle*> &toDelete);
 
 public:
@@ -83,6 +82,7 @@ public:
 	//
 	void MODE_INTR_FN();
 	void MODE_STEP_FN();
+	void PromoteOrder (int  ,int); 
 	void AddOrders(Order* po);
 	void AddMotorcycle(Motorcycle *po, int priority);
 	void ReadData();

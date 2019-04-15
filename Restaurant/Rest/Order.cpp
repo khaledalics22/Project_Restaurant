@@ -108,11 +108,10 @@ void Order::SetFinishTime(int F)
 	FinishTime = F>0 ? F:0;
 }
 
-void Order::promote()     //not completed yet
+void Order::promote()     //change the type if not inservice
 {
 	if(type == TYPE_NRM && InService == false)
 		type = TYPE_VIP;
-	return;
 }
 
 bool Order::IsActive(void) const

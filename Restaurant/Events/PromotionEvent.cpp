@@ -1,5 +1,5 @@
 #include "PromotionEvent.h"
-
+#include "..\Rest\Restaurant.h"
 
 PromotionEvent::PromotionEvent(int eTime, int oID, double ExMon):Event(eTime, oID)
 {
@@ -7,7 +7,9 @@ PromotionEvent::PromotionEvent(int eTime, int oID, double ExMon):Event(eTime, oI
 }
 
 void PromotionEvent::Execute(Restaurant* pRest)
-{
+{ 
+	pRest->PromoteOrder(OrderID,ExtraMoney);          //call Promote fn  in class restaurant
+
 }
 
 PromotionEvent::~PromotionEvent(void)

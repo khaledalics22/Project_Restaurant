@@ -85,7 +85,7 @@ Restaurant::~Restaurant()
 void Restaurant::ReadData()
 {
 	ifstream infile;
-	infile.open("InputFile.txt");
+	infile.open("InputFile3.txt");
 
 //receiving number of all motors for all regions
 	int NumMotNA,NumMotFA,NumMotVA;
@@ -559,7 +559,7 @@ void Restaurant::MODE_INTR_FN()
 		pGUI->UpdateInterface();
 		pGUI->ResetDrawingList();
 		pGUI->waitForClick(); 
-		
+	/*	
 		Order* temp = NULL;
 		VIP_ord_A.dequeue(temp,priority);
 		if(temp) delete temp;
@@ -600,7 +600,7 @@ void Restaurant::MODE_INTR_FN()
 		Frz_Ord_D.dequeue(temp);
 		if(temp) delete temp;
 		temp = NULL;
-
+		*/
 		current_time_step++;
 	}
 
@@ -974,4 +974,72 @@ void Restaurant::MODE_STEP_FN()
 	}
 
 
+}
+void  Restaurant::PromoteOrder (int id,int extramoney)   //takes the money and id to promote   .....called in promotionEvent
+{
+
+	Order* Order; 
+	for(int i=0; i<Norm_Ord_A.getCount(); i++)     // loop on normal Orders in regioin A
+	{
+		Norm_Ord_A.GetFirst(Order);
+		if(Order->GetID()==id)                  //if found promote or ignore Event
+		{
+			Order->promote();         // change the type of Order  if not in service
+			int money=Order->GetMoney(); 
+			Order->SetMoney(money+extramoney);   // set new money
+			AddOrders(Order);			//add order to the appropriate List
+			if (i==0)break;                     //if found at beginning of the list there is no need to continue
+		}
+		else
+			Norm_Ord_A.InsertEnd(Order);          //if not at the beginnign or not found at all refill the List
+			
+	}
+													//same for all areas
+	for(int i=0; i<Norm_Ord_B.getCount(); i++)   
+	{
+		Norm_Ord_B.GetFirst(Order);
+		if(Order->GetID()==id)
+		{
+			Order->promote();
+			int money=Order->GetMoney(); 
+			Order->SetMoney(money+extramoney); 
+			AddOrders(Order); 
+			if (i==0)break; 
+		}
+		else
+			Norm_Ord_B.InsertEnd(Order);
+			
+	}	
+	
+	for(int i=0; i<Norm_Ord_C.getCount(); i++)
+	{
+		Norm_Ord_C.GetFirst(Order);
+		if(Order->GetID()==id)
+		{
+			Order->promote();
+			int money=Order->GetMoney(); 
+			Order->SetMoney(money+extramoney); 
+			AddOrders(Order); 
+			if (i==0)break; 
+		}
+		else
+			Norm_Ord_C.InsertEnd(Order);
+			
+	}	
+	
+	for(int i=0; i<Norm_Ord_D.getCount(); i++)
+	{
+		Norm_Ord_D.GetFirst(Order);
+		if(Order->GetID()==id)
+		{
+			Order->promote();
+			int money=Order->GetMoney(); 
+			Order->SetMoney(money+extramoney); 
+			AddOrders(Order); 
+			if (i==0)break; 
+		}
+		else
+			Norm_Ord_D.InsertEnd(Order);
+			
+	}
 }
