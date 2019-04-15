@@ -82,6 +82,7 @@ public:
 	// TODO: Add More Member Functions As Needed
 	//
 	void MODE_INTR_FN();
+	void MODE_STEP_FN();
 	void AddOrders(Order* po);
 	void AddMotorcycle(Motorcycle *po, int priority);
 	void ReadData();

@@ -27,11 +27,12 @@ void Restaurant::RunSimulation()
 		MODE_INTR_FN();	
 		break;
 	case MODE_STEP:
+		MODE_STEP_FN();
 		break;
 	case MODE_SLNT:
 		break;
-	case MODE_DEMO:
-		Just_A_Demo();
+	//case MODE_DEMO:
+		//Just_A_Demo();
 
 	};
 
@@ -323,6 +324,7 @@ while(infile>>s)
 
 //This is just a demo function for project introductory phase
 //It should be removed starting phase 1
+/*
 void Restaurant::Just_A_Demo()
 {
 	
@@ -414,9 +416,10 @@ Order* Restaurant::getDemoOrder()
 	return pOrd;
 
 }
-
-
 /// ==> end of DEMO-related function
+
+*/
+
 
 void Restaurant::MODE_INTR_FN()
 {
@@ -786,4 +789,189 @@ void Restaurant::deleteMotorcycle(Priority_Queue<Motorcycle*> &toDelete)
 	{
 		delete m;
 	}
+}
+void Restaurant::MODE_STEP_FN()
+{
+	Order* pOrd;
+	int current_time_step=1;
+	while(!EventsQueue.isEmpty())
+	{
+		char timestep[10];
+		itoa(current_time_step,timestep,10);	
+		//pGUI->PrintMessage(timestep);
+
+		ExecuteEvents(current_time_step);
+
+		//vip order  for all areas
+		int priority; 
+		for  (int i=0; i<VIP_ord_A.getCount();i++)
+		{
+			VIP_ord_A.dequeue(pOrd,priority);
+			pGUI->AddOrderForDrawing(pOrd);
+			VIP_ord_A.enqueue(pOrd,priority);
+
+		}
+
+		for  (int i=0; i<VIP_ord_B.getCount();i++)
+		{
+			VIP_ord_B.dequeue(pOrd,priority);
+			pGUI->AddOrderForDrawing(pOrd);
+			VIP_ord_B.enqueue(pOrd,priority);
+
+		}
+		for  (int i=0; i<VIP_ord_C.getCount();i++)
+		{
+			VIP_ord_C.dequeue(pOrd,priority);
+			pGUI->AddOrderForDrawing(pOrd);
+			VIP_ord_C.enqueue(pOrd,priority);
+
+		}
+		for  (int i=0; i<VIP_ord_D.getCount();i++)
+		{
+			VIP_ord_D.dequeue(pOrd,priority);
+			pGUI->AddOrderForDrawing(pOrd);
+			VIP_ord_D.enqueue(pOrd,priority);
+
+		}
+
+		//frozen order  for all areas
+		for  (int i=0; i<Frz_Ord_A.getCount();i++)
+		{
+			Frz_Ord_A.dequeue(pOrd);
+			pGUI->AddOrderForDrawing(pOrd);
+			Frz_Ord_A.enqueue(pOrd);
+
+		}
+		for  (int i=0; i<Frz_Ord_B.getCount();i++)
+		{
+			Frz_Ord_B.dequeue(pOrd);
+			pGUI->AddOrderForDrawing(pOrd);
+			Frz_Ord_B.enqueue(pOrd);
+
+		}
+		for  (int i=0; i<Frz_Ord_C.getCount();i++)
+		{
+			Frz_Ord_C.dequeue(pOrd);
+			pGUI->AddOrderForDrawing(pOrd);
+			Frz_Ord_C.enqueue(pOrd);
+
+		}
+		for  (int i=0; i<Frz_Ord_D.getCount();i++)
+		{
+			Frz_Ord_D.dequeue(pOrd);
+			pGUI->AddOrderForDrawing(pOrd);
+			Frz_Ord_D.enqueue(pOrd);
+
+		}
+
+
+		//normal orders for all areas
+		for  (int i=0; i<Norm_Ord_A.getCount();i++)
+		{
+			Norm_Ord_A.GetFirst(pOrd);
+			pGUI->AddOrderForDrawing(pOrd);
+			Norm_Ord_A.InsertEnd(pOrd);
+
+		}
+		for  (int i=0; i<Norm_Ord_B.getCount();i++)
+		{
+			Norm_Ord_B.GetFirst(pOrd);
+			pGUI->AddOrderForDrawing(pOrd);
+			Norm_Ord_B.InsertEnd(pOrd);
+
+		}
+		for  (int i=0; i<Norm_Ord_C.getCount();i++)
+		{
+			Norm_Ord_C.GetFirst(pOrd);
+			pGUI->AddOrderForDrawing(pOrd);
+			Norm_Ord_C.InsertEnd(pOrd);
+
+
+		}
+		for  (int i=0; i<Norm_Ord_D.getCount();i++)
+		{
+			Norm_Ord_D.GetFirst(pOrd);
+			pGUI->AddOrderForDrawing(pOrd);
+			Norm_Ord_D.InsertEnd(pOrd);
+
+		}
+		
+		string S1, S2, S3, S4; 
+		S1 ="Region A:     Orders: VIP "+ to_string(VIP_ord_A.getCount()) 
+				+ "     Frozen " + to_string(Frz_Ord_A.getCount()) 
+				+ "     Normal " +  to_string(Norm_Ord_A.getCount())
+				+ "        Motors:   VIP "+ to_string(VIP_Mtr_A.getCount())
+				+ "     Frozen " + to_string(Froz_Mtr_A.getCount())
+				+ "     Normal " +  to_string(Norm_Mtr_A.getCount());
+
+		S2 ="Region B:     Orders: VIP "+ to_string(VIP_ord_B.getCount()) 
+				+ "     Frozen " + to_string(Frz_Ord_B.getCount()) 
+				+ "     Normal " +  to_string(Norm_Ord_B.getCount())
+				+ "        Motors:   VIP "+ to_string(VIP_Mtr_B.getCount())
+				+ "     Frozen " + to_string(Froz_Mtr_B.getCount())
+				+ "     Normal " +  to_string(Norm_Mtr_B.getCount());
+		
+		S3 ="Region C:     Orders: VIP "+ to_string(VIP_ord_C.getCount()) 
+				+ "     Frozen " + to_string(Frz_Ord_C.getCount()) 
+				+ "     Normal " +  to_string(Norm_Ord_C.getCount())
+				+ "        Motors:   VIP " + to_string(VIP_Mtr_C.getCount())
+				+ "     Frozen " + to_string(Froz_Mtr_C.getCount())
+				+ "     Normal " +  to_string(Norm_Mtr_C.getCount());
+		
+		S4 ="Region D:     Orders: VIP "+ to_string(VIP_ord_D.getCount()) 
+				+ "     Frozen " + to_string(Frz_Ord_D.getCount()) 
+				+ "     Normal " +  to_string(Norm_Ord_D.getCount())
+				+ "        Motors:   VIP "+ to_string(VIP_Mtr_D.getCount())
+				+ "     Frozen " + to_string(Froz_Mtr_D.getCount())
+				+ "     Normal " +  to_string(Norm_Mtr_D.getCount());
+		pGUI->PrintMessage(timestep, S1, S2, S3, S4);
+		pGUI->UpdateInterface();
+		pGUI->ResetDrawingList();
+		Sleep(1000);
+		
+		Order* temp = NULL;
+		VIP_ord_A.dequeue(temp,priority);
+		if(temp) delete temp;
+		temp = NULL;
+		VIP_ord_B.dequeue(temp,priority);
+		if(temp) delete temp;
+		temp = NULL;
+		VIP_ord_C.dequeue(temp,priority);
+		if(temp) delete temp;
+		temp = NULL;
+		VIP_ord_D.dequeue(temp,priority);
+		if(temp) delete temp;
+		temp = NULL;
+
+		Norm_Ord_A.GetFirst(temp);
+		if(temp) delete temp;
+		temp = NULL;
+		Norm_Ord_B.GetFirst(temp);
+		temp = NULL;
+		if(temp) delete temp;
+		temp = NULL;
+		Norm_Ord_C.GetFirst(temp);
+		if(temp) delete temp;
+		temp = NULL;
+		Norm_Ord_D.GetFirst(temp);
+		if(temp) delete temp;
+		temp = NULL;
+		
+		Frz_Ord_A.dequeue(temp);
+		if(temp) delete temp;
+		temp = NULL;
+		Frz_Ord_B.dequeue(temp);
+		if(temp) delete temp;
+		temp = NULL;
+		Frz_Ord_C.dequeue(temp);
+		if(temp) delete temp;
+		temp = NULL;
+		Frz_Ord_D.dequeue(temp);
+		if(temp) delete temp;
+		temp = NULL;
+
+		current_time_step++;
+	}
+
+
 }
