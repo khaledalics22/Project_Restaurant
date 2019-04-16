@@ -1164,3 +1164,92 @@ void Restaurant::PrintGUI()
 
 	}
 }
+
+
+void Restaurant ::GetOutPutFile()
+{
+	outFile.open("OUTPUT.txt");
+
+	outFile<<"FT   "<<"ID   "<<"AT   "<<"WT   "<<"ST   "<<endl;
+	
+	Queue<Order*>SubServed;
+	Order *ord;
+	int FinTime;
+
+	double TotWaitA=0,TotServA=0;
+	double TotWaitB=0,TotServB=0;
+	double TotWaitC=0,TotServC=0;
+	double TotWaitD=0,TotServD=0;
+
+	double CountWaitA=0,CountServA=0;
+	double CountWaitB=0,CountServB=0;
+	double CountWaitC=0,CountServC=0;
+	double CountWaitD=0,CountServD=0;
+
+	while(!(Served_Ord.isEmpty()))
+	{
+		Served_Ord.dequeue(ord,FinTime);
+		
+		     if(ord->GetRegion()==A_REG) 
+		{CountWaitA++;CountServA++; TotWaitA+=ord->GetWaitingTime(); TotServA+=ord->GetServTime();}
+		else if(ord->GetRegion()==B_REG) 
+		{CountWaitB++;CountServB++; TotWaitB+=ord->GetWaitingTime(); TotServB+=ord->GetServTime();}
+		else if(ord->GetRegion()==C_REG) 
+		{CountWaitC++;CountServC++; TotWaitC+=ord->GetWaitingTime(); TotServC+=ord->GetServTime();}
+		else if(ord->GetRegion()==D_REG) 
+		{CountWaitD++;CountServD++; TotWaitD+=ord->GetWaitingTime(); TotServD+=ord->GetServTime();}
+		
+
+	  outFile<<to_string((ord->GetFinishTime()))<<"   "<<to_string(ord->GetID())<<
+		"   "<<to_string(ord->GetArrTime())<<"   "<<to_string(ord->GetWaitingTime())<<
+		"   "<<to_string(ord->GetServTime())<<endl;
+		SubServed.enqueue(ord);
+	}
+
+	outFile<<"......................."<<endl;
+	outFile<<"......................."<<endl;
+
+	int totA=VIP_ord_A.getCount()+Frz_Ord_A.getCount()+Norm_Ord_A.getCount();
+	int totB=VIP_ord_B.getCount()+Frz_Ord_B.getCount()+Norm_Ord_B.getCount();
+	int totC=VIP_ord_C.getCount()+Frz_Ord_C.getCount()+Norm_Ord_C.getCount();
+	int totD=VIP_ord_D.getCount()+Frz_Ord_D.getCount()+Norm_Ord_D.getCount();
+  
+  int tmotA=Norm_Mtr_A.getCount()+Froz_Mtr_A.getCount()+VIP_Mtr_A.getCount();
+  int tmotB=Norm_Mtr_B.getCount()+Froz_Mtr_B.getCount()+VIP_Mtr_B.getCount();
+  int tmotC=Norm_Mtr_C.getCount()+Froz_Mtr_C.getCount()+VIP_Mtr_C.getCount();
+  int tmotD=Norm_Mtr_D.getCount()+Froz_Mtr_D.getCount()+VIP_Mtr_D.getCount();
+
+	outFile<<"Region A:"<<endl;
+	outFile<<"     Orders:"<<to_string(totA)<<" [Norm:"<<to_string(Norm_Ord_A.getCount())<<",Froz:"<<to_string(Frz_Ord_A.getCount())<<",VIP:"<<to_string(VIP_ord_A.getCount())<<"]"<<endl;
+	outFile<<"     Motors:"<<to_string(tmotA)<<" [Norm:"<<to_string(Norm_Mtr_A.getCount())<<",Froz:"<<to_string(Froz_Mtr_A.getCount())<<",VIP:"<<to_string(VIP_Mtr_A.getCount())<<"]"<<endl;
+	if(CountServA!=0 && CountWaitA!=0)
+	outFile<<"     Avg Wait ="<<to_string(TotWaitA/CountWaitA)<<" , Avg Serv ="<<to_string(TotServA/CountServA)<<endl;
+
+
+	outFile<<"Region B:"<<endl;
+	outFile<<"     Orders:"<<to_string(totB)<<" [Norm:"<<to_string(Norm_Ord_B.getCount())<<",Froz:"<<to_string(Frz_Ord_B.getCount())<<",VIP:"<<to_string(VIP_ord_B.getCount())<<"]"<<endl;
+	outFile<<"     Motors:"<<to_string(tmotB)<<" [Norm:"<<to_string(Norm_Mtr_B.getCount())<<",Froz:"<<to_string(Froz_Mtr_B.getCount())<<",VIP:"<<to_string(VIP_Mtr_B.getCount())<<"]"<<endl;
+	if(CountServB!=0 && CountWaitB!=0)
+	outFile<<"     Avg Wait ="<<to_string(TotWaitB/CountWaitB)<<" , Avg Serv ="<<to_string(TotServB/CountServB)<<endl;
+
+
+	outFile<<"Region C:"<<endl;
+	outFile<<"     Orders:"<<to_string(totC)<<" [Norm:"<<to_string(Norm_Ord_C.getCount())<<",Froz:"<<to_string(Frz_Ord_C.getCount())<<",VIP:"<<to_string(VIP_ord_C.getCount())<<"]"<<endl;
+	outFile<<"     Motors:"<<to_string(tmotC)<<" [Norm:"<<to_string(Norm_Mtr_C.getCount())<<",Froz:"<<to_string(Froz_Mtr_C.getCount())<<",VIP:"<<to_string(VIP_Mtr_C.getCount())<<"]"<<endl;
+	if(CountServC!=0 && CountWaitC!=0)
+	outFile<<"     Avg Wait ="<<to_string(TotWaitC/CountWaitC)<<" , Avg Serv ="<<to_string(TotServC/CountServC)<<endl;
+
+
+	outFile<<"Region D:"<<endl;
+	outFile<<"     Orders:"<<to_string(totD)<<" [Norm:"<<to_string(Norm_Ord_D.getCount())<<",Froz:"<<to_string(Frz_Ord_D.getCount())<<",VIP:"<<to_string(VIP_ord_D.getCount())<<"]"<<endl;
+	outFile<<"     Motors:"<<to_string(tmotD)<<" [Norm:"<<to_string(Norm_Mtr_D.getCount())<<",Froz:"<<to_string(Froz_Mtr_D.getCount())<<",VIP:"<<to_string(VIP_Mtr_D.getCount())<<"]"<<endl;
+	if(CountServD!=0 && CountWaitD!=0)
+	outFile<<"     Avg Wait ="<<to_string(TotWaitD/CountWaitD)<<" , Avg Serv ="<<to_string(TotServD/CountServD)<<endl;
+
+	while(!SubServed.isEmpty())
+	{
+		SubServed.dequeue(ord);
+		Served_Ord.enqueue(ord,-1*(ord->GetWaitingTime()));
+	}
+	outFile.close();
+}

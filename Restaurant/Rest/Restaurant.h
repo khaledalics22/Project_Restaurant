@@ -10,7 +10,7 @@
 #include "..\Generic_DS\PriorityQueue.h"
 #include "Motorcycle.h"
 #include "Order.h"
-
+#include <fstream>
 // it is the maestro of the project
 class Restaurant  
 {	
@@ -49,7 +49,7 @@ private:
 
 	Priority_Queue<Motorcycle*> Serving_Mtr;	//contain the serving Motorcycles 
 	Priority_Queue<Order*> Served_Ord;
-	
+	ofstream outFile;   
 	/// ==> 
 	//	DEMO-related members. Should be removed in phases 1&2
 	Queue<Order*> DEMO_Queue;	//Important: This is just for demo
@@ -92,6 +92,8 @@ public:
 	void ReturnMotorcycle(int timestep);
 	void PrintToStatusBar(char* timestep);
 	void PrintGUI();
+	void GetOutPutFile();
+
 };
 
 #endif
