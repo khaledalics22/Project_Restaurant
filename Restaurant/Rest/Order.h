@@ -15,7 +15,7 @@ protected:
 	double totalMoney;	//Total order money
 	bool InService;	//shows whether the order is in service or waiting
 	bool serviced;     // shows whether the order is serviced to the customer or not
-	int ArrTime, ServTime, FinishTime, WaitingTime, AssigningTime;	//arrival, service start, and finish times
+	int ArrTime, ServTime, FinishTime, WaitingTime;	//arrival, service start, and finish times
 	
 public:
 	Order(int ID, ORD_TYPE r_Type, REGION r_region, int dis, double cost, int time);
@@ -56,7 +56,7 @@ public:
 	bool IsServiced() const;
 	void SetServiced(bool i);
 	
-	void SetWaitingTime(int arrival, int assigning);
+	void SetWaitingTime(int WT);
 	int GetWaitingTime() const;
 	bool operator==(Order other); 
 	virtual ~Order();

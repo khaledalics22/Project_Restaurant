@@ -148,9 +148,9 @@ void Order::setState(STATE s)
 	state = s;
 }
 
-void Order::SetWaitingTime(int arrival, int assigning)
+void Order::SetWaitingTime(int WT)
 {
-	WaitingTime = assigning - arrival;
+	WaitingTime = WT;
 }
 
 int Order::GetWaitingTime() const

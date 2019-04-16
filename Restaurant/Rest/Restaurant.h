@@ -48,6 +48,7 @@ private:
 	Priority_Queue<Motorcycle*> VIP_Mtr_D;
 
 	Priority_Queue<Motorcycle*> Serving_Mtr;	//contain the serving Motorcycles 
+	Priority_Queue<Order*> Served_Ord;
 	
 	/// ==> 
 	//	DEMO-related members. Should be removed in phases 1&2
@@ -87,6 +88,10 @@ public:
 	void AddMotorcycle(Motorcycle *po, int priority);
 	void ReadData();
 	void CancelOrder(int id);
+	void AssignToMotorcycle(int timestep);
+	void ReturnMotorcycle(int timestep);
+	void PrintToStatusBar(char* timestep);
+	void PrintGUI();
 };
 
 #endif

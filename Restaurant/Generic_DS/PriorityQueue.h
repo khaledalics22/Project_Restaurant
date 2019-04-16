@@ -19,7 +19,7 @@ public:
 	void Clear();
 	bool enqueue(const T& newEntry, int p); // insert to be sorted with respect to priority
 	bool dequeue(T& frntEntry,int & );  //dequeue the highest priority in the queue
-	bool peekFront(T& frntEntry)  const; // return the highest priority node without deleting it from the queue
+	bool peekFront(T& frntEntry, int& p)  const; // return the highest priority node without deleting it from the queue
 	~Priority_Queue();
 };
 
@@ -115,6 +115,7 @@ bool Priority_Queue<T>::dequeue(T& frntEntry ,int & Priority)
 	count--;
 	PriorityNode<T>* nodeToDeletePtr = frontptr;
 	frntEntry = frontptr->getItem();
+	Priority = frontptr->getPriority();
 	frontptr = frontptr->getNext();
 	delete nodeToDeletePtr;
 	return true;
@@ -129,12 +130,13 @@ return: false if Queue is empty
 */
 
 template <class T>
-bool Priority_Queue<T>::peekFront(T& frntEntry) const
+bool Priority_Queue<T>::peekFront(T& frntEntry, int& p) const
 {
 	if(isEmpty())
 		return false;
 
 	frntEntry = frontptr->getItem();
+	p = frontptr->getPriority();
 	return true;
 }
 
