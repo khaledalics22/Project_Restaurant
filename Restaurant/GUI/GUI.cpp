@@ -248,6 +248,16 @@ void GUI::ResetDrawingList()
 	OrderCount = 0;		//resets the orders count to be ready for next timestep updates
 }
 
+PROG_MODE GUI::readinput()
+{
+	ClearStatusBar();
+	PrintMessage("All orders are served , to reRun press 1. to exit press 2");
+	PROG_MODE Mode;
+		string S = GetString();
+		Mode = (PROG_MODE) (atoi(S.c_str())-1);
+	return Mode;
+
+}
 
 PROG_MODE	GUI::getGUIMode() const
 {

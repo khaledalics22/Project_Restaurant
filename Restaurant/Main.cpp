@@ -5,11 +5,17 @@
 
 int main()
 {
-	
+	bool go=true; 
+	while (go)
+	{
 	Restaurant* pRest = new Restaurant;
 	pRest->RunSimulation();
-	
-	delete pRest;
-	
+	Sleep(2000);
+	PROG_MODE input=pRest->Readinput();
+	go=(input==0)?true:false; 
+	delete pRest; 
+	if (input==1)
+	break; 
+	}
 	return 0;
 }

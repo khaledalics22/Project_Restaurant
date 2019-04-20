@@ -74,7 +74,6 @@ private:
 	void DrawOrders() const;		//drwas ALL orders in OrdListForDrawing
 
 
-
 	void DrawString(const int iX, const int iY, const string Text); // prints a message in the passed coordinates
 	void DrawRestArea() const;	    // draws the restaurant area
 
@@ -84,7 +83,7 @@ private:
 public:
 	GUI();
 	~GUI();
-
+	PROG_MODE readinput(); //added for simulation
 	// Input Functions  ---------------------------
 	void waitForClick() const;	// waits a user click from the user
 	string GetString() const ; // reads a string (keyboard input) from the user

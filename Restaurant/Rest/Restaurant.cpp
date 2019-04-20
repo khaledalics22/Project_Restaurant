@@ -15,6 +15,16 @@ Restaurant::Restaurant()
 {
 	pGUI = NULL;
 }
+PROG_MODE Restaurant::Readinput()
+{
+
+	PROG_MODE 	input; 
+	do
+	{
+		input = pGUI->readinput();
+	}while (input!=0&&input!=1); 
+	return input; 
+}
 
 void Restaurant::RunSimulation()
 {
@@ -84,7 +94,7 @@ Restaurant::~Restaurant()
 void Restaurant::ReadData()
 {
 	ifstream infile;
-	infile.open("InputFile3.txt");
+	infile.open("InputFile.txt");
 
 //receiving number of all motors for all regions
 	int NumMotNA,NumMotFA,NumMotVA;
@@ -423,28 +433,42 @@ Order* Restaurant::getDemoOrder()
 void Restaurant::MODE_INTR_FN()
 {
 	int current_time_step=1;
+	char timestep[10];
 	while(!EventsQueue.isEmpty())
 	{
-		char timestep[10];
 		itoa(current_time_step,timestep,10);	
 		//pGUI->PrintMessage(timestep);
 
 		ExecuteEvents(current_time_step);
 
 		PrintGUI();
-
+		
 		PrintToStatusBar(timestep);
 		pGUI->UpdateInterface();
 		pGUI->ResetDrawingList();
-		pGUI->waitForClick();
-		
 		ReturnMotorcycle(current_time_step);
 		AssignToMotorcycle(current_time_step);
-
+		pGUI->waitForClick();
+		
+	
 		current_time_step++;
 	}
-
-
+		while (!Norm_Ord_A.IsEmpty()||!Norm_Ord_B.IsEmpty()||!Norm_Ord_C.IsEmpty()||!Norm_Ord_D.IsEmpty()||!Frz_Ord_A.isEmpty()||!Frz_Ord_B.isEmpty()||!Frz_Ord_C.isEmpty()||!Frz_Ord_D.isEmpty()||!VIP_ord_A.isEmpty()||!VIP_ord_B.isEmpty()||!VIP_ord_C.isEmpty()||!VIP_ord_D.isEmpty())
+	{
+		itoa(current_time_step,timestep,10);	
+		PrintGUI();		
+	
+		PrintToStatusBar(timestep);
+		pGUI->UpdateInterface();
+		pGUI->ResetDrawingList();
+		ReturnMotorcycle(current_time_step);
+		AssignToMotorcycle(current_time_step);
+		current_time_step++;
+	}
+		itoa(current_time_step,timestep,10);	
+		PrintToStatusBar(timestep);
+		pGUI->UpdateInterface();
+		GetOutPutFile(); 
 }
 
 void Restaurant::AddOrders(Order*  po)
@@ -623,39 +647,87 @@ void Restaurant::CancelOrder(int id)
 }
 void Restaurant::deleteMotorcycle(Priority_Queue<Motorcycle*> &toDelete)
 {
-	int x;
-	Motorcycle* m = NULL;
-	while (toDelete.dequeue(m,x))
-	{
-		delete m;
-	}
+	//int x;
+	//Motorcycle* m = NULL;
+	//while (toDelete.dequeue(m,x))
+	//{
+//		delete m;
+	//}
+	toDelete.Clear();
 }
+
 void Restaurant::MODE_STEP_FN()
 {
 	int current_time_step=1;
+	char timestep[10];
 	while(!EventsQueue.isEmpty())
 	{
-		char timestep[10];
 		itoa(current_time_step,timestep,10);	
 		//pGUI->PrintMessage(timestep);
 
 		ExecuteEvents(current_time_step);
-		
-		PrintGUI();
-		
+		PrintGUI();		
 		PrintToStatusBar(timestep);
 		pGUI->UpdateInterface();
 		pGUI->ResetDrawingList();
 		Sleep(1000);
-		
 		ReturnMotorcycle(current_time_step);
 		AssignToMotorcycle(current_time_step);
 
 		current_time_step++;
 	}
-
+	while (!Norm_Ord_A.IsEmpty()||!Norm_Ord_B.IsEmpty()||!Norm_Ord_C.IsEmpty()||!Norm_Ord_D.IsEmpty()||!Frz_Ord_A.isEmpty()||!Frz_Ord_B.isEmpty()||!Frz_Ord_C.isEmpty()||!Frz_Ord_D.isEmpty()||!VIP_ord_A.isEmpty()||!VIP_ord_B.isEmpty()||!VIP_ord_C.isEmpty()||!VIP_ord_D.isEmpty())
+	{
+		itoa(current_time_step,timestep,10);	
+		PrintGUI();		
+		
+		PrintToStatusBar(timestep);
+		pGUI->UpdateInterface();
+		pGUI->ResetDrawingList();
+		Sleep(1000);
+		ReturnMotorcycle(current_time_step);
+		AssignToMotorcycle(current_time_step);
+		current_time_step++;
+	}
+	itoa(current_time_step,timestep,10);	
+	PrintToStatusBar(timestep);
+	pGUI->UpdateInterface();
+	GetOutPutFile(); 
 
 }
+void Restaurant::MODE_SILENT_FN()
+{
+	int current_time_step=1;
+	char timestep[10];
+
+	while(!EventsQueue.isEmpty())
+	{
+		itoa(current_time_step,timestep,10);	
+		ExecuteEvents(current_time_step);
+		PrintGUI();
+		ReturnMotorcycle(current_time_step);
+		AssignToMotorcycle(current_time_step);
+		PrintToStatusBar(timestep);
+		current_time_step++;
+	}
+	while (!Norm_Ord_A.IsEmpty()||!Norm_Ord_B.IsEmpty()||!Norm_Ord_C.IsEmpty()||!Norm_Ord_D.IsEmpty()||!Frz_Ord_A.isEmpty()||!Frz_Ord_B.isEmpty()||!Frz_Ord_C.isEmpty()||!Frz_Ord_D.isEmpty()||!VIP_ord_A.isEmpty()||!VIP_ord_B.isEmpty()||!VIP_ord_C.isEmpty()||!VIP_ord_D.isEmpty())
+	{
+		itoa(current_time_step,timestep,10);	
+		PrintGUI();		
+		ReturnMotorcycle(current_time_step);
+		AssignToMotorcycle(current_time_step);
+		PrintToStatusBar(timestep);
+	//	pGUI->UpdateInterface();
+	//  pGUI->ResetDrawingList();
+	//  Sleep(1000);
+		current_time_step++;
+	}
+	//pGUI->UpdateInterface();
+
+	GetOutPutFile(); 
+
+}
+
 void  Restaurant::PromoteOrder (int id,int extramoney)   //takes the money and id to promote   .....called in promotionEvent
 {
 
@@ -1220,29 +1292,29 @@ void Restaurant ::GetOutPutFile()
   int tmotD=Norm_Mtr_D.getCount()+Froz_Mtr_D.getCount()+VIP_Mtr_D.getCount();
 
 	outFile<<"Region A:"<<endl;
-	outFile<<"     Orders:"<<to_string(totA)<<" [Norm:"<<to_string(Norm_Ord_A.getCount())<<",Froz:"<<to_string(Frz_Ord_A.getCount())<<",VIP:"<<to_string(VIP_ord_A.getCount())<<"]"<<endl;
-	outFile<<"     Motors:"<<to_string(tmotA)<<" [Norm:"<<to_string(Norm_Mtr_A.getCount())<<",Froz:"<<to_string(Froz_Mtr_A.getCount())<<",VIP:"<<to_string(VIP_Mtr_A.getCount())<<"]"<<endl;
+	outFile<<"     Orders:"<<to_string(totA)<<"		[Norm:"<<to_string(Norm_Ord_A.getCount())<<",Froz:"<<to_string(Frz_Ord_A.getCount())<<",VIP:"<<to_string(VIP_ord_A.getCount())<<"]"<<endl;
+	outFile<<"     Motors:"<<to_string(tmotA)<<"	 [Norm:"<<to_string(Norm_Mtr_A.getCount())<<",Froz:"<<to_string(Froz_Mtr_A.getCount())<<",VIP:"<<to_string(VIP_Mtr_A.getCount())<<"]"<<endl;
 	if(CountServA!=0 && CountWaitA!=0)
 	outFile<<"     Avg Wait ="<<to_string(TotWaitA/CountWaitA)<<" , Avg Serv ="<<to_string(TotServA/CountServA)<<endl;
 
 
 	outFile<<"Region B:"<<endl;
-	outFile<<"     Orders:"<<to_string(totB)<<" [Norm:"<<to_string(Norm_Ord_B.getCount())<<",Froz:"<<to_string(Frz_Ord_B.getCount())<<",VIP:"<<to_string(VIP_ord_B.getCount())<<"]"<<endl;
-	outFile<<"     Motors:"<<to_string(tmotB)<<" [Norm:"<<to_string(Norm_Mtr_B.getCount())<<",Froz:"<<to_string(Froz_Mtr_B.getCount())<<",VIP:"<<to_string(VIP_Mtr_B.getCount())<<"]"<<endl;
+	outFile<<"     Orders:"<<to_string(totB)<<"		[Norm:"<<to_string(Norm_Ord_B.getCount())<<",Froz:"<<to_string(Frz_Ord_B.getCount())<<",VIP:"<<to_string(VIP_ord_B.getCount())<<"]"<<endl;
+	outFile<<"     Motors:"<<to_string(tmotB)<<"	 [Norm:"<<to_string(Norm_Mtr_B.getCount())<<",Froz:"<<to_string(Froz_Mtr_B.getCount())<<",VIP:"<<to_string(VIP_Mtr_B.getCount())<<"]"<<endl;
 	if(CountServB!=0 && CountWaitB!=0)
 	outFile<<"     Avg Wait ="<<to_string(TotWaitB/CountWaitB)<<" , Avg Serv ="<<to_string(TotServB/CountServB)<<endl;
 
 
 	outFile<<"Region C:"<<endl;
-	outFile<<"     Orders:"<<to_string(totC)<<" [Norm:"<<to_string(Norm_Ord_C.getCount())<<",Froz:"<<to_string(Frz_Ord_C.getCount())<<",VIP:"<<to_string(VIP_ord_C.getCount())<<"]"<<endl;
-	outFile<<"     Motors:"<<to_string(tmotC)<<" [Norm:"<<to_string(Norm_Mtr_C.getCount())<<",Froz:"<<to_string(Froz_Mtr_C.getCount())<<",VIP:"<<to_string(VIP_Mtr_C.getCount())<<"]"<<endl;
+	outFile<<"     Orders:"<<to_string(totC)<<"		[Norm:"<<to_string(Norm_Ord_C.getCount())<<",Froz:"<<to_string(Frz_Ord_C.getCount())<<",VIP:"<<to_string(VIP_ord_C.getCount())<<"]"<<endl;
+	outFile<<"     Motors:"<<to_string(tmotC)<<"	 [Norm:"<<to_string(Norm_Mtr_C.getCount())<<",Froz:"<<to_string(Froz_Mtr_C.getCount())<<",VIP:"<<to_string(VIP_Mtr_C.getCount())<<"]"<<endl;
 	if(CountServC!=0 && CountWaitC!=0)
 	outFile<<"     Avg Wait ="<<to_string(TotWaitC/CountWaitC)<<" , Avg Serv ="<<to_string(TotServC/CountServC)<<endl;
 
 
 	outFile<<"Region D:"<<endl;
-	outFile<<"     Orders:"<<to_string(totD)<<" [Norm:"<<to_string(Norm_Ord_D.getCount())<<",Froz:"<<to_string(Frz_Ord_D.getCount())<<",VIP:"<<to_string(VIP_ord_D.getCount())<<"]"<<endl;
-	outFile<<"     Motors:"<<to_string(tmotD)<<" [Norm:"<<to_string(Norm_Mtr_D.getCount())<<",Froz:"<<to_string(Froz_Mtr_D.getCount())<<",VIP:"<<to_string(VIP_Mtr_D.getCount())<<"]"<<endl;
+	outFile<<"     Orders:"<<to_string(totD)<<"		[Norm:"<<to_string(Norm_Ord_D.getCount())<<",Froz:"<<to_string(Frz_Ord_D.getCount())<<",VIP:"<<to_string(VIP_ord_D.getCount())<<"]"<<endl;
+	outFile<<"     Motors:"<<to_string(tmotD)<<"	 [Norm:"<<to_string(Norm_Mtr_D.getCount())<<",Froz:"<<to_string(Froz_Mtr_D.getCount())<<",VIP:"<<to_string(VIP_Mtr_D.getCount())<<"]"<<endl;
 	if(CountServD!=0 && CountWaitD!=0)
 	outFile<<"     Avg Wait ="<<to_string(TotWaitD/CountWaitD)<<" , Avg Serv ="<<to_string(TotServD/CountServD)<<endl;
 
