@@ -16,6 +16,7 @@ public:
 	bool IsEmpty();								//return true if Head points to nullptr
 	void Clear();								//delete all Nodes and set Head & tail to nullptr
 	Node<T>* Contain(T & );				// search for an item and return ptr to its node if found and nullptr if not found
+	void InsertBeg(T data);
 	bool GetFirst(T &);					//return first item and delete it from the list
 	~List();									//call Clear() fn 
 };
@@ -27,7 +28,16 @@ List<T>::List()
 	tail=nullptr;
 	count = 0;
 }
+template<class T>
+void List<T>::InsertBeg(T data)
+{
 
+	Node<T> *R = new Node<T>(data);
+	R->setNext(Head);
+	Head = R;
+	count++;
+
+}
 template <class T>
 int List<T>::getCount()
 {

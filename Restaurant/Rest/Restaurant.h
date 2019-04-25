@@ -85,6 +85,7 @@ public:
 	void MODE_STEP_FN();
 	void MODE_SILENT_FN(); 
 	void PromoteOrder (int  ,int); 
+	void AutoPromotion(int time_step);
 	void AddOrders(Order* po);
 	void AddMotorcycle(Motorcycle *po, int priority);
 	void ReadData();

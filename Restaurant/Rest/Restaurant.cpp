@@ -447,6 +447,7 @@ void Restaurant::MODE_INTR_FN()
 		pGUI->UpdateInterface();
 		pGUI->ResetDrawingList();
 		ReturnMotorcycle(current_time_step);
+		AutoPromotion(current_time_step);
 		AssignToMotorcycle(current_time_step);
 		pGUI->waitForClick();
 		
@@ -462,6 +463,7 @@ void Restaurant::MODE_INTR_FN()
 		pGUI->UpdateInterface();
 		pGUI->ResetDrawingList();
 		ReturnMotorcycle(current_time_step);
+		AutoPromotion(current_time_step);
 		AssignToMotorcycle(current_time_step);
 		current_time_step++;
 	}
@@ -672,6 +674,7 @@ void Restaurant::MODE_STEP_FN()
 		pGUI->ResetDrawingList();
 		Sleep(1000);
 		ReturnMotorcycle(current_time_step);
+		AutoPromotion(current_time_step);
 		AssignToMotorcycle(current_time_step);
 
 		current_time_step++;
@@ -686,6 +689,7 @@ void Restaurant::MODE_STEP_FN()
 		pGUI->ResetDrawingList();
 		Sleep(1000);
 		ReturnMotorcycle(current_time_step);
+		AutoPromotion(current_time_step);
 		AssignToMotorcycle(current_time_step);
 		current_time_step++;
 	}
@@ -706,6 +710,7 @@ void Restaurant::MODE_SILENT_FN()
 		ExecuteEvents(current_time_step);
 		PrintGUI();
 		ReturnMotorcycle(current_time_step);
+		AutoPromotion(current_time_step);
 		AssignToMotorcycle(current_time_step);
 		PrintToStatusBar(timestep);
 		current_time_step++;
@@ -715,6 +720,7 @@ void Restaurant::MODE_SILENT_FN()
 		itoa(current_time_step,timestep,10);	
 		PrintGUI();		
 		ReturnMotorcycle(current_time_step);
+		AutoPromotion(current_time_step);
 		AssignToMotorcycle(current_time_step);
 		PrintToStatusBar(timestep);
 	//	pGUI->UpdateInterface();
@@ -726,6 +732,90 @@ void Restaurant::MODE_SILENT_FN()
 
 	GetOutPutFile(); 
 
+}
+
+void Restaurant::AutoPromotion(int time_step)
+{
+	int i=1, t;
+	bool flag = true;
+	Order* ord;
+	while(i<=Norm_Ord_A.getCount() && flag)
+	{
+		if(Norm_Ord_A.GetFirst(ord))
+		{
+			t = ord->GetArrTime();
+			if(t-time_step >= AutoPromLim)
+				PromoteOrder(ord->GetID(), 0);
+			else
+			{
+				Norm_Ord_A.InsertBeg(ord);
+				flag = false;
+			}
+		}
+		else
+			flag = false;
+		i++;
+	}
+
+	i=1;
+	flag = true;
+	while(i<=Norm_Ord_B.getCount() && flag)
+	{
+		if(Norm_Ord_B.GetFirst(ord))
+		{
+			t = ord->GetArrTime();
+			if(t - time_step >= AutoPromLim)
+				PromoteOrder(ord->GetID(), 0);
+			else
+			{
+				Norm_Ord_B.InsertBeg(ord);
+				flag = false;
+			}
+		}
+		else
+			flag = false;
+		i++;
+	}
+
+	i=1;
+	flag = true;
+	while(i<=Norm_Ord_C.getCount() && flag)
+	{
+		if(Norm_Ord_C.GetFirst(ord))
+		{
+			t = ord->GetArrTime();
+			if(t - time_step >= AutoPromLim)
+				PromoteOrder(ord->GetID(), 0);
+			else
+			{
+				Norm_Ord_C.InsertBeg(ord);
+				flag = false;
+			}
+		}
+		else
+			flag = false;
+		i++;
+	}
+
+	i=1;
+	flag = true;
+	while(i<=Norm_Ord_D.getCount() && flag)
+	{
+		if(Norm_Ord_D.GetFirst(ord))
+		{
+			t = ord->GetArrTime();
+			if(t - time_step >= AutoPromLim)
+				PromoteOrder(ord->GetID(), 0);
+			else
+			{
+				Norm_Ord_D.InsertBeg(ord);
+				flag = false;
+			}
+		}
+		else
+			flag = false;
+		i++;
+	}
 }
 
 void  Restaurant::PromoteOrder (int id,int extramoney)   //takes the money and id to promote   .....called in promotionEvent

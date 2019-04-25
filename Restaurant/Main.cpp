@@ -1,5 +1,4 @@
 //#include "Drawing.h"
-//#include <vld.h>
 #include "Rest\Restaurant.h"
 #include "GUI\GUI.h"
 
