@@ -161,6 +161,28 @@ Restaurant::~Restaurant()
 	deleteMotorcycle(VIP_Mtr_B);
 	deleteMotorcycle(VIP_Mtr_C);
 	deleteMotorcycle(VIP_Mtr_D);
+
+	deleteMotorcycle(Serving_Mtr);
+
+	DeleteOrdersList(Norm_Ord_A);
+	DeleteOrdersList(Norm_Ord_B);
+	DeleteOrdersList(Norm_Ord_C);
+	DeleteOrdersList(Norm_Ord_D);
+
+	DeleteOrdersQueue(Frz_Ord_A);
+	DeleteOrdersQueue(Frz_Ord_B);
+	DeleteOrdersQueue(Frz_Ord_C);
+	DeleteOrdersQueue(Frz_Ord_D);
+
+	DeleteOrdersPrio(VIP_ord_A);
+	DeleteOrdersPrio(VIP_ord_B);
+	DeleteOrdersPrio(VIP_ord_C);
+	DeleteOrdersPrio(VIP_ord_D);
+
+
+	DeleteOrdersQueue(DEMO_Queue);
+	DeleteOrdersPrio(Served_Ord);
+	
 	delete pGUI;
 }
 
@@ -583,14 +605,37 @@ void Restaurant::CancelOrder(int id)
 }
 void Restaurant::deleteMotorcycle(Priority_Queue<Motorcycle*> &toDelete)
 {
-	//int x;
-	//Motorcycle* m = NULL;
-	//while (toDelete.dequeue(m,x))
-	//{
-//		delete m;
-	//}
+	int x;
+	Motorcycle* m = NULL;
+	while (toDelete.dequeue(m,x))
+	{
+		delete m;
+	}
 	toDelete.Clear();
 }
+void Restaurant:: DeleteOrdersList(List<Order*>& l)
+{
+	Order *ord=NULL;
+	while(l.GetFirst(ord))
+	{delete ord;}
+	l.Clear();
+}
+void Restaurant::DeleteOrdersQueue(Queue<Order*>& q)
+{
+	Order *ord=NULL;
+	while(q.dequeue(ord))
+		{delete ord;}
+	q.Clear();
+}
+void Restaurant::DeleteOrdersPrio(Priority_Queue<Order*>& p)
+{
+	Order *ord=NULL;
+	int x;
+	while(p.dequeue(ord,x))
+	{delete ord;}
+	p.Clear();
+}
+
 
 void Restaurant::AutoPromotion(int time_step)
 {
@@ -1305,6 +1350,7 @@ void Restaurant ::GetOutPutFile()
 	  outFile<<to_string((ord->GetFinishTime()))<<"       "<<to_string(ord->GetID())<<
 		"       "<<to_string(ord->GetArrTime())<<"       "<<to_string(ord->GetWaitingTime())<<
 		"       "<<to_string(ord->GetServTime())<<endl;
+	  delete ord;
 	}
 
 	outFile<<"......................."<<endl;

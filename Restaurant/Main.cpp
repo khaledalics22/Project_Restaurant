@@ -1,7 +1,6 @@
 //#include "Drawing.h"
 #include "Rest\Restaurant.h"
 #include "GUI\GUI.h"
-
 int main()
 {
 	bool go=true; 

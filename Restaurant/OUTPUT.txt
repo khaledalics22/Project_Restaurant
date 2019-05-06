@@ -1,59 +1,56 @@
 FT      ID      AT      WT      ST      
-2       32       1       0       1
-3       3       1       0       2
-3       33       1       0       2
 4       16       1       0       3
 4       28       1       0       3
 4       25       1       0       3
 4       35       1       0       3
 5       19       1       0       4
-5       34       1       2       2
+6       42       1       0       5
 6       18       1       0       5
 6       11       1       0       5
 6       26       1       0       5
+6       44       1       0       5
+6       43       1       0       5
 6       30       1       0       5
 7       6       1       0       6
-7       1       1       0       6
-8       2       1       0       7
 8       17       2       0       6
+9       1       1       0       8
 9       31       1       0       8
 9       24       3       4       2
 9       27       1       6       2
 10       7       1       0       9
 10       36       1       0       9
-10       9       3       2       5
 11       12       1       0       10
 11       14       2       5       4
 12       29       1       0       11
-12       37       1       6       5
-12       13       1       8       3
-14       21       1       10       3
+12       33       1       6       5
+12       4       3       8       1
 15       20       1       0       14
-17       4       3       10       4
-18       22       1       16       1
-23       38       5       12       6
+18       9       3       10       5
+20       41       1       0       19
+22       37       1       16       5
 23       8       2       17       4
 24       10       4       9       11
+26       38       5       14       7
 .......................
 .......................
 Region A:
-     Orders:9		[Norm:3,Froz:3,VIP:3]
+     Orders:9		[Norm:1,Froz:3,VIP:5]
      Motors:5	        [Norm:2,Froz:2,VIP:1]
-     Avg Wait =9.500000 , Avg Serv =6.000000
+     Avg Wait =11.000000 , Avg Serv =7.555556
 Region B:
-     Orders:8		[Norm:3,Froz:2,VIP:3]
+     Orders:7		[Norm:2,Froz:2,VIP:3]
      Motors:6	        [Norm:2,Froz:2,VIP:2]
-     Avg Wait =6.500000 , Avg Serv =5.000000
+     Avg Wait =5.000000 , Avg Serv =5.285714
 Region C:
-     Orders:9		[Norm:3,Froz:3,VIP:3]
+     Orders:7		[Norm:1,Froz:3,VIP:3]
      Motors:5	        [Norm:2,Froz:2,VIP:1]
-     Avg Wait =9.000000 , Avg Serv =4.888889
+     Avg Wait =5.000000 , Avg Serv =5.714286
 Region D:
-     Orders:9		[Norm:5,Froz:4,VIP:0]
+     Orders:9		[Norm:2,Froz:4,VIP:3]
      Motors:6	        [Norm:2,Froz:2,VIP:2]
-     Avg Wait =6.666667 , Avg Serv =4.555556
+     Avg Wait =12.000000 , Avg Serv =5.777778
 
 Restaurant:
-     Orders:35		[Norm:14,Froz:12,VIP:9]
+     Orders:32		[Norm:6,Froz:12,VIP:14]
      Motors:22	        [Norm:8,Froz:8,VIP:6]
-     Avg Wait =7.916667 , Avg Serv =5.111111
+     Avg Wait =8.250000 , Avg Serv =6.083333

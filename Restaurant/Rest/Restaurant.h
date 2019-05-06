@@ -61,7 +61,9 @@ private:
 	// TODO: Add More Data Members As Needed
 	//time step ::
 	void deleteMotorcycle(Priority_Queue<Motorcycle*> &toDelete);
-
+	void DeleteOrdersList(List<Order*>& l);
+	void DeleteOrdersQueue(Queue<Order*>& q);
+	void DeleteOrdersPrio(Priority_Queue<Order*>& p);
 public:
 	
 	Restaurant();
