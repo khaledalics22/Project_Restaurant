@@ -639,10 +639,11 @@ void Restaurant::DeleteOrdersPrio(Priority_Queue<Order*>& p)
 
 void Restaurant::AutoPromotion(int time_step)
 {
-	int i=1, t;
+	int t;
 	bool flag = true;
 	Order* ord;
-	while(i<=Norm_Ord_A.getCount() && flag)
+
+	while(Norm_Ord_A.IsEmpty() && flag)
 	{
 		if(Norm_Ord_A.GetFirst(ord))
 		{
@@ -657,12 +658,10 @@ void Restaurant::AutoPromotion(int time_step)
 		}
 		else
 			flag = false;
-		i++;
 	}
 
-	i=1;
 	flag = true;
-	while(i<=Norm_Ord_B.getCount() && flag)
+	while(Norm_Ord_B.IsEmpty() && flag)
 	{
 		if(Norm_Ord_B.GetFirst(ord))
 		{
@@ -677,12 +676,10 @@ void Restaurant::AutoPromotion(int time_step)
 		}
 		else
 			flag = false;
-		i++;
 	}
 
-	i=1;
 	flag = true;
-	while(i<=Norm_Ord_C.getCount() && flag)
+	while(Norm_Ord_C.IsEmpty() && flag)
 	{
 		if(Norm_Ord_C.GetFirst(ord))
 		{
@@ -697,12 +694,10 @@ void Restaurant::AutoPromotion(int time_step)
 		}
 		else
 			flag = false;
-		i++;
 	}
 
-	i=1;
 	flag = true;
-	while(i<=Norm_Ord_D.getCount() && flag)
+	while(Norm_Ord_D.IsEmpty() && flag)
 	{
 		if(Norm_Ord_D.GetFirst(ord))
 		{
@@ -717,7 +712,6 @@ void Restaurant::AutoPromotion(int time_step)
 		}
 		else
 			flag = false;
-		i++;
 	}
 }
 
