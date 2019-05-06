@@ -327,114 +327,11 @@ while(infile>>s)
 
 
 
-////////////////////////////////////////////////////////////////////////////////
-/// ==> 
-///  DEMO-related functions. Should be removed in phases 1&2
-
-//This is just a demo function for project introductory phase
-//It should be removed starting phase 1
-/*
-void Restaurant::Just_A_Demo()
-{
-	
-	//
-	// THIS IS JUST A DEMO FUNCTION
-	// IT SHOULD BE REMOVED IN PHASE 1 AND PHASE 2
-	
-	int EventCnt;	
-	Order* pOrd;
-	Event* pEv;
-	srand(time(NULL));
-
-	pGUI->PrintMessage("Just a Demo. Enter EVENTS Count(next phases should read I/P filename):");
-	EventCnt = atoi(pGUI->GetString().c_str());	//get user input as a string then convert to integer
-
-	pGUI->UpdateInterface();
-
-	pGUI->PrintMessage("Generating orders randomly... In next phases, orders should be loaded from a file");
-		
-	int EvTime = 0;
-	
-	//Create Random events
-	//All generated event will be "ArrivalEvents" for the demo
-	for(int i=0; i<EventCnt; i++)
-	{
-		int O_id = i+1;
-		
-		//Rendomize order type
-		int OType;
-		if(i<EventCnt*0.2)	//let 1st 20% of orders be VIP (just for sake of demo)
-			OType = TYPE_VIP;
-		else if(i<EventCnt*0.5)	
-			OType = TYPE_FROZ;	//let next 30% be Frozen
-		else
-			OType = TYPE_NRM;	//let the rest be normal
-
-		
-		int reg = rand()% REG_CNT;	//randomize region
-
-
-		//Randomize event time
-		EvTime += rand()%4;
-		pEv = new ArrivalEvent(EvTime,O_id,(ORD_TYPE)OType,(REGION)reg);
-		AddEvent(pEv);
-
-	}	
-
-	int CurrentTimeStep = 1;
-	//as long as events queue is not empty yet
-	while(!EventsQueue.isEmpty())
-	{
-		//print current timestep
-		char timestep[10];
-		itoa(CurrentTimeStep,timestep,10);	
-		pGUI->PrintMessage(timestep);
-
-
-		ExecuteEvents(CurrentTimeStep);	//execute all events at current time step
-		//The above line may add new orders to the DEMO_Queue
-
-		//Let's draw all arrived orders by passing them to the GUI to draw
-
-		while(DEMO_Queue.dequeue(pOrd))
-		{
-			pGUI->AddOrderForDrawing(pOrd);
-			pGUI->UpdateInterface();
-		}
-		Sleep(1000);
-		CurrentTimeStep++;	//advance timestep
-	}
-
-
-	pGUI->PrintMessage("generation done, click to END program");
-	pGUI->waitForClick();
-
-	
-}
-////////////////
-
-void Restaurant::AddtoDemoQueue(Order *pOrd)
-{
-	DEMO_Queue.enqueue(pOrd);
-}
-
-Order* Restaurant::getDemoOrder()
-{
-	Order* pOrd;
-	DEMO_Queue.dequeue(pOrd);
-	return pOrd;
-
-}
-/// ==> end of DEMO-related function
-
-*/
-
-
 void Restaurant::MODE_INTR_FN()
 {
 	int current_time_step=1;
 	char timestep[10];
-	while(!EventsQueue.isEmpty())
+	while(isOpen())
 	{
 		itoa(current_time_step,timestep,10);	
 		//pGUI->PrintMessage(timestep);
@@ -449,22 +346,8 @@ void Restaurant::MODE_INTR_FN()
 		ReturnMotorcycle(current_time_step);
 		AutoPromotion(current_time_step);
 		AssignToMotorcycle(current_time_step);
+
 		pGUI->waitForClick();
-		
-	
-		current_time_step++;
-	}
-		while (!Norm_Ord_A.IsEmpty()||!Norm_Ord_B.IsEmpty()||!Norm_Ord_C.IsEmpty()||!Norm_Ord_D.IsEmpty()||!Frz_Ord_A.isEmpty()||!Frz_Ord_B.isEmpty()||!Frz_Ord_C.isEmpty()||!Frz_Ord_D.isEmpty()||!VIP_ord_A.isEmpty()||!VIP_ord_B.isEmpty()||!VIP_ord_C.isEmpty()||!VIP_ord_D.isEmpty())
-	{
-		itoa(current_time_step,timestep,10);	
-		PrintGUI();		
-	
-		PrintToStatusBar(timestep);
-		pGUI->UpdateInterface();
-		pGUI->ResetDrawingList();
-		ReturnMotorcycle(current_time_step);
-		AutoPromotion(current_time_step);
-		AssignToMotorcycle(current_time_step);
 		current_time_step++;
 	}
 		itoa(current_time_step,timestep,10);	
@@ -499,7 +382,7 @@ void Restaurant::AddOrders(Order*  po)
 		break;
 	case TYPE_VIP:
 		{
-			int priority = 1000*(po->GetMoney()/(po->GetDistance()*po->GetArrTime()));
+			int priority = 100*(po->GetMoney()/(po->GetDistance()*po->GetArrTime()));
 			switch (po->GetRegion())
 			{
 			case A_REG:
@@ -902,7 +785,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -913,7 +796,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -924,7 +807,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -936,7 +819,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -948,7 +831,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -959,7 +842,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -975,7 +858,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -986,7 +869,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -997,7 +880,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -1009,7 +892,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -1021,7 +904,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -1032,7 +915,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -1047,7 +930,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -1058,7 +941,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -1069,7 +952,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -1081,7 +964,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -1093,7 +976,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -1104,7 +987,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -1119,7 +1002,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -1130,7 +1013,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -1141,7 +1024,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -1153,7 +1036,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -1165,7 +1048,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
@@ -1176,7 +1059,7 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
 		ord->SetServTime(ord->GetDistance()/speed);
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, ord->GetFinishTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 }
@@ -1186,7 +1069,7 @@ void Restaurant::ReturnMotorcycle(int timestep)
 	int time;
 	while (Serving_Mtr.peekFront(mtr, time))
 	{
-		if(time == timestep)
+		if(-time == timestep)
 		{
 			Serving_Mtr.dequeue(mtr, time);
 			AddMotorcycle(mtr, mtr->GetSpeed());
@@ -1235,35 +1118,54 @@ void Restaurant::PrintGUI()
 	Order* pOrd;
 	//vip order  for all areas
 	int priority; 
-	for  (int i=0; i<VIP_ord_A.getCount();i++)
+	Priority_Queue<Order*> temp;
+	while(VIP_ord_A.dequeue(pOrd,priority))
 	{
-		VIP_ord_A.dequeue(pOrd,priority);
 		pGUI->AddOrderForDrawing(pOrd);
+		temp.enqueue(pOrd,priority);
+
+	}
+	while(temp.dequeue(pOrd, priority))
+	{
 		VIP_ord_A.enqueue(pOrd,priority);
-
 	}
 
-	for  (int i=0; i<VIP_ord_B.getCount();i++)
+
+	while(VIP_ord_B.dequeue(pOrd,priority))
 	{
-		VIP_ord_B.dequeue(pOrd,priority);
 		pGUI->AddOrderForDrawing(pOrd);
+		temp.enqueue(pOrd,priority);
+
+	}
+	while(temp.dequeue(pOrd, priority))
+	{
 		VIP_ord_B.enqueue(pOrd,priority);
+	}
+
+
+	while(VIP_ord_C.dequeue(pOrd,priority))
+	{
+		pGUI->AddOrderForDrawing(pOrd);
+		temp.enqueue(pOrd,priority);
 
 	}
-	for  (int i=0; i<VIP_ord_C.getCount();i++)
+	while(temp.dequeue(pOrd, priority))
 	{
-		VIP_ord_C.dequeue(pOrd,priority);
-		pGUI->AddOrderForDrawing(pOrd);
 		VIP_ord_C.enqueue(pOrd,priority);
-
 	}
-	for  (int i=0; i<VIP_ord_D.getCount();i++)
+
+
+	while(VIP_ord_D.dequeue(pOrd,priority))
 	{
-		VIP_ord_D.dequeue(pOrd,priority);
 		pGUI->AddOrderForDrawing(pOrd);
-		VIP_ord_D.enqueue(pOrd,priority);
+		temp.enqueue(pOrd,priority);
 
 	}
+	while(temp.dequeue(pOrd, priority))
+	{
+		VIP_ord_D.enqueue(pOrd,priority);
+	}
+
 
 	//frozen order  for all areas
 	for  (int i=0; i<Frz_Ord_A.getCount();i++)
@@ -1414,4 +1316,12 @@ void Restaurant ::GetOutPutFile()
 		Served_Ord.enqueue(ord,-1*(ord->GetWaitingTime()));
 	}
 	outFile.close();
+}
+
+bool Restaurant::isOpen()
+{
+	return !Norm_Ord_A.IsEmpty()||!Norm_Ord_B.IsEmpty()||!Norm_Ord_C.IsEmpty()||!Norm_Ord_D.IsEmpty()||
+		!Frz_Ord_A.isEmpty()||!Frz_Ord_B.isEmpty()||!Frz_Ord_C.isEmpty()||!Frz_Ord_D.isEmpty()||
+		!VIP_ord_A.isEmpty()||!VIP_ord_B.isEmpty()||!VIP_ord_C.isEmpty()||!VIP_ord_D.isEmpty()||
+		!EventsQueue.isEmpty() || !Serving_Mtr.isEmpty();
 }

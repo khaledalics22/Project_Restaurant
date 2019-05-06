@@ -90,6 +90,7 @@ public:
 	void AddMotorcycle(Motorcycle *po, int priority);
 	void ReadData();
 	void CancelOrder(int id);
+	bool isOpen();
 	void AssignToMotorcycle(int timestep);
 	void ReturnMotorcycle(int timestep);
 	void PrintToStatusBar(char* timestep);
