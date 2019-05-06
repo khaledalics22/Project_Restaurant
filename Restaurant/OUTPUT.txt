@@ -51,3 +51,8 @@ Region D:
      Orders:8		[Norm:4,Froz:4,VIP:0]
      Motors:6	        [Norm:2,Froz:2,VIP:2]
      Avg Wait =9.000000 , Avg Serv =4.875000
+
+Restaurant:
+     Orders:34		[Norm:13,Froz:12,VIP:9]
+     Motors:22	        [Norm:8,Froz:8,VIP:6]
+     Avg Wait =8.375000 , Avg Serv =5.274306

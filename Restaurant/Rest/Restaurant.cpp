@@ -1241,7 +1241,6 @@ bool Restaurant::isOpen()
 		!EventsQueue.isEmpty() || !Serving_Mtr.isEmpty();
 }
 
-
 void Restaurant ::GetOutPutFile()
 {
 	outFile.open("OUTPUT.txt");
@@ -1271,6 +1270,10 @@ void Restaurant ::GetOutPutFile()
 	double CountWaitC=0,CountServC=0;
 	double CountWaitD=0,CountServD=0;
 
+	double avgWaitA,avgWaitB,avgWaitC,avgWaitD;
+	double avgServA,avgServB,avgServC,avgServD;
+	
+	
 	while(!(Served_Ord.isEmpty()))
 	{
 		Served_Ord.dequeue(ord,FinTime);
@@ -1338,38 +1341,49 @@ void Restaurant ::GetOutPutFile()
 	outFile<<"     Orders:"<<to_string(CountRegA)<<"		[Norm:"<<to_string(CountNrmA)<<",Froz:"<<to_string(CountFrzA)<<",VIP:"<<to_string(CountVIPA)<<"]"<<endl;
 	outFile<<"     Motors:"<<to_string(CountMotA)<<"	        [Norm:"<<to_string(Norm_Mtr_A.getCount())<<",Froz:"<<to_string(Froz_Mtr_A.getCount())<<",VIP:"<<to_string(VIP_Mtr_A.getCount())<<"]"<<endl;
 	
+	avgServA=TotServA/CountServA;
 	if(CountWaitA!=0)
-	outFile<<"     Avg Wait ="<<to_string(TotWaitA/CountWaitA)<<" , Avg Serv ="<<to_string(TotServA/CountServA)<<endl;
-	else
-	outFile<<"     Avg Wait ="<<to_string(0)<<" , Avg Serv ="<<to_string(TotServA/CountServA)<<endl;
+		avgWaitA=TotWaitA/CountWaitA;
+	else avgWaitA=0;
+	outFile<<"     Avg Wait ="<<to_string(avgWaitA)<<" , Avg Serv ="<<to_string(avgServA)<<endl;
+
 
 
 	outFile<<"Region B:"<<endl;
 	outFile<<"     Orders:"<<to_string(CountRegB)<<"		[Norm:"<<to_string(CountNrmB)<<",Froz:"<<to_string(CountFrzB)<<",VIP:"<<to_string(CountVIPB)<<"]"<<endl;
 	outFile<<"     Motors:"<<to_string(CountMotB)<<"	        [Norm:"<<to_string(Norm_Mtr_B.getCount())<<",Froz:"<<to_string(Froz_Mtr_B.getCount())<<",VIP:"<<to_string(VIP_Mtr_B.getCount())<<"]"<<endl;
+	
+	avgServB=TotServB/CountServB;
 	if(CountWaitB!=0)
-	outFile<<"     Avg Wait ="<<to_string(TotWaitB/CountWaitB)<<" , Avg Serv ="<<to_string(TotServB/CountServB)<<endl;
-	else
-	outFile<<"     Avg Wait ="<<to_string(0)<<" , Avg Serv ="<<to_string(TotServB/CountServB)<<endl;
-
+		avgWaitB=TotWaitB/CountWaitB;
+	else avgWaitB=0;
+	outFile<<"     Avg Wait ="<<to_string(avgWaitB)<<" , Avg Serv ="<<to_string(avgServB)<<endl;
 
 	outFile<<"Region C:"<<endl;
 	outFile<<"     Orders:"<<to_string(CountRegC)<<"		[Norm:"<<to_string(CountNrmC)<<",Froz:"<<to_string(CountFrzC)<<",VIP:"<<to_string(CountVIPC)<<"]"<<endl;
 	outFile<<"     Motors:"<<to_string(CountMotC)<<"	        [Norm:"<<to_string(Norm_Mtr_C.getCount())<<",Froz:"<<to_string(Froz_Mtr_C.getCount())<<",VIP:"<<to_string(VIP_Mtr_C.getCount())<<"]"<<endl;
+	
+	avgServC=TotServC/CountServC;
 	if(CountWaitC!=0)
-	outFile<<"     Avg Wait ="<<to_string(TotWaitC/CountWaitC)<<" , Avg Serv ="<<to_string(TotServC/CountServC)<<endl;
-	else
-	outFile<<"     Avg Wait ="<<to_string(0)<<" , Avg Serv ="<<to_string(TotServC/CountServC)<<endl;
-
+		avgWaitC=TotWaitC/CountWaitC;
+	else avgWaitC=0;
+	outFile<<"     Avg Wait ="<<to_string(avgWaitC)<<" , Avg Serv ="<<to_string(avgServC)<<endl;
 
 	outFile<<"Region D:"<<endl;
 	outFile<<"     Orders:"<<to_string(CountRegD)<<"		[Norm:"<<to_string(CountNrmD)<<",Froz:"<<to_string(CountFrzD)<<",VIP:"<<to_string(CountVIPD)<<"]"<<endl;
 	outFile<<"     Motors:"<<to_string(CountMotD)<<"	        [Norm:"<<to_string(Norm_Mtr_D.getCount())<<",Froz:"<<to_string(Froz_Mtr_D.getCount())<<",VIP:"<<to_string(VIP_Mtr_D.getCount())<<"]"<<endl;
+	
+	avgServD=TotServD/CountServD;
 	if(CountWaitD!=0)
-	outFile<<"     Avg Wait ="<<to_string(TotWaitD/CountWaitD)<<" , Avg Serv ="<<to_string(TotServD/CountServD)<<endl;
-	else
-	outFile<<"     Avg Wait ="<<to_string(0)<<" , Avg Serv ="<<to_string(TotServD/CountServD)<<endl;
+		avgWaitD=TotWaitD/CountWaitD;
+	else avgWaitD=0;
+	outFile<<"     Avg Wait ="<<to_string(avgWaitD)<<" , Avg Serv ="<<to_string(avgServD)<<endl;
 
+
+	outFile<<endl<<"Restaurant:"<<endl;
+	outFile<<"     Orders:"<<to_string(CountRegA+CountRegB+CountRegC+CountRegD)<<"		[Norm:"<<to_string(CountNrmA+CountNrmB+CountNrmC+CountNrmD)<<",Froz:"<<to_string(CountFrzA+CountFrzB+CountFrzC+CountFrzD)<<",VIP:"<<to_string(CountVIPA+CountVIPB+CountVIPC+CountVIPD)<<"]"<<endl;
+	outFile<<"     Motors:"<<to_string(CountMotA+CountMotB+CountMotC+CountMotD)<<"	        [Norm:"<<to_string(Norm_Mtr_A.getCount()+Norm_Mtr_B.getCount()+Norm_Mtr_C.getCount()+Norm_Mtr_D.getCount())<<",Froz:"<<to_string(Froz_Mtr_A.getCount()+Froz_Mtr_B.getCount()+Froz_Mtr_C.getCount()+Froz_Mtr_D.getCount())<<",VIP:"<<to_string(VIP_Mtr_A.getCount()+VIP_Mtr_B.getCount()+VIP_Mtr_C.getCount()+VIP_Mtr_D.getCount())<<"]"<<endl;
+	outFile<<"     Avg Wait ="<<to_string((avgWaitA+avgWaitB+avgWaitC+avgWaitD)/4)<<" , Avg Serv ="<<to_string((avgServA+avgServB+avgServC+avgServD)/4)<<endl;
 
 	outFile.close();
 }
