@@ -13,7 +13,7 @@ int main()
 	PROG_MODE input=pRest->Readinput();
 	go=(input==0)?true:false; 
 	delete pRest; 
-	if (input==1)
+	if (input == 1)
 	break; 
 	}
 	return 0;
