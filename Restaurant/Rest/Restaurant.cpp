@@ -11,6 +11,79 @@ using namespace std;
 #include "..\Events\PromotionEvent.h"
 #include "..\Events\CancellationEvent.h"
 
+
+void Restaurant::MODE_INTR_FN()
+{
+	int current_time_step=1;
+	char timestep[10];
+	while(isOpen())
+	{
+		itoa(current_time_step,timestep,10);	
+		if(!EventsQueue.isEmpty())
+	    	ExecuteEvents(current_time_step);
+		ReturnMotorcycle(current_time_step);
+		AutoPromotion(current_time_step);
+		PrintGUI();
+		PrintToStatusBar(timestep);
+		pGUI->UpdateInterface();
+		pGUI->ResetDrawingList();
+		AssignToMotorcycle(current_time_step);
+
+		pGUI->waitForClick();
+		current_time_step++;
+	}
+	itoa(current_time_step,timestep,10);	
+	PrintToStatusBar(timestep);
+	pGUI->UpdateInterface();
+		GetOutPutFile(); 
+}
+
+void Restaurant::MODE_STEP_FN()
+{
+		int current_time_step=1;
+	char timestep[10];
+	while(isOpen())
+	{
+		itoa(current_time_step,timestep,10);	
+		if(!EventsQueue.isEmpty())
+	    	ExecuteEvents(current_time_step);
+		ReturnMotorcycle(current_time_step);
+		AutoPromotion(current_time_step);
+		PrintGUI();
+		PrintToStatusBar(timestep);
+		pGUI->UpdateInterface();
+		pGUI->ResetDrawingList();
+		AssignToMotorcycle(current_time_step);
+
+	Sleep(1000);
+		current_time_step++;
+	}
+	itoa(current_time_step,timestep,10);	
+	PrintToStatusBar(timestep);
+	pGUI->UpdateInterface();
+		GetOutPutFile();
+}
+void Restaurant::MODE_SILENT_FN()
+{
+	int current_time_step=1;
+	char timestep[10];
+
+	while(isOpen())
+	{
+		itoa(current_time_step,timestep,10);	
+		if (!EventsQueue.isEmpty())
+			ExecuteEvents(current_time_step);
+		PrintGUI();
+		ReturnMotorcycle(current_time_step);
+		AutoPromotion(current_time_step);
+		AssignToMotorcycle(current_time_step);
+		PrintToStatusBar(timestep);
+		current_time_step++;
+	}
+	GetOutPutFile(); 
+
+}
+
 Restaurant::Restaurant() 
 {
 	pGUI = NULL;
@@ -325,31 +398,6 @@ while(infile>>s)
 
 }
 
-
-
-void Restaurant::MODE_INTR_FN()
-{
-	int current_time_step=1;
-	char timestep[10];
-	while(isOpen())
-	{
-		itoa(current_time_step,timestep,10);	
-		ExecuteEvents(current_time_step);
-		ReturnMotorcycle(current_time_step);
-		AutoPromotion(current_time_step);
-		PrintGUI();
-		PrintToStatusBar(timestep);
-		pGUI->UpdateInterface();
-		pGUI->ResetDrawingList();
-		AssignToMotorcycle(current_time_step);
-
-		pGUI->waitForClick();
-		current_time_step++;
-	}
-
-		GetOutPutFile(); 
-}
-
 void Restaurant::AddOrders(Order*  po)
 {
 	switch (po->GetType())
@@ -542,82 +590,6 @@ void Restaurant::deleteMotorcycle(Priority_Queue<Motorcycle*> &toDelete)
 //		delete m;
 	//}
 	toDelete.Clear();
-}
-
-void Restaurant::MODE_STEP_FN()
-{
-	int current_time_step=1;
-	char timestep[10];
-	while(!EventsQueue.isEmpty())
-	{
-		itoa(current_time_step,timestep,10);	
-		//pGUI->PrintMessage(timestep);
-
-		ExecuteEvents(current_time_step);
-		PrintGUI();		
-		PrintToStatusBar(timestep);
-		pGUI->UpdateInterface();
-		pGUI->ResetDrawingList();
-		Sleep(1000);
-		ReturnMotorcycle(current_time_step);
-		AutoPromotion(current_time_step);
-		AssignToMotorcycle(current_time_step);
-
-		current_time_step++;
-	}
-	while (!Norm_Ord_A.IsEmpty()||!Norm_Ord_B.IsEmpty()||!Norm_Ord_C.IsEmpty()||!Norm_Ord_D.IsEmpty()||!Frz_Ord_A.isEmpty()||!Frz_Ord_B.isEmpty()||!Frz_Ord_C.isEmpty()||!Frz_Ord_D.isEmpty()||!VIP_ord_A.isEmpty()||!VIP_ord_B.isEmpty()||!VIP_ord_C.isEmpty()||!VIP_ord_D.isEmpty())
-	{
-		itoa(current_time_step,timestep,10);	
-		PrintGUI();		
-		
-		PrintToStatusBar(timestep);
-		pGUI->UpdateInterface();
-		pGUI->ResetDrawingList();
-		Sleep(1000);
-		ReturnMotorcycle(current_time_step);
-		AutoPromotion(current_time_step);
-		AssignToMotorcycle(current_time_step);
-		current_time_step++;
-	}
-	itoa(current_time_step,timestep,10);	
-	PrintToStatusBar(timestep);
-	pGUI->UpdateInterface();
-	GetOutPutFile(); 
-
-}
-void Restaurant::MODE_SILENT_FN()
-{
-	int current_time_step=1;
-	char timestep[10];
-
-	while(!EventsQueue.isEmpty())
-	{
-		itoa(current_time_step,timestep,10);	
-		ExecuteEvents(current_time_step);
-		PrintGUI();
-		ReturnMotorcycle(current_time_step);
-		AutoPromotion(current_time_step);
-		AssignToMotorcycle(current_time_step);
-		PrintToStatusBar(timestep);
-		current_time_step++;
-	}
-	while (!Norm_Ord_A.IsEmpty()||!Norm_Ord_B.IsEmpty()||!Norm_Ord_C.IsEmpty()||!Norm_Ord_D.IsEmpty()||!Frz_Ord_A.isEmpty()||!Frz_Ord_B.isEmpty()||!Frz_Ord_C.isEmpty()||!Frz_Ord_D.isEmpty()||!VIP_ord_A.isEmpty()||!VIP_ord_B.isEmpty()||!VIP_ord_C.isEmpty()||!VIP_ord_D.isEmpty())
-	{
-		itoa(current_time_step,timestep,10);	
-		PrintGUI();		
-		ReturnMotorcycle(current_time_step);
-		AutoPromotion(current_time_step);
-		AssignToMotorcycle(current_time_step);
-		PrintToStatusBar(timestep);
-	//	pGUI->UpdateInterface();
-	//  pGUI->ResetDrawingList();
-	//  Sleep(1000);
-		current_time_step++;
-	}
-	//pGUI->UpdateInterface();
-
-	GetOutPutFile(); 
-
 }
 
 void Restaurant::AutoPromotion(int time_step)
@@ -827,6 +799,16 @@ void Restaurant::AssignToMotorcycle(int timestep)
 	}
 
 	//Assign Normal orders
+		while(!Norm_Mtr_A.isEmpty() && !Norm_Ord_A.IsEmpty())
+	{
+		Norm_Mtr_A.dequeue(mtr, speed);
+		Norm_Ord_A.GetFirst(ord);
+		ord->SetWaitingTime(timestep-ord->GetArrTime());
+		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
+		Served_Ord.enqueue(ord, -ord->GetFinishTime());
+		}
 	while(!VIP_Mtr_A.isEmpty() && !Norm_Ord_A.IsEmpty())
 	{
 		VIP_Mtr_A.dequeue(mtr, speed);
@@ -838,16 +820,6 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
-	while(!Norm_Mtr_A.isEmpty() && !Norm_Ord_A.IsEmpty())
-	{
-		Norm_Mtr_A.dequeue(mtr, speed);
-		Norm_Ord_A.GetFirst(ord);
-		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
-		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
-		Served_Ord.enqueue(ord, -ord->GetFinishTime());
-	}
 
 
 
@@ -900,17 +872,6 @@ void Restaurant::AssignToMotorcycle(int timestep)
 	}
 
 	//Assign Normal orders
-	while(!VIP_Mtr_B.isEmpty() && !Norm_Ord_B.IsEmpty())
-	{
-		VIP_Mtr_B.dequeue(mtr, speed);
-		Norm_Ord_B.GetFirst(ord);
-		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
-		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
-		Served_Ord.enqueue(ord, -ord->GetFinishTime());
-	}
-
 	while(!Norm_Mtr_B.isEmpty() && !Norm_Ord_B.IsEmpty())
 	{
 		Norm_Mtr_B.dequeue(mtr, speed);
@@ -922,6 +883,18 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
+	while(!VIP_Mtr_B.isEmpty() && !Norm_Ord_B.IsEmpty())
+	{
+		VIP_Mtr_B.dequeue(mtr, speed);
+		Norm_Ord_B.GetFirst(ord);
+		ord->SetWaitingTime(timestep-ord->GetArrTime());
+		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
+		Served_Ord.enqueue(ord, -ord->GetFinishTime());
+	}
+
+	
 
 	//Assign Region C
 	
@@ -972,6 +945,17 @@ void Restaurant::AssignToMotorcycle(int timestep)
 	}
 
 	//Assign Normal orders
+	while(!Norm_Mtr_C.isEmpty() && !Norm_Ord_C.IsEmpty())
+	{
+		Norm_Mtr_C.dequeue(mtr, speed);
+		Norm_Ord_C.GetFirst(ord);
+		ord->SetWaitingTime(timestep-ord->GetArrTime());
+		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
+		Served_Ord.enqueue(ord, -ord->GetFinishTime());
+	}
+
 	while(!VIP_Mtr_C.isEmpty() && !Norm_Ord_C.IsEmpty())
 	{
 		VIP_Mtr_C.dequeue(mtr, speed);
@@ -983,16 +967,6 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
-	while(!Norm_Mtr_C.isEmpty() && !Norm_Ord_C.IsEmpty())
-	{
-		Norm_Mtr_C.dequeue(mtr, speed);
-		Norm_Ord_C.GetFirst(ord);
-		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
-		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
-		Served_Ord.enqueue(ord, -ord->GetFinishTime());
-	}
 
 
 	//Assign Region D
@@ -1044,6 +1018,17 @@ void Restaurant::AssignToMotorcycle(int timestep)
 	}
 
 	//Assign Normal orders
+	while(!Norm_Mtr_D.isEmpty() && !Norm_Ord_D.IsEmpty())
+	{
+		Norm_Mtr_D.dequeue(mtr, speed);
+		Norm_Ord_D.GetFirst(ord);
+		ord->SetWaitingTime(timestep-ord->GetArrTime());
+		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
+		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
+		Served_Ord.enqueue(ord, -ord->GetFinishTime());
+	}
+
 	while(!VIP_Mtr_D.isEmpty() && !Norm_Ord_D.IsEmpty())
 	{
 		VIP_Mtr_D.dequeue(mtr, speed);
@@ -1055,16 +1040,6 @@ void Restaurant::AssignToMotorcycle(int timestep)
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 	}
 
-	while(!Norm_Mtr_D.isEmpty() && !Norm_Ord_D.IsEmpty())
-	{
-		Norm_Mtr_D.dequeue(mtr, speed);
-		Norm_Ord_D.GetFirst(ord);
-		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
-		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
-		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
-		Served_Ord.enqueue(ord, -ord->GetFinishTime());
-	}
 }
 void Restaurant::ReturnMotorcycle(int timestep)
 {

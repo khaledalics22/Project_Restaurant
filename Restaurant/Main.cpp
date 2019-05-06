@@ -9,7 +9,7 @@ int main()
 	{
 	Restaurant* pRest = new Restaurant;
 	pRest->RunSimulation();
-	Sleep(2000);
+	//Sleep(2000);
 	PROG_MODE input=pRest->Readinput();
 	go=(input==0)?true:false; 
 	delete pRest; 
