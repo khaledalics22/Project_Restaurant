@@ -602,7 +602,7 @@ void Restaurant::AutoPromotion(int time_step)
 		if(Norm_Ord_A.GetFirst(ord))
 		{
 			t = ord->GetArrTime();
-			if(t-time_step >= AutoPromLim)
+			if(time_step - t >= AutoPromLim)
 				PromoteOrder(ord->GetID(), 0);
 			else
 			{
@@ -622,7 +622,7 @@ void Restaurant::AutoPromotion(int time_step)
 		if(Norm_Ord_B.GetFirst(ord))
 		{
 			t = ord->GetArrTime();
-			if(t - time_step >= AutoPromLim)
+			if(time_step - t >= AutoPromLim)
 				PromoteOrder(ord->GetID(), 0);
 			else
 			{
@@ -642,7 +642,7 @@ void Restaurant::AutoPromotion(int time_step)
 		if(Norm_Ord_C.GetFirst(ord))
 		{
 			t = ord->GetArrTime();
-			if(t - time_step >= AutoPromLim)
+			if(time_step - t >= AutoPromLim)
 				PromoteOrder(ord->GetID(), 0);
 			else
 			{
@@ -662,7 +662,7 @@ void Restaurant::AutoPromotion(int time_step)
 		if(Norm_Ord_D.GetFirst(ord))
 		{
 			t = ord->GetArrTime();
-			if(t - time_step >= AutoPromLim)
+			if(time_step - t >= AutoPromLim)
 				PromoteOrder(ord->GetID(), 0);
 			else
 			{
