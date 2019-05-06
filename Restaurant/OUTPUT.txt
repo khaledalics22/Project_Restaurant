@@ -18,22 +18,22 @@ FT   ID   AT   WT   ST
 8   1   1   0   7
 8   12   1   0   7
 8   19   1   4   3
-13   20   3   4   6
+14   20   3   8   3
 .......................
 .......................
 Region A:
      Orders:0		[Norm:0,Froz:0,VIP:0]
-     Motors:6	 [Norm:1,Froz:2,VIP:3]
+     Motors:3	 [Norm:1,Froz:1,VIP:1]
      Avg Wait =0.500000 , Avg Serv =3.000000
 Region B:
      Orders:0		[Norm:0,Froz:0,VIP:0]
-     Motors:6	 [Norm:1,Froz:2,VIP:3]
+     Motors:3	 [Norm:1,Froz:1,VIP:1]
      Avg Wait =1.200000 , Avg Serv =2.000000
 Region C:
      Orders:0		[Norm:0,Froz:0,VIP:0]
-     Motors:7	 [Norm:1,Froz:2,VIP:4]
+     Motors:3	 [Norm:1,Froz:1,VIP:1]
      Avg Wait =1.200000 , Avg Serv =2.600000
 Region D:
      Orders:0		[Norm:0,Froz:0,VIP:0]
-     Motors:9	 [Norm:2,Froz:2,VIP:5]
-     Avg Wait =2.000000 , Avg Serv =3.000000
+     Motors:3	 [Norm:1,Froz:1,VIP:1]
+     Avg Wait =2.666667 , Avg Serv =2.500000

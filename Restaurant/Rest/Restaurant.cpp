@@ -334,25 +334,19 @@ void Restaurant::MODE_INTR_FN()
 	while(isOpen())
 	{
 		itoa(current_time_step,timestep,10);	
-		//pGUI->PrintMessage(timestep);
-
 		ExecuteEvents(current_time_step);
-
+		ReturnMotorcycle(current_time_step);
+		AutoPromotion(current_time_step);
 		PrintGUI();
-		
 		PrintToStatusBar(timestep);
 		pGUI->UpdateInterface();
 		pGUI->ResetDrawingList();
-		ReturnMotorcycle(current_time_step);
-		AutoPromotion(current_time_step);
 		AssignToMotorcycle(current_time_step);
 
 		pGUI->waitForClick();
 		current_time_step++;
 	}
-		itoa(current_time_step,timestep,10);	
-		PrintToStatusBar(timestep);
-		pGUI->UpdateInterface();
+
 		GetOutPutFile(); 
 }
 
@@ -360,27 +354,28 @@ void Restaurant::AddOrders(Order*  po)
 {
 	switch (po->GetType())
 	{
-	case TYPE_NRM:
-
-		switch (po->GetRegion())
+		case TYPE_NRM:
 		{
-		case A_REG:
-			Norm_Ord_A.InsertEnd(po);
-			break;
-		case B_REG:
-			Norm_Ord_B.InsertEnd(po);
-			break;
-		case C_REG:
-			Norm_Ord_C.InsertEnd(po);
-			break;
-		case D_REG:
-			Norm_Ord_D.InsertEnd(po);
-			break;
-		default:
+			switch (po->GetRegion())
+			{
+			case A_REG:
+				Norm_Ord_A.InsertEnd(po);
+				break;
+			case B_REG:
+				Norm_Ord_B.InsertEnd(po);
+				break;
+			case C_REG:
+				Norm_Ord_C.InsertEnd(po);
+				break;
+			case D_REG:
+				Norm_Ord_D.InsertEnd(po);
+				break;
+			default:
+				break;
+			}
 			break;
 		}
-		break;
-	case TYPE_VIP:
+		case TYPE_VIP:
 		{
 			int priority = 100*(po->GetMoney()/(po->GetDistance()*po->GetArrTime()));
 			switch (po->GetRegion())
@@ -402,84 +397,92 @@ void Restaurant::AddOrders(Order*  po)
 			}
 			break;
 		}
-
-	case TYPE_FROZ:
-		
-		switch (po->GetRegion())
+		case TYPE_FROZ:
 		{
-		case A_REG:
-			Frz_Ord_A.enqueue(po);
-			break;
-		case B_REG:
-			Frz_Ord_B.enqueue(po);
-			break;
-		case C_REG:
-			Frz_Ord_C.enqueue(po);
-			break;
-		case D_REG:
-			Frz_Ord_D.enqueue(po);
+			switch (po->GetRegion())
+			{
+			case A_REG:
+				Frz_Ord_A.enqueue(po);
+				break;
+			case B_REG:
+				Frz_Ord_B.enqueue(po);
+				break;
+			case C_REG:
+				Frz_Ord_C.enqueue(po);
+				break;
+			case D_REG:
+				Frz_Ord_D.enqueue(po);
+				break;
+			default:
+				break;
+			}
 			break;
 		default:
 			break;
 		}
-		break;
-	default:
-		break;
 	}
 }
 void Restaurant::AddMotorcycle(Motorcycle *po, int priority)
 {
 	switch (po->GetType())
 	{
-	case TYPE_NRM:
-		switch (po->GetRegion())
+		case TYPE_NRM:
 		{
-		case A_REG:
-			Norm_Mtr_A.enqueue(po, priority);
-			break;
-		case B_REG:
-			Norm_Mtr_B.enqueue(po, priority);
-			break;
-		case C_REG:
-			Norm_Mtr_C.enqueue(po, priority);
-			break;
-		case D_REG:
-			Norm_Mtr_D.enqueue(po, priority);
+			switch (po->GetRegion())
+			{
+			case A_REG:
+				Norm_Mtr_A.enqueue(po, priority);
+				break;
+			case B_REG:
+				Norm_Mtr_B.enqueue(po, priority);
+				break;
+			case C_REG:
+				Norm_Mtr_C.enqueue(po, priority);
+				break;
+			case D_REG:
+				Norm_Mtr_D.enqueue(po, priority);
+				break;
+			}
 			break;
 		}
-	case TYPE_FROZ:
-		switch (po->GetRegion())
+		case TYPE_FROZ:
 		{
-		case A_REG:
-			Froz_Mtr_A.enqueue(po, priority);
-			break;
-		case B_REG:
-			Froz_Mtr_B.enqueue(po, priority);
-			break;
-		case C_REG:
-			Froz_Mtr_C.enqueue(po, priority);
-			break;
-		case D_REG:
-			Froz_Mtr_D.enqueue(po, priority);
+			switch (po->GetRegion())
+			{
+			case A_REG:
+				Froz_Mtr_A.enqueue(po, priority);
+				break;
+			case B_REG:
+				Froz_Mtr_B.enqueue(po, priority);
+				break;
+			case C_REG:
+				Froz_Mtr_C.enqueue(po, priority);
+				break;
+			case D_REG:
+				Froz_Mtr_D.enqueue(po, priority);
+				break;
+			}
 			break;
 		}
-	case TYPE_VIP:
-		switch (po->GetRegion())
+		case TYPE_VIP:
 		{
-		case A_REG:
-			VIP_Mtr_A.enqueue(po, priority);
-			break;
-		case B_REG:
-			VIP_Mtr_B.enqueue(po, priority);
-			break;
-		case C_REG:
-			VIP_Mtr_C.enqueue(po, priority);
-			break;
-		case D_REG:
-			VIP_Mtr_D.enqueue(po, priority);
+			switch (po->GetRegion())
+			{
+			case A_REG:
+				VIP_Mtr_A.enqueue(po, priority);
+				break;
+			case B_REG:
+				VIP_Mtr_B.enqueue(po, priority);
+				break;
+			case C_REG:
+				VIP_Mtr_C.enqueue(po, priority);
+				break;
+			case D_REG:
+				VIP_Mtr_D.enqueue(po, priority);
+				break;
+			}
 			break;
 		}
-
 	}
 }
 
