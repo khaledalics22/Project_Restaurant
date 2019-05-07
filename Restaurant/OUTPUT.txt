@@ -1,62 +1,37 @@
 FT      ID      AT      WT      ST      
-4       16       1       0       3
-4       28       1       0       3
-4       25       1       0       3
-4       35       1       0       3
-5       19       1       0       4
-6       42       1       0       5
-6       18       1       0       5
-6       11       1       0       5
-6       26       1       0       5
-6       44       1       0       5
-6       43       1       0       5
-6       30       1       0       5
-7       6       1       0       6
-8       17       2       0       6
-9       1       1       0       8
-9       31       1       0       8
-9       24       3       4       2
-9       27       1       6       2
-10       7       1       0       9
-10       36       1       0       9
-11       12       1       0       10
-11       14       2       5       4
-12       29       1       0       11
-12       33       1       6       5
-12       13       1       8       3
-12       4       3       8       1
-14       21       1       10       3
-14       32       1       10       3
-15       20       1       0       14
-18       9       3       10       5
-18       22       1       16       1
-20       41       1       0       19
-22       37       1       16       5
-23       8       2       17       4
-24       10       4       9       11
-24       2       1       16       7
-25       3       1       22       2
-26       38       5       14       7
+4       8       2       0       2
+5       7       1       0       4
+6       6       1       0       5
+8       12       5       1       2
+9       9       3       0       6
+11       10       4       0       7
+12       3       9       0       3
+12       1       6       4       2
+14       11       4       5       5
+16       4       12       0       4
+20       2       9       0       11
+23       5       19       0       4
+29       6       25       0       4
 .......................
 .......................
 Region A:
-     Orders:11		[Norm:3,Froz:3,VIP:5]
+     Orders:8		[Norm:3,Froz:3,VIP:2]
      Motors:5	        [Norm:2,Froz:2,VIP:1]
-     Avg Wait =13.67 , Avg Serv =7
+     Avg Wait =3.333 , Avg Serv =4.125
 Region B:
-     Orders:8		[Norm:3,Froz:2,VIP:3]
-     Motors:6	        [Norm:2,Froz:2,VIP:2]
-     Avg Wait =6.5 , Avg Serv =5
+     Orders:2		[Norm:1,Froz:0,VIP:1]
+     Motors:7	        [Norm:3,Froz:2,VIP:2]
+     Avg Wait =0 , Avg Serv =7
 Region C:
-     Orders:9		[Norm:3,Froz:3,VIP:3]
+     Orders:1		[Norm:0,Froz:1,VIP:0]
      Motors:5	        [Norm:2,Froz:2,VIP:1]
-     Avg Wait =9 , Avg Serv =4.889
+     Avg Wait =0 , Avg Serv =4
 Region D:
-     Orders:10		[Norm:3,Froz:4,VIP:3]
-     Motors:6	        [Norm:2,Froz:2,VIP:2]
-     Avg Wait =11.5 , Avg Serv =5.5
+     Orders:2		[Norm:1,Froz:1,VIP:0]
+     Motors:7	        [Norm:3,Froz:2,VIP:2]
+     Avg Wait =0 , Avg Serv =4
 
 Restaurant:
-     Orders:38		[Norm:12,Froz:12,VIP:14]
-     Motors:22	        [Norm:8,Froz:8,VIP:6]
-     Avg Wait =10.17 , Avg Serv =5.597
+     Orders:13		[Norm:5,Froz:5,VIP:3]
+     Motors:24	        [Norm:10,Froz:8,VIP:6]
+     Avg Wait =0.8333 , Avg Serv =4.781

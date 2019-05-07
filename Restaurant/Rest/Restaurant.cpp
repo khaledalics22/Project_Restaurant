@@ -13,11 +13,14 @@ using namespace std;
 #include "..\Events\CancellationEvent.h"
 
 
+#define inFileName "InputFile2.txt"
+#define outFileName "OUTPUT.txt"
+
 void Restaurant::MODE_INTR_FN()
 {
 	int current_time_step=1;
 	char timestep[10];
-	string MA = "  ", MB = "  ", MC = "", MD = "  ";
+	string MA = "  ", MB = "  ", MC = "  ", MD = "  ";
 	while(isOpen())
 	{
 		itoa(current_time_step,timestep,10);	
@@ -78,6 +81,7 @@ void Restaurant::MODE_SILENT_FN()
 			ExecuteEvents(current_time_step);
 		/*PrintGUI();
 		PrintToStatusBar(timestep, MA, MB, MC, MD);*/
+
 		ReturnMotorcycle(current_time_step);
 		AutoPromotion(current_time_step);
 		AssignToMotorcycle(current_time_step, MA, MB, MC, MD);
@@ -196,7 +200,7 @@ Restaurant::~Restaurant()
 void Restaurant::ReadData()
 {
 	ifstream infile;
-	infile.open("InputFile6.txt");
+	infile.open(inFileName);
 
 //receiving number of all motors for all regions
 	int NumMotNA,NumMotFA,NumMotVA;
@@ -424,7 +428,7 @@ while(infile>>s)
     }
 
  }
-
+ infile.close();
 }
 
 void Restaurant::AddOrders(Order*  po)
@@ -454,7 +458,7 @@ void Restaurant::AddOrders(Order*  po)
 		}
 		case TYPE_VIP:
 		{
-			int priority = 100*(po->GetMoney()/(po->GetDistance()*po->GetArrTime()));
+			int priority = (int)(100*(po->GetMoney()/(po->GetDistance()*po->GetArrTime())));
 			switch (po->GetRegion())
 			{
 			case A_REG:
@@ -650,7 +654,7 @@ void Restaurant::AutoPromotion(int time_step)
 	bool flag = true;
 	Order* ord;
 
-	while(Norm_Ord_A.IsEmpty() && flag)
+	while(!Norm_Ord_A.IsEmpty() && flag)
 	{
 		if(Norm_Ord_A.GetFirst(ord))
 		{
@@ -668,7 +672,7 @@ void Restaurant::AutoPromotion(int time_step)
 	}
 
 	flag = true;
-	while(Norm_Ord_B.IsEmpty() && flag)
+	while(!Norm_Ord_B.IsEmpty() && flag)
 	{
 		if(Norm_Ord_B.GetFirst(ord))
 		{
@@ -686,7 +690,7 @@ void Restaurant::AutoPromotion(int time_step)
 	}
 
 	flag = true;
-	while(Norm_Ord_C.IsEmpty() && flag)
+	while(!Norm_Ord_C.IsEmpty() && flag)
 	{
 		if(Norm_Ord_C.GetFirst(ord))
 		{
@@ -704,7 +708,7 @@ void Restaurant::AutoPromotion(int time_step)
 	}
 
 	flag = true;
-	while(Norm_Ord_D.IsEmpty() && flag)
+	while(!Norm_Ord_D.IsEmpty() && flag)
 	{
 		if(Norm_Ord_D.GetFirst(ord))
 		{
@@ -732,7 +736,7 @@ void  Restaurant::PromoteOrder (int id,int extramoney)   //takes the money and i
 		if(Order->GetID()==id)                  //if found promote or ignore Event
 		{
 			Order->promote();         // change the type of Order  if not in service
-			int money=Order->GetMoney(); 
+			double money=Order->GetMoney(); 
 			Order->SetMoney(money+extramoney);   // set new money
 			AddOrders(Order);			//add order to the appropriate List
 			if (i==0)break;                     //if found at beginning of the list there is no need to continue
@@ -748,7 +752,7 @@ void  Restaurant::PromoteOrder (int id,int extramoney)   //takes the money and i
 		if(Order->GetID()==id)
 		{
 			Order->promote();
-			int money=Order->GetMoney(); 
+			double money=Order->GetMoney(); 
 			Order->SetMoney(money+extramoney); 
 			AddOrders(Order); 
 			if (i==0)break; 
@@ -764,7 +768,7 @@ void  Restaurant::PromoteOrder (int id,int extramoney)   //takes the money and i
 		if(Order->GetID()==id)
 		{
 			Order->promote();
-			int money=Order->GetMoney(); 
+			double money=Order->GetMoney(); 
 			Order->SetMoney(money+extramoney); 
 			AddOrders(Order); 
 			if (i==0)break; 
@@ -780,7 +784,7 @@ void  Restaurant::PromoteOrder (int id,int extramoney)   //takes the money and i
 		if(Order->GetID()==id)
 		{
 			Order->promote();
-			int money=Order->GetMoney(); 
+			double money=Order->GetMoney(); 
 			Order->SetMoney(money+extramoney); 
 			AddOrders(Order); 
 			if (i==0)break; 
@@ -804,7 +808,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		VIP_Mtr_A.dequeue(mtr, speed);
 		VIP_ord_A.dequeue(ord, p);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -817,7 +821,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Norm_Mtr_A.dequeue(mtr, speed);
 		VIP_ord_A.dequeue(ord, p);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -830,7 +834,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Froz_Mtr_A.dequeue(mtr, speed);
 		VIP_ord_A.dequeue(ord, p);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -844,7 +848,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Froz_Mtr_A.dequeue(mtr, speed);
 		Frz_Ord_A.dequeue(ord);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -858,7 +862,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Norm_Mtr_A.dequeue(mtr, speed);
 		Norm_Ord_A.GetFirst(ord);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -870,7 +874,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		VIP_Mtr_A.dequeue(mtr, speed);
 		Norm_Ord_A.GetFirst(ord);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -889,7 +893,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		VIP_Mtr_B.dequeue(mtr, speed);
 		VIP_ord_B.dequeue(ord, p);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -902,7 +906,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Norm_Mtr_B.dequeue(mtr, speed);
 		VIP_ord_B.dequeue(ord, p);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -915,7 +919,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Froz_Mtr_B.dequeue(mtr, speed);
 		VIP_ord_B.dequeue(ord, p);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -929,7 +933,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Froz_Mtr_B.dequeue(mtr, speed);
 		Frz_Ord_B.dequeue(ord);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -943,7 +947,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Norm_Mtr_B.dequeue(mtr, speed);
 		Norm_Ord_B.GetFirst(ord);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -956,7 +960,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		VIP_Mtr_B.dequeue(mtr, speed);
 		Norm_Ord_B.GetFirst(ord);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -974,7 +978,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		VIP_Mtr_C.dequeue(mtr, speed);
 		VIP_ord_C.dequeue(ord, p);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -987,7 +991,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Norm_Mtr_C.dequeue(mtr, speed);
 		VIP_ord_C.dequeue(ord, p);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -1000,7 +1004,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Froz_Mtr_C.dequeue(mtr, speed);
 		VIP_ord_C.dequeue(ord, p);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -1014,7 +1018,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Froz_Mtr_C.dequeue(mtr, speed);
 		Frz_Ord_C.dequeue(ord);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -1028,7 +1032,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Norm_Mtr_C.dequeue(mtr, speed);
 		Norm_Ord_C.GetFirst(ord);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -1041,7 +1045,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		VIP_Mtr_C.dequeue(mtr, speed);
 		Norm_Ord_C.GetFirst(ord);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -1059,7 +1063,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		VIP_Mtr_D.dequeue(mtr, speed);
 		VIP_ord_D.dequeue(ord, p);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -1072,7 +1076,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Norm_Mtr_D.dequeue(mtr, speed);
 		VIP_ord_D.dequeue(ord, p);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -1085,7 +1089,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Froz_Mtr_D.dequeue(mtr, speed);
 		VIP_ord_D.dequeue(ord, p);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -1099,7 +1103,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Froz_Mtr_D.dequeue(mtr, speed);
 		Frz_Ord_D.dequeue(ord);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -1113,7 +1117,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Norm_Mtr_D.dequeue(mtr, speed);
 		Norm_Ord_D.GetFirst(ord);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -1126,7 +1130,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		VIP_Mtr_D.dequeue(mtr, speed);
 		Norm_Ord_D.GetFirst(ord);
 		ord->SetWaitingTime(timestep-ord->GetArrTime());
-		ord->SetServTime(ord->GetDistance()/speed);
+		ord->SetServTime((int)ceil((double)ord->GetDistance()/speed));
 		ord->SetFinishTime(ord->GetArrTime() + ord->GetWaitingTime() + ord->GetServTime());
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
@@ -1328,7 +1332,7 @@ bool Restaurant::isOpen()
 
 void Restaurant ::GetOutPutFile()
 {
-	outFile.open("OUTPUT.txt");
+	outFile.open(outFileName);
 	outFile.precision(4);
 	outFile<<"FT      "<<"ID      "<<"AT      "<<"WT      "<<"ST      "<<endl;
 		

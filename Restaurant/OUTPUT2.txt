@@ -1,0 +1,36 @@
+FT      ID      AT      WT      ST      
+5       8       2       0       3
+6       7       1       0       5
+7       6       1       0       6
+10       9       3       0       7
+11       12       5       3       3
+12       10       4       0       8
+13       3       9       0       4
+17       11       4       7       6
+17       4       12       0       5
+21       2       9       0       12
+24       5       19       0       5
+30       6       25       0       5
+.......................
+.......................
+Region A:
+     Orders:7		[Norm:2,Froz:3,VIP:2]
+     Motors:5	        [Norm:2,Froz:2,VIP:1]
+     Avg Wait =5 , Avg Serv =5.429
+Region B:
+     Orders:2		[Norm:1,Froz:0,VIP:1]
+     Motors:7	        [Norm:3,Froz:2,VIP:2]
+     Avg Wait =0 , Avg Serv =8
+Region C:
+     Orders:1		[Norm:0,Froz:1,VIP:0]
+     Motors:5	        [Norm:2,Froz:2,VIP:1]
+     Avg Wait =0 , Avg Serv =5
+Region D:
+     Orders:2		[Norm:1,Froz:1,VIP:0]
+     Motors:7	        [Norm:3,Froz:2,VIP:2]
+     Avg Wait =0 , Avg Serv =5
+
+Restaurant:
+     Orders:12		[Norm:4,Froz:5,VIP:3]
+     Motors:24	        [Norm:10,Froz:8,VIP:6]
+     Avg Wait =1.25 , Avg Serv =5.857
