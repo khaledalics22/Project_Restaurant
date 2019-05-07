@@ -11,6 +11,8 @@
 #include "Motorcycle.h"
 #include "Order.h"
 #include <fstream>
+#include <string>
+#include <string.h>
 // it is the maestro of the project
 class Restaurant  
 {	
@@ -93,9 +95,9 @@ public:
 	void ReadData();
 	void CancelOrder(int id);
 	bool isOpen();
-	void AssignToMotorcycle(int timestep);
+	void AssignToMotorcycle(int timestep, string& MA, string& MB, string& MC, string& MD);
 	void ReturnMotorcycle(int timestep);
-	void PrintToStatusBar(char* timestep);
+	void PrintToStatusBar(char* timestep, string MA, string MB, string MC, string MD);
 	void PrintGUI();
 	void GetOutPutFile();
 
