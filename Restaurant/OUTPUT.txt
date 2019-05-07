@@ -1,37 +1,77 @@
 FT      ID      AT      WT      ST      
-4       8       2       0       2
-5       7       1       0       4
-6       6       1       0       5
-8       12       5       1       2
-9       9       3       0       6
-11       10       4       0       7
-12       3       9       0       3
-12       1       6       4       2
-14       11       4       5       5
-16       4       12       0       4
-20       2       9       0       11
-23       5       19       0       4
-29       6       25       0       4
+3       67       1       0       2
+4       41       1       0       3
+5       25       1       0       4
+5       60       1       0       4
+5       32       2       0       3
+6       13       1       0       5
+6       68       1       0       5
+7       31       1       0       6
+7       29       1       0       6
+7       49       1       0       6
+7       42       1       0       6
+8       7       1       0       7
+8       71       2       3       3
+11       8       1       0       10
+11       61       1       0       10
+12       1       1       0       11
+12       30       1       0       11
+12       47       1       0       11
+13       66       1       0       12
+13       56       2       9       2
+15       2       1       0       14
+15       16       1       0       14
+15       50       2       5       8
+15       74       5       6       4
+16       14       3       8       5
+17       69       1       0       16
+17       51       1       0       16
+17       33       3       6       8
+17       24       6       7       4
+17       22       4       9       4
+17       73       4       9       4
+17       43       1       12       4
+18       48       1       0       17
+20       70       2       7       11
+21       34       3       5       13
+22       17       1       0       21
+24       44       2       19       3
+25       72       5       16       4
+26       15       4       11       11
+26       9       2       19       5
+28       62       1       20       7
+28       45       2       21       5
+31       26       2       23       6
+31       46       3       24       4
+34       10       4       27       3
+39       63       2       29       8
+39       12       7       30       2
+42       27       2       32       8
+42       60       2       33       7
+42       28       3       34       5
+44       11       6       31       7
+52       64       3       44       5
+57       65       5       44       8
 .......................
 .......................
 Region A:
-     Orders:8		[Norm:3,Froz:3,VIP:2]
+     Orders:12		[Norm:2,Froz:6,VIP:4]
      Motors:5	        [Norm:2,Froz:2,VIP:1]
-     Avg Wait =3.333 , Avg Serv =4.125
+     Avg Wait =20.29 , Avg Serv =7
 Region B:
-     Orders:2		[Norm:1,Froz:0,VIP:1]
+     Orders:14		[Norm:3,Froz:4,VIP:7]
      Motors:7	        [Norm:3,Froz:2,VIP:2]
-     Avg Wait =0 , Avg Serv =7
+     Avg Wait =16.57 , Avg Serv =8.071
 Region C:
-     Orders:1		[Norm:0,Froz:1,VIP:0]
+     Orders:11		[Norm:0,Froz:6,VIP:5]
      Motors:5	        [Norm:2,Froz:2,VIP:1]
-     Avg Wait =0 , Avg Serv =4
+     Avg Wait =15 , Avg Serv =6.455
 Region D:
-     Orders:2		[Norm:1,Froz:1,VIP:0]
+     Orders:16		[Norm:2,Froz:7,VIP:7]
      Motors:7	        [Norm:3,Froz:2,VIP:2]
-     Avg Wait =0 , Avg Serv =4
+     Avg Wait =21.67 , Avg Serv =7.5
 
 Restaurant:
-     Orders:13		[Norm:5,Froz:5,VIP:3]
+     Orders:53		[Norm:7,Froz:23,VIP:23]
      Motors:24	        [Norm:10,Froz:8,VIP:6]
-     Avg Wait =0.8333 , Avg Serv =4.781
+     Avg Wait =18.38 , Avg Serv =7.256

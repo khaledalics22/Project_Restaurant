@@ -13,7 +13,7 @@ using namespace std;
 #include "..\Events\CancellationEvent.h"
 
 
-#define inFileName "InputFile2.txt"
+#define inFileName "InputFile4.txt"
 #define outFileName "OUTPUT.txt"
 
 void Restaurant::MODE_INTR_FN()
@@ -75,15 +75,13 @@ void Restaurant::MODE_SILENT_FN()
 	char timestep[10];
 	string MA = "  ", MB = "  ", MC = "  ", MD = "  ";
 	while(isOpen())
-	{
-		itoa(current_time_step,timestep,10);	
-		if (!EventsQueue.isEmpty())
-			ExecuteEvents(current_time_step);
-		/*PrintGUI();
-		PrintToStatusBar(timestep, MA, MB, MC, MD);*/
-
+	{	
+		itoa(current_time_step,timestep,10);
+		if(!EventsQueue.isEmpty())
+	    	ExecuteEvents(current_time_step);
 		ReturnMotorcycle(current_time_step);
 		AutoPromotion(current_time_step);
+		PrintGUI();
 		AssignToMotorcycle(current_time_step, MA, MB, MC, MD);
 		current_time_step++;
 	}
