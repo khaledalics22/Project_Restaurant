@@ -2,6 +2,8 @@
 #include <time.h>
 #include <iostream>
 #include <fstream>
+#include <iomanip>
+#include <math.h>
 
 using namespace std;
 
@@ -74,8 +76,8 @@ void Restaurant::MODE_SILENT_FN()
 		itoa(current_time_step,timestep,10);	
 		if (!EventsQueue.isEmpty())
 			ExecuteEvents(current_time_step);
-		PrintGUI();
-		PrintToStatusBar(timestep, MA, MB, MC, MD);
+		/*PrintGUI();
+		PrintToStatusBar(timestep, MA, MB, MC, MD);*/
 		ReturnMotorcycle(current_time_step);
 		AutoPromotion(current_time_step);
 		AssignToMotorcycle(current_time_step, MA, MB, MC, MD);
@@ -117,6 +119,7 @@ void Restaurant::RunSimulation()
 		MODE_STEP_FN();
 		break;
 	case MODE_SLNT:
+		MODE_SILENT_FN();
 		break;
 	//case MODE_DEMO:
 		//Just_A_Demo();
@@ -1326,7 +1329,7 @@ bool Restaurant::isOpen()
 void Restaurant ::GetOutPutFile()
 {
 	outFile.open("OUTPUT.txt");
-
+	outFile.precision(4);
 	outFile<<"FT      "<<"ID      "<<"AT      "<<"WT      "<<"ST      "<<endl;
 		
 	Order *ord;
@@ -1428,7 +1431,7 @@ void Restaurant ::GetOutPutFile()
 	if(CountWaitA!=0)
 		avgWaitA=TotWaitA/CountWaitA;
 	else avgWaitA=0;
-	outFile<<"     Avg Wait ="<<to_string(avgWaitA)<<" , Avg Serv ="<<to_string(avgServA)<<endl;
+	outFile<<setprecision(4)<<"     Avg Wait ="<<avgWaitA<<" , Avg Serv ="<<avgServA<<endl;
 
 
 
@@ -1440,7 +1443,8 @@ void Restaurant ::GetOutPutFile()
 	if(CountWaitB!=0)
 		avgWaitB=TotWaitB/CountWaitB;
 	else avgWaitB=0;
-	outFile<<"     Avg Wait ="<<to_string(avgWaitB)<<" , Avg Serv ="<<to_string(avgServB)<<endl;
+	outFile<<setprecision(4)<<"     Avg Wait ="<<avgWaitB<<" , Avg Serv ="<<avgServB<<endl;
+	
 
 	outFile<<"Region C:"<<endl;
 	outFile<<"     Orders:"<<to_string(CountRegC)<<"		[Norm:"<<to_string(CountNrmC)<<",Froz:"<<to_string(CountFrzC)<<",VIP:"<<to_string(CountVIPC)<<"]"<<endl;
@@ -1450,8 +1454,8 @@ void Restaurant ::GetOutPutFile()
 	if(CountWaitC!=0)
 		avgWaitC=TotWaitC/CountWaitC;
 	else avgWaitC=0;
-	outFile<<"     Avg Wait ="<<to_string(avgWaitC)<<" , Avg Serv ="<<to_string(avgServC)<<endl;
-
+	outFile<<setprecision(4)<<"     Avg Wait ="<<avgWaitC<<" , Avg Serv ="<<avgServC<<endl;
+	
 	outFile<<"Region D:"<<endl;
 	outFile<<"     Orders:"<<to_string(CountRegD)<<"		[Norm:"<<to_string(CountNrmD)<<",Froz:"<<to_string(CountFrzD)<<",VIP:"<<to_string(CountVIPD)<<"]"<<endl;
 	outFile<<"     Motors:"<<to_string(CountMotD)<<"	        [Norm:"<<to_string(Norm_Mtr_D.getCount())<<",Froz:"<<to_string(Froz_Mtr_D.getCount())<<",VIP:"<<to_string(VIP_Mtr_D.getCount())<<"]"<<endl;
@@ -1460,13 +1464,13 @@ void Restaurant ::GetOutPutFile()
 	if(CountWaitD!=0)
 		avgWaitD=TotWaitD/CountWaitD;
 	else avgWaitD=0;
-	outFile<<"     Avg Wait ="<<to_string(avgWaitD)<<" , Avg Serv ="<<to_string(avgServD)<<endl;
-
+	outFile<<setprecision(4)<<"     Avg Wait ="<<avgWaitD<<" , Avg Serv ="<<avgServD<<endl;
+	
 
 	outFile<<endl<<"Restaurant:"<<endl;
 	outFile<<"     Orders:"<<to_string(CountRegA+CountRegB+CountRegC+CountRegD)<<"		[Norm:"<<to_string(CountNrmA+CountNrmB+CountNrmC+CountNrmD)<<",Froz:"<<to_string(CountFrzA+CountFrzB+CountFrzC+CountFrzD)<<",VIP:"<<to_string(CountVIPA+CountVIPB+CountVIPC+CountVIPD)<<"]"<<endl;
 	outFile<<"     Motors:"<<to_string(CountMotA+CountMotB+CountMotC+CountMotD)<<"	        [Norm:"<<to_string(Norm_Mtr_A.getCount()+Norm_Mtr_B.getCount()+Norm_Mtr_C.getCount()+Norm_Mtr_D.getCount())<<",Froz:"<<to_string(Froz_Mtr_A.getCount()+Froz_Mtr_B.getCount()+Froz_Mtr_C.getCount()+Froz_Mtr_D.getCount())<<",VIP:"<<to_string(VIP_Mtr_A.getCount()+VIP_Mtr_B.getCount()+VIP_Mtr_C.getCount()+VIP_Mtr_D.getCount())<<"]"<<endl;
-	outFile<<"     Avg Wait ="<<to_string((avgWaitA+avgWaitB+avgWaitC+avgWaitD)/4)<<" , Avg Serv ="<<to_string((avgServA+avgServB+avgServC+avgServD)/4)<<endl;
+	outFile<<setprecision(4)<<"     Avg Wait ="<<(avgWaitA+avgWaitB+avgWaitC+avgWaitD)/4<<" , Avg Serv ="<<(avgServA+avgServB+avgServC+avgServD)/4<<endl;
 
 	outFile.close();
 }

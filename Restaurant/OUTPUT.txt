@@ -42,21 +42,21 @@ FT      ID      AT      WT      ST
 Region A:
      Orders:11		[Norm:3,Froz:3,VIP:5]
      Motors:5	        [Norm:2,Froz:2,VIP:1]
-     Avg Wait =13.666667 , Avg Serv =7.000000
+     Avg Wait =13.67 , Avg Serv =7
 Region B:
      Orders:8		[Norm:3,Froz:2,VIP:3]
      Motors:6	        [Norm:2,Froz:2,VIP:2]
-     Avg Wait =6.500000 , Avg Serv =5.000000
+     Avg Wait =6.5 , Avg Serv =5
 Region C:
      Orders:9		[Norm:3,Froz:3,VIP:3]
      Motors:5	        [Norm:2,Froz:2,VIP:1]
-     Avg Wait =9.000000 , Avg Serv =4.888889
+     Avg Wait =9 , Avg Serv =4.889
 Region D:
      Orders:10		[Norm:3,Froz:4,VIP:3]
      Motors:6	        [Norm:2,Froz:2,VIP:2]
-     Avg Wait =11.500000 , Avg Serv =5.500000
+     Avg Wait =11.5 , Avg Serv =5.5
 
 Restaurant:
      Orders:38		[Norm:12,Froz:12,VIP:14]
      Motors:22	        [Norm:8,Froz:8,VIP:6]
-     Avg Wait =10.166667 , Avg Serv =5.597222
+     Avg Wait =10.17 , Avg Serv =5.597
