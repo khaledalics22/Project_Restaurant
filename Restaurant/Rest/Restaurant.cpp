@@ -88,6 +88,9 @@ void Restaurant::MODE_SILENT_FN()
 Restaurant::Restaurant() 
 {
 	pGUI = NULL;
+	VA = 0, VB = 0, VC = 0, VD = 0;
+	NA = 0, NB = 0, NC = 0, ND = 0;
+	FA = 0, FB = 0, FC = 0, FD = 0;
 }
 PROG_MODE Restaurant::Readinput()
 {
@@ -803,6 +806,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MA += "V" + to_string(mtr->GetID()) + "(V" + to_string(ord->GetID()) + ")  ";
+		VA++;
 	}
 
 	while(!Norm_Mtr_A.isEmpty() && !VIP_ord_A.isEmpty())
@@ -815,6 +819,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MA += "N" + to_string(mtr->GetID()) + "(V" + to_string(ord->GetID()) + ")  ";
+		VA++;
 	}
 
 	while(!Froz_Mtr_A.isEmpty() && !VIP_ord_A.isEmpty())
@@ -827,6 +832,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MA += "F" + to_string(mtr->GetID()) + "(V" + to_string(ord->GetID()) + ")  ";
+		VA++;
 	}
 
 	//Assign Frozen orders
@@ -840,6 +846,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MA += "F" + to_string(mtr->GetID()) + "(F" + to_string(ord->GetID()) + ")  ";
+		FA++;
 	}
 
 	//Assign Normal orders
@@ -853,6 +860,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MA += "N" + to_string(mtr->GetID()) + "(N" + to_string(ord->GetID()) + ")  ";
+		NA++;
 	}
 	while(!VIP_Mtr_A.isEmpty() && !Norm_Ord_A.IsEmpty())
 	{
@@ -864,6 +872,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MA += "V" + to_string(mtr->GetID()) + "(N" + to_string(ord->GetID()) + ")  ";
+		NA++;
 	}
 
 
@@ -882,6 +891,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MB += "V" + to_string(mtr->GetID()) + "(V" + to_string(ord->GetID()) + ")  ";
+		VB++;
 	}
 
 	while(!Norm_Mtr_B.isEmpty() && !VIP_ord_B.isEmpty())
@@ -894,6 +904,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MB += "N" + to_string(mtr->GetID()) + "(V" + to_string(ord->GetID()) + ")  ";
+		VB++;
 	}
 
 	while(!Froz_Mtr_B.isEmpty() && !VIP_ord_B.isEmpty())
@@ -906,6 +917,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MB += "F" + to_string(mtr->GetID()) + "(V" + to_string(ord->GetID()) + ")  ";
+		VB++;
 	}
 
 	//Assign Frozen orders
@@ -919,6 +931,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MB += "F" + to_string(mtr->GetID()) + "(F" + to_string(ord->GetID()) + ")  ";
+		FB++;
 	}
 
 	//Assign Normal orders
@@ -932,6 +945,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MB += "N" + to_string(mtr->GetID()) + "(N" + to_string(ord->GetID()) + ")  ";
+		NB++;
 	}
 
 	while(!VIP_Mtr_B.isEmpty() && !Norm_Ord_B.IsEmpty())
@@ -944,6 +958,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MB += "V" + to_string(mtr->GetID()) + "(N" + to_string(ord->GetID()) + ")  ";
+		NB++;
 	}
 
 	
@@ -961,6 +976,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MC += "V" + to_string(mtr->GetID()) + "(V" + to_string(ord->GetID()) + ")  ";
+		VC++;
 	}
 
 	while(!Norm_Mtr_C.isEmpty() && !VIP_ord_C.isEmpty())
@@ -973,6 +989,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MC += "N" + to_string(mtr->GetID()) + "(V" + to_string(ord->GetID()) + ")  ";
+		VC++;
 	}
 
 	while(!Froz_Mtr_C.isEmpty() && !VIP_ord_C.isEmpty())
@@ -985,6 +1002,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MC += "F" + to_string(mtr->GetID()) + "(V" + to_string(ord->GetID()) + ")  ";
+		VC++;
 	}
 
 	//Assign Frozen orders
@@ -998,6 +1016,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MC += "F" + to_string(mtr->GetID()) + "(F" + to_string(ord->GetID()) + ")  ";
+		FC++;
 	}
 
 	//Assign Normal orders
@@ -1011,6 +1030,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MC += "N" + to_string(mtr->GetID()) + "(N" + to_string(ord->GetID()) + ")  ";
+		NC++;
 	}
 
 	while(!VIP_Mtr_C.isEmpty() && !Norm_Ord_C.IsEmpty())
@@ -1023,6 +1043,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MC += "V" + to_string(mtr->GetID()) + "(N" + to_string(ord->GetID()) + ")  ";
+		NC++;
 	}
 
 
@@ -1040,6 +1061,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MD += "V" + to_string(mtr->GetID()) + "(V" + to_string(ord->GetID()) + ")  ";
+		VD++;
 	}
 
 	while(!Norm_Mtr_D.isEmpty() && !VIP_ord_D.isEmpty())
@@ -1052,6 +1074,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MD += "N" + to_string(mtr->GetID()) + "(V" + to_string(ord->GetID()) + ")  ";
+		VD++;
 	}
 
 	while(!Froz_Mtr_D.isEmpty() && !VIP_ord_D.isEmpty())
@@ -1064,6 +1087,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MD += "F" + to_string(mtr->GetID()) + "(V" + to_string(ord->GetID()) + ")  ";
+		VD++;
 	}
 
 	//Assign Frozen orders
@@ -1077,6 +1101,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MD += "F" + to_string(mtr->GetID()) + "(F" + to_string(ord->GetID()) + ")  ";
+		FD++;
 	}
 
 	//Assign Normal orders
@@ -1090,6 +1115,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MD += "N" + to_string(mtr->GetID()) + "(N" + to_string(ord->GetID()) + ")  ";
+		ND++;
 	}
 
 	while(!VIP_Mtr_D.isEmpty() && !Norm_Ord_D.IsEmpty())
@@ -1102,6 +1128,7 @@ void Restaurant::AssignToMotorcycle(int timestep, string &MA, string &MB, string
 		Serving_Mtr.enqueue(mtr, -(ord->GetFinishTime() + ord->GetServTime()));
 		Served_Ord.enqueue(ord, -ord->GetFinishTime());
 		MD += "V" + to_string(mtr->GetID()) + "(N" + to_string(ord->GetID()) + ")  ";
+		ND++;
 	}
 
 }
@@ -1125,37 +1152,49 @@ void Restaurant::ReturnMotorcycle(int timestep)
 void Restaurant::PrintToStatusBar(char* timestep, string MA, string MB, string MC, string MD)
 {
 	string S1, S2, S3, S4; 
-	S1 ="Region A:     Orders: VIP "+ to_string(VIP_ord_A.getCount()) 
-			+ "     Frozen " + to_string(Frz_Ord_A.getCount()) 
-			+ "     Normal " +  to_string(Norm_Ord_A.getCount())
-			+ "        Motors:   VIP "+ to_string(VIP_Mtr_A.getCount())
-			+ "     Frozen " + to_string(Froz_Mtr_A.getCount())
-			+ "     Normal " +  to_string(Norm_Mtr_A.getCount())
-			+ MA;
+	S1 ="Region A:     Ord: V "+ to_string(VIP_ord_A.getCount()) 
+			+ "     F " + to_string(Frz_Ord_A.getCount()) 
+			+ "     N " +  to_string(Norm_Ord_A.getCount())
+			+ "        Mtr:   V "+ to_string(VIP_Mtr_A.getCount())
+			+ "     F " + to_string(Froz_Mtr_A.getCount())
+			+ "     N " +  to_string(Norm_Mtr_A.getCount())
+			+ "        Srv:   V " + to_string(VA)
+			+ "     F " + to_string(FA)
+			+ "     N " +  to_string(NA)
+			+ "        Assigned:   " + MA;
 
-	S2 ="Region B:     Orders: VIP "+ to_string(VIP_ord_B.getCount()) 
-			+ "     Frozen " + to_string(Frz_Ord_B.getCount()) 
-			+ "     Normal " +  to_string(Norm_Ord_B.getCount())
-			+ "        Motors:   VIP "+ to_string(VIP_Mtr_B.getCount())
-			+ "     Frozen " + to_string(Froz_Mtr_B.getCount())
-			+ "     Normal " +  to_string(Norm_Mtr_B.getCount())
-			+ MB;
+	S2 ="Region B:     Ord: V "+ to_string(VIP_ord_B.getCount()) 
+			+ "     F " + to_string(Frz_Ord_B.getCount()) 
+			+ "     N " +  to_string(Norm_Ord_B.getCount())
+			+ "        Mtr:   V "+ to_string(VIP_Mtr_B.getCount())
+			+ "     F " + to_string(Froz_Mtr_B.getCount())
+			+ "     N " +  to_string(Norm_Mtr_B.getCount())
+			+ "        Srv:   V " + to_string(VB)
+			+ "     F " + to_string(FB)
+			+ "     N " +  to_string(NB)
+			+ "        Assigned:   " + MB;
 		
-	S3 ="Region C:     Orders: VIP "+ to_string(VIP_ord_C.getCount()) 
-			+ "     Frozen " + to_string(Frz_Ord_C.getCount()) 
-			+ "     Normal " +  to_string(Norm_Ord_C.getCount())
-			+ "        Motors:   VIP " + to_string(VIP_Mtr_C.getCount())
-			+ "     Frozen " + to_string(Froz_Mtr_C.getCount())
-			+ "     Normal " +  to_string(Norm_Mtr_C.getCount())
-			+ MC;
+	S3 ="Region C:     Ord: V "+ to_string(VIP_ord_C.getCount()) 
+			+ "     F " + to_string(Frz_Ord_C.getCount()) 
+			+ "     N " +  to_string(Norm_Ord_C.getCount())
+			+ "        Mtr:   V " + to_string(VIP_Mtr_C.getCount())
+			+ "     F " + to_string(Froz_Mtr_C.getCount())
+			+ "     N " +  to_string(Norm_Mtr_C.getCount())
+			+ "        Srv:   V " + to_string(VC)
+			+ "     F " + to_string(FC)
+			+ "     N " +  to_string(NC)
+			+ "        Assigned:   " + MC;
 		
-	S4 ="Region D:     Orders: VIP "+ to_string(VIP_ord_D.getCount()) 
-			+ "     Frozen " + to_string(Frz_Ord_D.getCount()) 
-			+ "     Normal " +  to_string(Norm_Ord_D.getCount())
-			+ "        Motors:   VIP "+ to_string(VIP_Mtr_D.getCount())
-			+ "     Frozen " + to_string(Froz_Mtr_D.getCount())
-			+ "     Normal " +  to_string(Norm_Mtr_D.getCount())
-			+ MD;
+	S4 ="Region D:     Ord: V "+ to_string(VIP_ord_D.getCount()) 
+			+ "     F " + to_string(Frz_Ord_D.getCount()) 
+			+ "     N " +  to_string(Norm_Ord_D.getCount())
+			+ "        Mtr:   V "+ to_string(VIP_Mtr_D.getCount())
+			+ "     F " + to_string(Froz_Mtr_D.getCount())
+			+ "     N " +  to_string(Norm_Mtr_D.getCount())
+			+ "        Srv:   V " + to_string(VD)
+			+ "     F " + to_string(FD)
+			+ "     N " +  to_string(ND)
+			+ "        Assigned:   " + MD;
 	pGUI->PrintMessage(timestep, S1, S2, S3, S4);
 }
 

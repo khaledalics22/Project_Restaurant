@@ -59,6 +59,9 @@ private:
 	
 	int AutoPromLim;
 	int EventsNum;
+	int VA, VB, VC, VD;		//# of Served VIP orders in each region
+	int NA, NB, NC, ND;		//# of Served Normal orders in each region
+	int FA, FB, FC, FD;		//# of Served Frozen orders in each region
 	//
 	// TODO: Add More Data Members As Needed
 	//time step ::
