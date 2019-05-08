@@ -658,7 +658,10 @@ void Restaurant::AutoPromotion(int time_step)
 		{
 			t = ord->GetArrTime();
 			if(time_step - t >= AutoPromLim)
+			{
+				Norm_Ord_A.InsertBeg(ord);
 				PromoteOrder(ord->GetID(), 0);
+			}
 			else
 			{
 				Norm_Ord_A.InsertBeg(ord);
@@ -676,7 +679,10 @@ void Restaurant::AutoPromotion(int time_step)
 		{
 			t = ord->GetArrTime();
 			if(time_step - t >= AutoPromLim)
+			{
+				Norm_Ord_B.InsertBeg(ord);
 				PromoteOrder(ord->GetID(), 0);
+			}
 			else
 			{
 				Norm_Ord_B.InsertBeg(ord);
@@ -694,7 +700,10 @@ void Restaurant::AutoPromotion(int time_step)
 		{
 			t = ord->GetArrTime();
 			if(time_step - t >= AutoPromLim)
+			{
+				Norm_Ord_C.InsertBeg(ord);
 				PromoteOrder(ord->GetID(), 0);
+			}
 			else
 			{
 				Norm_Ord_C.InsertBeg(ord);
@@ -712,7 +721,10 @@ void Restaurant::AutoPromotion(int time_step)
 		{
 			t = ord->GetArrTime();
 			if(time_step - t >= AutoPromLim)
+			{
+				Norm_Ord_D.InsertBeg(ord);
 				PromoteOrder(ord->GetID(), 0);
+			}
 			else
 			{
 				Norm_Ord_D.InsertBeg(ord);
